@@ -3,6 +3,11 @@ body {
     margin: 0;
     padding: 0;
 }
+
+img {
+    margin-left: 33rem;
+}
+
 .navbar {
     background-color: #333;
     overflow: hidden;
