@@ -7,7 +7,8 @@ export default function Metadata() {
             <meta name="author" content="Jaskaran Sethy"/>
             <meta name="description"
                   content="Based in India, Jaskaran is an ML engineer working to be a full stack engineer. Graduated from IIT Roorkee in 2022, Jaskaran has an active interest in the latest developments in the tech world, especially including AI and LLMs."/>
-            <meta property="og:title" content="Jaskaran's Blog"/>
+                <meta name="google-site-verification" content="hVrkQ5GBwfCj_XihMVowDHGI-66EkG2laBJ3aS-tae4" />
+                <meta property="og:title" content="Jaskaran's Blog"/>
             <meta property="og:description"
                   content="Based in India, Jaskaran is an ML engineer working to be a full stack engineer. Graduated from IIT Roorkee in 2022, Jaskaran has an active interest in the latest developments in the tech world, especially including AI and LLMs."/>
             <meta property="og:image" content="/suit_me.png"/>
