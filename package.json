@@ -14,5 +14,8 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "swr": "^2.2.4"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.7.3"
   }
 }
