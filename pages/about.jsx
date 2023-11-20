@@ -1,26 +1,17 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import Head from 'next/head';
-import Script from 'next/script';
-import Layout from '../components/layout';
-import useSWR from 'swr';
 
 export default function HomePage() {
-    return (<Layout>
-            <Head>
-                <Metadata />
-            </Head>
-            <Header/>
-            <NavBar/>
-            <Content/>
-            <Footer/>
-        </Layout>
+    return (<>
+            <Header />
+            <NavBar />
+            <Content />
+            <Footer />
+        </>
     );
 }
 
-function Metadata() {
-    return (
-        <>
+function Head() {
+    return (<head>
         <meta charSet="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Jaskaran's Blog</title>
@@ -51,7 +42,7 @@ function Metadata() {
         <meta name="twitter:creator" content="@JaskaranSethy"/>
         <link rel="icon" href="../public/favicon.svg" type="image/svg+xml"/>
         <link rel="stylesheet" href="../styles/global.css"/>
-    </>)
+    </head>)
 }
 
 function Header() {
@@ -74,8 +65,7 @@ function NavBar() {
 function Content() {
     return (<div className="main-content">
             <div className="blog-card">
-                <Image src="/public/suit_me.png" alt="Photo of Jaskaran Sethyyyyyy in a suit" height={144}
-                       width={144}/>
+                <img src="../public/suit_me.png" alt="Photo of Jaskaran Sethyyyyyy in a suit" />
             </div>
         </div>
     );
@@ -86,13 +76,4 @@ function Footer() {
         <div className="footer">
             <p>Jaskaran Sethy &copy; 2023</p>
         </div>);
-}
-
-export async function getStaticProps() {
-    const allPostsData = "";
-    return {
-        props: {
-            allPostsData,
-        },
-    };
 }
