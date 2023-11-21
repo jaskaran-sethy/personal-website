@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Layout, { Metadata, Header, NavBar, Content, Footer } from '../components/layout';
+import Layout, { Metadata, Header, NavBar, Content, Footer, Card } from '../components/layout';
 import useSWR from 'swr';
 
 export default function HomePage() {
@@ -9,7 +9,9 @@ export default function HomePage() {
             </Head>
             <Header/>
             <NavBar/>
-            <Content/>
+            <Content>
+                <Card image={true} />
+            </Content>
             <Footer/>
         </Layout>
     );
