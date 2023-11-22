@@ -1,6 +1,5 @@
 import style from "./content.module.css";
 import Image from "next/image";
-import Button from "./button";
 
 export default function Card({ image, children }) {
     return (
@@ -17,7 +16,7 @@ export default function Card({ image, children }) {
         </div>)}
         <div style={{padding: "2rem"}} />
         {children}
-        <Button/>
+
     </div>
     );
 }

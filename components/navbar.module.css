@@ -1,14 +1,16 @@
 .navbar {
     display: flex;
     justify-content: center;
-    background-color: #333;
+    background-color: #000;
     overflow: hidden;
     margin: auto;
 }
 
 .navbar a {
+    flex-basis: 0;
     color: #f2f2f2;
     text-align: center;
-    padding: 1.5% 2%;
+    padding: 1.5vw 2vw;
+    min-width: 5vw;
     text-decoration: none;
 }

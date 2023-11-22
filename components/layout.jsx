@@ -5,6 +5,7 @@ import Header from './header'
 import Footer from './footer'
 import Content from './content'
 import Card from "./card";
+import Sidebar from "./sidebar";
 
 
 export default function Layout({ children }) {
@@ -17,5 +18,6 @@ export {
     Header,
     Footer,
     Content,
-    Card
+    Card,
+    Sidebar
 }

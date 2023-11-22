@@ -3,12 +3,14 @@ import Layout, { Metadata, Header, NavBar, Content, Footer, Card } from '../comp
 import useSWR from 'swr';
 
 export default function HomePage() {
-    return (<Layout>
+    return (
+        <Layout>
             <Head>
                 <Metadata />
             </Head>
-            <Header/>
             <NavBar/>
+            <Header/>
+
             <Content>
                 <Card image={true} />
             </Content>
@@ -16,6 +18,3 @@ export default function HomePage() {
         </Layout>
     );
 }
-
-
-

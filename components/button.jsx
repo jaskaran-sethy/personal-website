@@ -1,8 +1,8 @@
-import style from "./button.module.css";
 
-export default function Button({ text= "Click", icon= "🌍" }) {
+export default function Button({ text= "Click", icon= "🌍", onButtonClick, buttonClass }) {
+
     return (
-        <button id={style["futuristicButton"]}>
+        <button className={buttonClass} onClick={onButtonClick}>
             <span className="buttonText">{text}</span>
             <span className="buttonIcon">{icon}</span>
         </button>

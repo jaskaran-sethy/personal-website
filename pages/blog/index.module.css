@@ -1,0 +1,42 @@
+.mainWrapper {
+    display: flex;
+    position: static;
+    --sideBarWidth: 20%;
+    background-color: white;
+    color: black;
+    height: 100%;
+    margin-top: 5vh;
+
+}
+
+/* Adjust the width of Sidebar as needed */
+.sideBar {
+    display: flex;
+    flex-direction: column;
+    width: var(--sideBarWidth);
+    background-color: #000;
+    align-items: stretch;
+    justify-content: center;
+    overflow-y: auto; /* Add this property for vertical scrolling if needed */
+
+
+}
+
+/* Adjust the width of Content as needed */
+.content {
+    flex-grow: 1; /* Content takes up remaining space */
+    padding: 20px; /* Add padding as needed */
+}
+
+.blogCard {
+    border: 2px solid black;
+    border-radius: 1.2em;
+    color: black;
+    padding: 1em;
+    min-height: 40%;
+
+}
+
+.light {
+    background-color: white;
+}
