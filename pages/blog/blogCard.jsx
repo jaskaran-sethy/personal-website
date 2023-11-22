@@ -1,9 +1,17 @@
-import blogData from "/posts/blog.json";
+import blogData from "/lib/content/blog.json";
 
 export default function BlogCard({className, blogId}) {
-    return (
-        <div className={className}>
-            {blogData[blogId]["text"]}
-        </div>
-    );
+    if (blogData && blogData[blogId]) {
+        return (
+            <div className={className}>
+                {blogData[blogId]["text"]}
+            </div>
+        );
+    } else {
+        return (
+            <div className={className}>
+                Blog not found
+            </div>
+        );
+    }
 }
