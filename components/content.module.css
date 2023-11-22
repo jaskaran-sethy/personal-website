@@ -1,12 +1,19 @@
-.main-content {
+.mainContent {
     margin: 15px;
     padding: 15px;
-    background-color: #e9e9e9;
+    background-color: black;
 }
 
-.blog-card {
-    background: white;
+.blogCard {
+    background: black;
     margin: 10px 0;
     padding: 20px;
     border-radius: 8px;
+}
+
+.blogImage > img {
+    border: 2px white solid;
+    display: block;
+    margin: auto;
+
 }
