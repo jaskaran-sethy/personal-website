@@ -1,0 +1,25 @@
+.homeContainer {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    width: 100%;
+}
+
+.homeText {
+
+    flex: 1 1 25%;
+    padding: 2rem;
+    color: #f7f7f7;
+    position: relative;
+    font-size: 3rem;
+}
+
+.homeImage {
+    position: relative;
+    margin-top: -50%;
+    clip-path: polygon(55% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: -999;
+    transform: translate(-30%);
+    overflow-x: hidden;
+}
