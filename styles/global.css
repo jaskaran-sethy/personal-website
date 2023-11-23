@@ -20,6 +20,10 @@ body::-webkit-scrollbar {
     overflow-y: hidden;
 }
 
+a:-webkit-any-link {
+    color: inherit;
+}
+
 
 
 
