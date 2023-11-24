@@ -4,17 +4,9 @@
     background-color: black;
 }
 
-.blogCard {
-    background: black;
-    margin: 10px 0;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.blogImage > img {
-    border: 2px white solid;
-    border-radius: 9999px;
-    display: block;
-    margin: auto;
-
+.card {
+    background-color: white;
+    border-radius: calc(min(30vw,30vh));
+    border-color: black;
+    min-height: 100vh;
 }
