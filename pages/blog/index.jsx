@@ -30,9 +30,9 @@ export default function BlogPage() {
                     <BlogCard className={style.blogCard} blogId={blogId}/>
                 </Content>
                 <Sidebar className={style.sideBar}>
-                    <Button text="📚🧠 Mindset" onButtonClick={() => handleClick("book-review-mindset", 0)} buttonClass={buttonClasses[0]} />
-                    <Button text="📚🛠️ Ikigai" onButtonClick={() => handleClick("book-review-ikigai", 1)} buttonClass={buttonClasses[1]} />
-                    <Button text="📚🗪 Crucial Conversations" onButtonClick={() => handleClick("book-review-crucial-conversations", 2)} buttonClass={buttonClasses[2]} />
+                    <Button text="📚🧠 Mindset" onButtonClick={() => handleClick("book-review-:-mindset", 0)} buttonClass={buttonClasses[0]} />
+                    <Button text="📚🛠️ Ikigai" onButtonClick={() => handleClick("book-review-:-ikigai", 1)} buttonClass={buttonClasses[1]} />
+                    <Button text="📚🗪 Crucial Conversations" onButtonClick={() => handleClick("book-review-:-crucial-conversations", 2)} buttonClass={buttonClasses[2]} />
                 </Sidebar>
             </div>
             <Footer/>
