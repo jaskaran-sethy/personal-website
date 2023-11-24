@@ -12,9 +12,9 @@
 /* Adjust the width of Sidebar as needed */
 .sideBar {
     display: flex;
-    flex: 0 0 15%;
+    flex: 0 0 var(--sideBarWidth);
     flex-direction: column;
-    width: var(--sideBarWidth);
+
     background-color: #000;
     align-items: stretch;
     justify-content: flex-start;
