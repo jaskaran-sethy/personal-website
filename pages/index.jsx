@@ -15,7 +15,7 @@ export default function HomePage() {
                 <div className={style.homeText}>
                     Hey! I'm Jaskaran!
                     <br />
-                    Full Stack AI Engineer
+                    AI Engineer
 
                 </div>
                 <div className={style.homeImage}>
