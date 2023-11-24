@@ -6,7 +6,7 @@ import Button from "../../components/button";
 import Head from "next/head";
 
 export default function BlogPage() {
-    const [blogId, setBlogId] = useState(0);
+    const [blogId, setBlogId] = useState("book-review-mindset");
     const [buttonStates, setButtonStates] = useState([true, false, false]);
 
     function handleClick(idx, buttonIndex) {
@@ -30,9 +30,9 @@ export default function BlogPage() {
                     <BlogCard className={style.blogCard} blogId={blogId}/>
                 </Content>
                 <Sidebar className={style.sideBar}>
-                    <Button text="Cookies" icon="🍪" onButtonClick={() => handleClick(0, 0)} buttonClass={buttonClasses[0]} />
-                    <Button text="Milk" icon="🥛" onButtonClick={() => handleClick(1, 1)} buttonClass={buttonClasses[1]} />
-                    <Button text="Yum" icon="😋" onButtonClick={() => handleClick(2, 2)} buttonClass={buttonClasses[2]} />
+                    <Button text="📚🧠 Mindset" onButtonClick={() => handleClick("book-review-mindset", 0)} buttonClass={buttonClasses[0]} />
+                    <Button text="📚🛠️ Ikigai" onButtonClick={() => handleClick("book-review-ikigai", 1)} buttonClass={buttonClasses[1]} />
+                    <Button text="📚🗪 Crucial Conversations" onButtonClick={() => handleClick("book-review-crucial-conversations", 2)} buttonClass={buttonClasses[2]} />
                 </Sidebar>
             </div>
             <Footer/>
