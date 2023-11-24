@@ -8,6 +8,8 @@
     color: white;
     padding: 2rem;
     align-self: center;
+    justify-content: center;
+    text-align: center;
     display: flex;
     flex-direction: column;
     flex: 1 1 30%;
@@ -48,11 +50,11 @@
         position: absolute;
         left: 0;
         right: 0;
-        text-shadow: -0.2px 0 black, 0 0.2px black, 0.2px 0 black, 0 -0.2px black;
+        text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
         font-size: 1.1rem;
-        justify-content: center;
-        text-align: center;
-        padding: 0;
+
+
+        padding: 1rem 0 0;
         flex-shrink: 1;
     }
 }
