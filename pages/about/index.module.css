@@ -1,0 +1,4 @@
+.roundChildImage img {
+    border-radius: 9999px;
+    border: 5px solid black;
+}
