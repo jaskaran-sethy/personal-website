@@ -12,19 +12,18 @@
 /* Adjust the width of Sidebar as needed */
 .sideBar {
     display: flex;
+    flex: 0 0 var(--sideBarWidth);
     flex-direction: column;
-    width: var(--sideBarWidth);
+
     background-color: #000;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-y: auto; /* Add this property for vertical scrolling if needed */
-
-
 }
 
 /* Adjust the width of Content as needed */
 .content {
-    flex-grow: 1; /* Content takes up remaining space */
+    flex: 1; /* Content takes up remaining space */
     padding: 20px; /* Add padding as needed */
 }
 

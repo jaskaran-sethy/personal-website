@@ -1,5 +1,5 @@
 
-export default function Button({ text= "Click", icon= "🌍", onButtonClick, buttonClass }) {
+export default function Button({ text= "Click", icon= "", onButtonClick, buttonClass }) {
 
     return (
         <button className={buttonClass} onClick={onButtonClick}>
