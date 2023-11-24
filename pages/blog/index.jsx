@@ -6,7 +6,7 @@ import Button from "../../components/button";
 import Head from "next/head";
 
 export default function BlogPage() {
-    const [blogId, setBlogId] = useState("book-review-mindset");
+    const [blogId, setBlogId] = useState("book-review-:-mindset");
     const [buttonStates, setButtonStates] = useState([true, false, false]);
 
     function handleClick(idx, buttonIndex) {
