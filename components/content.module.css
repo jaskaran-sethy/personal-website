@@ -13,6 +13,7 @@
 
 .blogImage > img {
     border: 2px white solid;
+    border-radius: 9999px;
     display: block;
     margin: auto;
 

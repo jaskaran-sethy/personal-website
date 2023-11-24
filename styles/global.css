@@ -12,6 +12,17 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+.noScrollx {
+    overflow-x: hidden;
+}
+
+.noScrolly {
+    overflow-y: hidden;
+}
+
+a:-webkit-any-link {
+    color: inherit;
+}
 
 
 
