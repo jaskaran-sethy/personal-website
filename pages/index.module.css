@@ -11,7 +11,7 @@
 .homeText {
     color: whitesmoke;
     align-self: center;
-    justify-content: flex-end;
+    justify-content: center;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -21,12 +21,12 @@
 }
 
 .cursorAura {
-    background: rgba(255,255,255, 0.5);
+    background: rgba(255,255,255, 0.7);
     height: 3dvw;
     width: 3dvw;
     border-radius: 999px;
     transform: translate(-50%, -50%);
-    filter: blur(20px);
+    filter: blur(15px);
     pointer-events: none;
 }
 
