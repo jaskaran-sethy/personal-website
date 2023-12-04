@@ -8,7 +8,7 @@ export default function BackgroundImage({   src = "/aiBackground.png",
         alt={alt}
         quality={100}
         fill
-        style={{zIndex: -10, opacity: 0.3, objectFit:"cover"}}
+        style={{zIndex: -10, opacity: 0.7, objectFit:"cover"}}
         />
     )
 }

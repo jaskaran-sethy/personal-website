@@ -30,18 +30,6 @@
     pointer-events: none;
 }
 
-.icons {
-    --relativeChangeX: 0;
-    --relativeChangeY: 0;
-    opacity: 0;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: calc(50% - 16px);
-    left: calc(50% - 16px);
-    animation: 5s ease-out explosion 1s forwards;
-}
-
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
     .homeContainer {
