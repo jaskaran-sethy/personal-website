@@ -1,9 +1,13 @@
 import Layout, { Metadata, NavBar, Card, Footer } from '../../components/layout';
+import { animated, useSpring } from '@react-spring/web';
 import style from './index.module.css';
 import Head from "next/head";
 import Image from "next/image";
+import {useState} from "react";
 
 export default function HomePage() {
+
+
     return (<Layout>
             <Head>
                 <Metadata />
@@ -11,8 +15,8 @@ export default function HomePage() {
             <NavBar />
             <Card>
                 <div style={{textAlign: "center"}}>
-                    <div className={style.roundChildImage} >
-                        <Image src="/suit_me.png" alt="Jaskaran Sethy in a suit" width={144} height={144} />
+                    <div className={style.roundChildImage}>
+                        <Image src="/suit_me.png" alt="Jaskaran Sethy in a suit" width={144} height={144} style={{margin: "auto"}}/>
                     </div>
                     <div style={{fontSize: "1.1rem", padding: "2rem"}}>
                         <p>

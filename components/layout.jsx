@@ -6,15 +6,17 @@ import Footer from './footer'
 import Content from './content'
 import Card from "./card";
 import Sidebar from "./sidebar";
+import BackgroundImage from "./backgroundImage";
 
 
 export default function Layout({ children }) {
-    return <><div className={styles.container}>{children}</div></>;
+    return <div className={styles.container}>{children}</div>;
 }
 
 export {
     Metadata,
     NavBar,
+    BackgroundImage,
     Header,
     Footer,
     Content,

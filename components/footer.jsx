@@ -8,9 +8,9 @@ export default function Footer() {
                 © 2023 Jaskaran Sethy
             </div>
             <div className={style.icons}>
-                <IconLink src="/githubIcon.svg" link="https://www.github.com/jaskaran-sethy/" />
-                <IconLink src="/linkedInIcon.png" link="https://www.linkedin.com/in/jaskaran-sethy/" width={28} height={28} />
-                <IconLink src="/instagramIcon.png" link="https://www.instagram.com/sethyrical" width={27}/>
+                <IconLink src="/logos/githubIcon.svg" link="https://www.github.com/jaskaran-sethy/" />
+                <IconLink src="/logos/linkedInIcon.png" link="https://www.linkedin.com/in/jaskaran-sethy/" width={28} height={28} />
+                <IconLink src="/logos/instagramIcon.png" link="https://www.instagram.com/sethyrical" width={27}/>
             </div>
         </div>
     );
