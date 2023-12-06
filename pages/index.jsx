@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Layout, { Metadata, NavBar, Footer, BackgroundImage, DownArrow } from '../components/layout';
+import Layout, { Metadata, NavBar, Footer, BackgroundImage, DownArrow, TextSpill } from '../components/layout';
 import style from './index.module.css';
 import useSWR from 'swr';
 import {useEffect, useRef, useState} from "react";
 import {useSpring, animated} from "@react-spring/web";
+
 
 export default function HomePage() {
     const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
@@ -25,7 +26,7 @@ export default function HomePage() {
                 <Section1>
                 </Section1>
                 <div className={style.downArrowContainer}>
-                    <p style={{color: "white", textAlign: "center"}}>About Me!</p>
+                    <p style={{color: "white", textAlign: "center"}}><TextSpill text="About"/><TextSpill text="Me!"/></p>
                     <DownArrow/>
                 </div>
                 <div className="separator" style={{position: "relative", bottom: 0}}></div>
@@ -37,6 +38,12 @@ export default function HomePage() {
     );
 }
 
+const introText = "Hey! I'm Jaskaran!";
+const jobText1 = "ML";
+const jobText2 = "Engineering";
+const jobText3 = "Software";
+const jobText4 = "Development";
+
 function Section1() {
     const fadeInProps = useSpring({
         from: { opacity: 0 },
@@ -47,21 +54,29 @@ function Section1() {
             from: { scale: 1 },
             to: { scale: 2 },
         })
+
+
     return (
         <section id="section1" className={style.section1}>
             <div style={springProps} className={style.section1Text}>
                 <animated.div style={springProps}>
-                    Hey! I'm Jaskaran!
+                    <TextSpill text={introText}></TextSpill>
                 </animated.div>
                 <br />
                 <div className={style.jobText}>
-                    <animated.div style={{borderRight: "1px solid white", ...fadeInProps}}>ML<br/>Engineering</animated.div>
-                    <animated.div style={{borderLeft: "1px solid white", ...fadeInProps}}>Software<br/>Development</animated.div>
+                    <animated.div style={{borderRight: "1px solid white", ...fadeInProps}}><TextSpill text={jobText1} /><TextSpill text={jobText2}/></animated.div>
+                    <animated.div style={{borderLeft: "1px solid white", ...fadeInProps}}><TextSpill text={jobText3}/><TextSpill text={jobText4}/></animated.div>
                 </div>
             </div>
+            <TextSpill/>
         </section>
     );
 }
+
+const aboutMePara1 = "I've been working as a Data Scientist at Sprinklr since July 2022. I love working with AI, especially LLMs and NLP. I graduated with the Department Gold Medal from IIT Roorkee in 2022, majoring in Biotechnology (B. Tech.). Working with technology is a dream come true, and I've had the opportunity to gain experience in both FrontEnd and BackEnd development. I'm also working on building my foundations in Computer Science.\n"
+const aboutMePara2 = "Apart from that, I become deeply interested in almost everything under the sun. If something piques my interest, I tend to become obsessed with it and conduct extensive research. I have a strong passion for Fitness and Gaming, and I like to engage in Content Creation, Reading, Music, and occasional Partying!! Additionally, my interests tend to change frequently, so you'll likely find a variety of topics covered in my blog."
+const aboutMePara3 = "I hope you enjoy visiting my site! If you'd like to get in touch, you can find my LinkedIn and Instagram links in the footer."
+
 
 function Section2() {
     return (
@@ -79,14 +94,13 @@ function Section2() {
                 </div>
 
                 <div className={style.aboutText}>
-                    I've been working as a Data Scientist at Sprinklr since July 2022. I love working with AI, especially LLMs and NLP. I graduated with the Department Gold Medal from IIT Roorkee in 2022, majoring in Biotechnology (B. Tech.). Working with technology is a dream come true, and I've had the opportunity to gain experience in both FrontEnd and BackEnd development. I'm also working on building my foundations in Computer Science.
+                    {aboutMePara1}
                     <br/><br/>
-                    Apart from that, I become deeply interested in almost everything under the sun. If something piques my interest, I tend to become obsessed with it and conduct extensive research. I have a strong passion for Fitness and Gaming, and I like to engage in Content Creation, Reading, Music, and occasional Partying!! Additionally, my interests tend to change frequently, so you'll likely find a variety of topics covered in my blog.
+                    {aboutMePara2}
                     <br/><br/>
-                    I hope you enjoy visiting my site! If you'd like to get in touch, you can find my LinkedIn and Instagram links in the footer.
+                    {aboutMePara3}
                 </div>
             </div>
         </section>
     )
 }
-

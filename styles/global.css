@@ -55,3 +55,7 @@ body::-webkit-scrollbar {
 a:-webkit-any-link {
     color: inherit;
 }
+
+.inlineBlock {
+    display: inline;
+}

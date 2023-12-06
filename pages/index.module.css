@@ -74,7 +74,7 @@
     max-height: 80%;
     height: 80%;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     padding-bottom: var(--footer-height);
 }
 
@@ -83,16 +83,17 @@
     overflow: hidden;
     color: ghostwhite;
     padding-left: 3vw;
+    flex-basis: 50%;
 
 }
 
 .aboutImage {
-    flex-basis: 100%;
+    flex-basis: 50%;
     border-radius: 5px;
     padding-bottom: var(--footer-height);
-
     display: inline-block;
     overflow: hidden;
+    clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 00% 100%);
 }
 
 .aboutImage > img {
@@ -101,6 +102,7 @@
     border-radius: 10px;
     transform: scale(2.5);
     margin: auto;
+    transition: transform 200ms;
 
 }
 
@@ -123,5 +125,9 @@
     .aboutContent {
         flex-direction: column;
         padding-bottom: var(--footer-height);
+    }
+
+    .aboutImage {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 95%);
     }
 }

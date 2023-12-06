@@ -8,6 +8,7 @@ import Card from "./card";
 import Sidebar from "./sidebar";
 import BackgroundImage from "./backgroundImage";
 import DownArrow from "./downArrow";
+import TextSpill from "./textSpill";
 
 
 export default function Layout({ children }) {
@@ -23,5 +24,6 @@ export {
     Content,
     Card,
     Sidebar,
-    DownArrow
+    DownArrow,
+    TextSpill
 }
