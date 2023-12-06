@@ -25,8 +25,8 @@ export default function HomePage() {
                 <BackgroundImage />
                 <Section1>
                 </Section1>
-                <div className={style.downArrowContainer}>
-                    <p style={{color: "white", textAlign: "center"}}><TextSpill text="About"/><TextSpill text="Me!"/></p>
+                <div className={style.downArrowContainer} style={{color: "white", textAlign: "center"}}>
+                    <TextSpill text="About"></TextSpill><TextSpill text="Me!"></TextSpill>
                     <DownArrow/>
                 </div>
                 <div className="separator" style={{position: "relative", bottom: 0}}></div>
@@ -85,8 +85,8 @@ function Section2() {
             <div className={style.aboutContent}>
                 <div className={style.aboutImage}>
                     <Image src="/mountainMe.jpg" alt="Jaskaran on a snowy mountain, in trekking gear"
-                           width={0}
-                           height={0}
+                           width={10}
+                           height={10}
                            sizes="100vw"
                            style={{ width: '100%', height: 'auto' }}
 
