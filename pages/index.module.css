@@ -1,14 +1,21 @@
-.homeContainer {
+.section1 {
     display: flex;
     width: 100dvw;
-    height: 100dvh;
+    height: 90dvh;
+    max-height: 100dvh;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-
 }
 
-.homeText {
+.section2 {
+    position: relative;
+    width: 100dvw;
+    max-height: 100dvh;
+    padding-bottom: var(--footer-height);
+}
+
+.section1Text {
     color: whitesmoke;
     align-self: center;
     justify-content: center;
@@ -16,6 +23,7 @@
     display: flex;
     flex-direction: column;
     font-size: 2rem;
+    font-weight: 200;
     border-radius: 9999px;
 }
 
@@ -29,6 +37,77 @@
     pointer-events: none;
 }
 
+.jobText {
+
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    justify-content: center;
+}
+
+.jobText > * {
+    padding: 1rem;
+}
+
+.downArrowContainer {
+    position: absolute;
+    width: max(6vw,6vh);
+    bottom: var(--footer-height);
+    left: 5vw;
+}
+
+.downArrowContainer p {
+    width: 8vw;
+}
+
+.section2 > h2 {
+    font-weight: 200;
+    color: ghostwhite;
+    text-align: center;
+    font-size: 4rem;
+    padding: 4rem;
+}
+
+.aboutContent {
+    display: flex;
+    max-height: 80%;
+    height: 80%;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: var(--footer-height);
+}
+
+.aboutText {
+    height: 80%;
+    overflow: hidden;
+    color: ghostwhite;
+    padding-left: 3vw;
+
+}
+
+.aboutImage {
+    flex-basis: 100%;
+    border-radius: 5px;
+    padding-bottom: var(--footer-height);
+
+    display: inline-block;
+    overflow: hidden;
+}
+
+.aboutImage > img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transform: scale(2.5);
+    margin: auto;
+
+}
+
+.aboutImage > img:hover {
+    transform: scale(3.5);
+}
+
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
     .homeContainer {
@@ -39,5 +118,10 @@
         flex: 1 1 50%;
         text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
         font-size: 2rem;
+    }
+
+    .aboutContent {
+        flex-direction: column;
+        padding-bottom: var(--footer-height);
     }
 }

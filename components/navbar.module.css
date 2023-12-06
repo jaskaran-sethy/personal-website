@@ -17,5 +17,15 @@
 }
 
 :not(#wtf) .activeLink {
-    font-size: 1.3rem;
+    background:
+            linear-gradient(
+                    to right,
+                    rgba(0, 100, 200, 1),
+                    rgba(255, 0, 180, 1),
+                    rgba(240, 240, 240, 1)
+            );
+    background-size: 100% 3px, 0 3px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 100ms;
 }
