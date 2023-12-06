@@ -25,7 +25,7 @@ export default function HomePage() {
 
 
     return (
-        <div onMouseMove={(event) => {handleMouseMove(event)}}>
+        <div className={style.wrapper} onMouseMove={(event) => {handleMouseMove(event)}}>
             <div className={style.cursorAura} style={{position: "fixed", top: `${mousePosition.y}px`, left: `${mousePosition.x}px`}}></div>
             <Layout style={{position: "relative"}} className="noScrollx noScrolly">
                 <Head>
@@ -61,8 +61,8 @@ function Section1() {
     })
     const springProps = useSpring(
         {
-            from: { scale: 1 },
-            to: { scale: 2 },
+            from: { fontSize: "1rem" },
+            to: { fontSize: "2rem" },
         })
 
 
@@ -101,12 +101,7 @@ function Section2() {
             </div>
             <div className={style.aboutContent}>
                 <div className={style.aboutImage}>
-                    <Image src="/mountainMe.jpg" alt="Jaskaran on a snowy mountain, in trekking gear"
-                           width={10}
-                           height={10}
-                           sizes="100vw"
-                           style={{ width: '100%', height: 'auto' }}
-
+                    <img src="/mountainMe.jpg" alt="Jaskaran on a snowy mountain, in trekking gear"
                     />
                 </div>
 
