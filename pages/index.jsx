@@ -61,8 +61,8 @@ function Section1() {
     })
     const springProps = useSpring(
         {
-            from: { fontSize: "1rem" },
-            to: { fontSize: "2rem" },
+            from: { fontSize: "1em" },
+            to: { fontSize: "1.3em" },
         })
 
 

@@ -142,3 +142,9 @@
         font-size: 1rem;
     }
 }
+
+@media (min-width: 1300px) {
+    .section1Text {
+        font-size: 2rem;
+    }
+}
