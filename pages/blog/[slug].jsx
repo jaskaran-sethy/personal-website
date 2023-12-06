@@ -2,7 +2,7 @@ import { NavBar } from '../../components/layout';
 import style from "./index.module.css";
 import React from "react";
 import { useRouter } from 'next/router'; // Import useRouter
-import { getBlogPostBySlug } from './blogs'; // Import your function to fetch blog posts
+import getBlogPostBySlug from './blogs'; // Import your function to fetch blog posts
 
 export default function BlogPost() {
     const router = useRouter();
