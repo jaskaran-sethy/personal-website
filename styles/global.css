@@ -1,5 +1,6 @@
 :root {
     --footer-height: 7vh;
+    --background-color: #111111;
 }
 
 *, *::before, *::after {
@@ -35,7 +36,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background-color: var(--background-color);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }

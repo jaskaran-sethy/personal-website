@@ -1,7 +1,8 @@
 .header {
-    background-image: radial-gradient(ellipse, #0f0a23, #000000);
-    padding: 50px;
+    background-image: linear-gradient(var(--background-color));
+    padding: 2em;
     text-align: center;
-    font-size: 24px;
-    color: white;
+    font-size: 2rem;
+    font-weight: 100;
+    color: ghostwhite;
 }

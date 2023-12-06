@@ -61,7 +61,7 @@
     width: 8vw;
 }
 
-.section2 > h2 {
+.section2 h2 {
     font-weight: 200;
     color: ghostwhite;
     text-align: center;
