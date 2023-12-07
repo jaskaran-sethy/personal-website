@@ -4,12 +4,20 @@
     --card-background-color: rgba(25, 25, 25, 0.5);
 }
 
-.blogPage h2 {
+.blogPage h1 {
     color: ghostwhite;
     text-align: center;
     font-weight: 200;
     font-size: 5rem;
     padding-bottom: 3rem;
+}
+
+.blogPage h2 {
+    color: ghostwhite;
+    text-align: center;
+    font-weight: 200;
+    font-size: 3rem;
+    padding: 3rem;
 }
 
 .blogGrid {
@@ -60,7 +68,46 @@
 }
 
 .blogContent {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    column-gap: 10vw;
+    position: relative;
+    padding: 1rem;
+    background-color: #dddddd;
+    color: #222222;
+    max-width: 70vw;
+    margin: auto;
+    border-radius: 10px;
+    margin-bottom: 5vh;
+}
+
+.blogContent * {
+    margin: 2rem;
+}
+
+.blogContent img {
+    max-height: 100vh;
+    margin: auto;
+    border: 5px solid #222222;
+    border-radius: 15px;
+}
+
+.links a {
+    text-decoration: none;
+}
+
+.marginLeft0 {
+    margin-left: 0;
+}
+@media(max-width: 768px) {
+    .blogContent * {
+        font-size: 0.8em;
+        margin: 0;
+    }
+
+    .marginLeft0 {
+        margin-left: 0;
+    }
+
+    .blogPage h2 {
+        font-size: 1.3rem;
+    }
+
 }

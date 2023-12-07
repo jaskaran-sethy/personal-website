@@ -8,7 +8,7 @@ export default function BlogPage() {
     return (
         <div className={style.blogPage}>
             <NavBar/>
-            <h2>Jaskaran's Blog</h2>
+            <h1>Jaskaran's Blog</h1>
             <BlogGrid/>
         </div>
     )
