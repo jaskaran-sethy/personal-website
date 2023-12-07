@@ -50,9 +50,9 @@ export default function HomePage() {
 
 const introText = "Hey! I'm Jaskaran!";
 const jobText1 = "ML";
-const jobText2 = "Engineering";
+const jobText2 = "Engineer";
 const jobText3 = "Software";
-const jobText4 = "Development";
+const jobText4 = "Developer";
 
 function Section1() {
     const fadeInProps = useSpring({
