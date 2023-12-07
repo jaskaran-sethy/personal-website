@@ -1,41 +1,113 @@
-.mainWrapper {
-    display: flex;
-    position: static;
-    --sideBarWidth: 20%;
-    background-color: white;
-    color: black;
-    height: 100%;
-    margin-top: 5vh;
-
+.blogPage {
+    position: relative;
+    color: rgba(220,220,220);
+    --card-background-color: rgba(25, 25, 25, 0.5);
 }
 
-/* Adjust the width of Sidebar as needed */
-.sideBar {
-    display: flex;
-    flex: 0 0 var(--sideBarWidth);
-    flex-direction: column;
-
-    background-color: #000;
-    align-items: stretch;
-    justify-content: flex-start;
-    overflow-y: auto; /* Add this property for vertical scrolling if needed */
+.blogPage h1 {
+    color: ghostwhite;
+    text-align: center;
+    font-weight: 200;
+    font-size: 5rem;
+    padding-bottom: 3rem;
 }
 
-/* Adjust the width of Content as needed */
-.content {
-    flex: 1; /* Content takes up remaining space */
-    padding: 20px; /* Add padding as needed */
+.blogPage h2 {
+    color: ghostwhite;
+    text-align: center;
+    font-weight: 200;
+    font-size: 3rem;
+    padding: 3rem;
+}
+
+.blogGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    column-gap: 2vw;
 }
 
 .blogCard {
-    /*border: 2px solid black;*/
-    border-radius: 1.2em;
-    color: black;
-    padding: 1em;
-    min-height: 40%;
+    text-decoration: none;
+    position: relative;
+    height: 40vh;
+    border: 2px solid ghostwhite;
+    border-radius: 10px;
+    margin: 1vw;
+    display: flex;
+    justify-content: space-evenly;
 
+    font-size: 1.5em;
+    background: var(--card-background-color);
+    opacity: 0.5;
 }
 
-.light {
-    background-color: white;
+.blogCard:hover {
+    opacity: 1;
+}
+
+.blogImage {
+    flex: auto;
+}
+
+.blogImage img {
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+}
+
+.blogTitle {
+    align-self: center;
+    flex: 1;
+    flex-basis: 20%;
+}
+
+.blogText {
+    margin: 1em;
+    padding: 1em;
+    flex-basis: 20%;
+}
+
+.blogContent {
+    position: relative;
+    padding: 1rem;
+    background-color: #dddddd;
+    color: #222222;
+    max-width: 70vw;
+    margin: auto;
+    border-radius: 10px;
+    margin-bottom: 5vh;
+}
+
+.blogContent * {
+    margin: 2rem;
+}
+
+.blogContent img {
+    max-height: 100vh;
+    margin: auto;
+    border: 5px solid #222222;
+    border-radius: 15px;
+}
+
+.links a {
+    text-decoration: none;
+}
+
+.marginLeft0 {
+    margin-left: 0;
+}
+@media(max-width: 768px) {
+    .blogContent * {
+        font-size: 0.8em;
+        margin: 0;
+    }
+
+    .marginLeft0 {
+        margin-left: 0;
+    }
+
+    .blogPage h2 {
+        font-size: 1.3rem;
+    }
+
 }

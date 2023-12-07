@@ -1,0 +1,16 @@
+.text-container {
+    display: inline-block;
+    --translateX: 0%;
+    --translateY: 0%;
+    --rotate: 0deg;
+}
+
+.letter {
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+}
+
+.hovered {
+    transform: translate(var(--translateX), var(--translateY)) rotate(var(--rotate));
+    transition: transform 300ms;
+}
