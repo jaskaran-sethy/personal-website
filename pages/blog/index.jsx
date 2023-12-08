@@ -1,6 +1,5 @@
 import  { NavBar } from '../../components/layout'
 import style from "./index.module.css";
-import Image from "next/image";
 import Link from "next/link";
 import blogData from '../../lib/content/blog.json';
 
@@ -18,13 +17,12 @@ function BlogGrid() {
     return (
         <div className={style.blogGrid}>
             {Object.keys(blogData).map((slug) => (
-                <Link key={slug} href={`/blog/${slug}`}>
+                <Link key={slug} href={`/blog/${slug}`} style={{textDecoration: "none"}}>
 
                         <BlogCard
                             imgSrc={blogData[slug].image}
                             imgAlt={blogData[slug].title}
                             title={blogData[slug].title}
-                            text={blogData[slug].description}
                         />
                 </Link>
             ))}
@@ -32,13 +30,20 @@ function BlogGrid() {
     )
 }
 
-function BlogCard({imgSrc, imgAlt, title, description}) {
+function BlogCard({imgSrc, imgAlt, title}) {
     return (
         <section className={style.blogCard}>
-            <div className={style.blogImage}>
-                <Image src={imgSrc} alt={imgAlt} width={200} height={210}/>
+            <div className={style.blogImageWrapper}>
+                <img src={imgSrc} alt={imgAlt} className={style.backdropImage}/>
+                <div className={style.blogImage}>
+                    <img src={imgSrc} alt={imgAlt} />
+                </div>
             </div>
-            <div className={style.blogTitle}>{title}</div>
+            <div className={style.blogTitle}>
+                <div>
+                    {title}
+                </div>
+            </div>
 
         </section>
     )

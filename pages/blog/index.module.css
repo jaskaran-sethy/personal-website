@@ -34,8 +34,8 @@
     border-radius: 10px;
     margin: 1vw;
     display: flex;
-    justify-content: space-evenly;
-
+    justify-content: center;
+    overflow: hidden;
     font-size: 1.5em;
     background: var(--card-background-color);
     opacity: 0.5;
@@ -45,20 +45,31 @@
     opacity: 1;
 }
 
-.blogImage {
-    flex: auto;
+.blogImageWrapper {
+    height: 100%;
+    flex: 1 1 50%;
+    position: relative;
 }
 
-.blogImage img {
-    width: auto;
+.blogImage {
+    flex: auto;
+    height: 100%;
+
+
+}
+
+.blogImage > img {
+    object-fit: contain;
     height: 100%;
     max-height: 100%;
+    margin: auto;
 }
 
 .blogTitle {
     align-self: center;
-    flex: 1;
-    flex-basis: 20%;
+    flex: 1 1 50%;
+    font-size: 1.3rem;
+    text-align: center;
 }
 
 .blogText {
@@ -96,6 +107,20 @@
 .marginLeft0 {
     margin-left: 0;
 }
+
+.backdropImage {
+    filter: blur(10px);
+
+    object-fit: fill;
+    min-height: 100%;
+    position: absolute;
+    z-index: -10;
+    margin: auto;
+
+
+}
+
+
 @media(max-width: 768px) {
     .blogContent * {
         font-size: 0.8em;
@@ -109,5 +134,12 @@
     .blogPage h2 {
         font-size: 1.3rem;
     }
+
+
+    .blogImageWrapper {
+        flex-basis: 50%;
+    }
+
+
 
 }
