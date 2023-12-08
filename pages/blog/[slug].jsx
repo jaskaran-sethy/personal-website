@@ -29,7 +29,7 @@ export default function BlogPost() {
     })
 
     return (
-        <div className={style.blogPage} style={{background: "#111122"}}>
+        <div className={style.blogPage}>
             <ReturnBar />
             <div className={style.marginLeft0}>
                 <h2>{blogPost.title}</h2>
