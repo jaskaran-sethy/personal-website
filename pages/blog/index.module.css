@@ -108,14 +108,11 @@
 
 .backdropImage {
     filter: blur(10px);
-
     object-fit: fill;
     min-height: 100%;
     position: absolute;
     z-index: -10;
     margin: auto;
-
-
 }
 
 
