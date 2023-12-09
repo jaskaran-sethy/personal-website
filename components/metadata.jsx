@@ -1,9 +1,11 @@
-export default function Metadata() {
+import Head from 'next/head';
+
+export default function Metadata({title}) {
     return (
-        <>
+        <Head>
             <meta charSet="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <title>Jaskaran's Blog</title>
+            <title>{title}</title>
             <meta name="author" content="Jaskaran Sethy"/>
             <meta name="description"
                   content="Based in India, Jaskaran is an ML engineer working to be a full stack engineer. Graduated from IIT Roorkee in 2022, Jaskaran has an active interest in the latest developments in the tech world, especially including AI and LLMs."/>
@@ -32,5 +34,5 @@ export default function Metadata() {
             <meta name="twitter:creator" content="@JaskaranSethy"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
             <link rel="stylesheet" href="../styles/global.css"/>
-        </>)
+        </Head>)
 }

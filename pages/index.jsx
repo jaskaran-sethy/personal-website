@@ -1,5 +1,3 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import Layout, { Metadata, NavBar, Footer, BackgroundImage, DownArrow, TextSpill } from '../components/layout';
 import style from './index.module.css';
 import useSWR from 'swr';
@@ -28,9 +26,7 @@ export default function HomePage() {
         <div className={style.wrapper} onMouseMove={(event) => {handleMouseMove(event)}}>
             <div className={style.cursorAura} style={{position: "fixed", top: `${mousePosition.y}px`, left: `${mousePosition.x}px`}}></div>
             <Layout style={{position: "relative"}} className="noScrollx noScrolly">
-                <Head>
-                    <Metadata />
-                </Head>
+                <Metadata title="Jaskaran's Website"/>
                 <NavBar />
                 <BackgroundImage />
                 <Section1>
@@ -90,7 +86,7 @@ const aboutMePara3 = "I hope you enjoy visiting my site! If you'd like to get in
 
 function Section2() {
     return (
-        <section id="section2" className={style.section2}>
+        <section id="About" className={style.section2}>
             <div style={{display: "grid", gridTemplateColumns: "1fr 1fr 6fr 1fr 1fr"}}>
                 <div></div>
                 <div style={{width: "5vw", paddingTop: "5vh"}}><Link href="/"><UpArrow /></Link></div>

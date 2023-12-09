@@ -1,4 +1,4 @@
-import { NavBar } from '../../components/layout';
+import {Metadata} from '../../components/layout';
 import style from "./index.module.css";
 import React from "react";
 import { useRouter } from 'next/router'; // Import useRouter
@@ -17,7 +17,7 @@ export default function BlogPost() {
 
     const blogPostHTML = blogPost['content'].map((element) => {
         const type = element["type"];
-        if (type == "heading") {
+        if (type === "heading") {
             return <h3>{element["text"]}</h3>;
         }
         if (type === "paragraph") {
@@ -30,6 +30,7 @@ export default function BlogPost() {
 
     return (
         <div className={style.blogPage}>
+            <Metadata title={blogPost.title}/>
             <ReturnBar />
             <div className={style.marginLeft0}>
                 <h2>{blogPost.title}</h2>
