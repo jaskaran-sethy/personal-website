@@ -10,6 +10,9 @@ export default function BlogPage() {
             <NavBar/>
             <h1>Jaskaran's Blog</h1>
             <BlogGrid/>
+            <div style={{display: "flex", justifyContent: "center", position: "relative", top: "5rem"}}>
+                <Link href="/games" style={{textDecoration: "none", textAlign: "center"}}>Games</Link>
+            </div>
         </div>
     )
 }
