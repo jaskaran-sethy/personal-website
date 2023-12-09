@@ -50,8 +50,8 @@ function ReturnBar() {
                     <svg viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="gradient">
-                                <stop offset="43%" stop-color="#0064c8" />
-                                <stop offset="100%" stop-color="#ff00b4" />
+                                <stop offset="43%" stopColor="#0064c8" />
+                                <stop offset="100%" stopColor="#ff00b4" />
 
                             </linearGradient>
                         </defs>
