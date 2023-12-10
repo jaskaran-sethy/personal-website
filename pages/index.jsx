@@ -65,7 +65,7 @@ function Section1() {
     return (
         <section id="section1" className={style.section1}>
             <h1 style={{fontSize: 0}}>Hey! I'm Jaskaran; ML Engineer | Software Developer</h1>
-            <div style={springProps} className={style.section1Text} aria-label={introText}>
+            <div className={style.section1Text} aria-label={introText}>
                 <animated.div style={springProps}>
                     <TextSpill text={introText}></TextSpill>
                 </animated.div>
