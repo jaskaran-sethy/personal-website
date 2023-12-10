@@ -23,7 +23,7 @@ export default function HomePage() {
 
 
     return (
-        <div className={style.wrapper} onMouseMove={(event) => {handleMouseMove(event)}}>
+        <main className={style.wrapper} onMouseMove={(event) => {handleMouseMove(event)}}>
             <div className={style.cursorAura} style={{position: "fixed", top: `${mousePosition.y}px`, left: `${mousePosition.x}px`}}></div>
             <Layout style={{position: "relative"}} className="noScrollx noScrolly">
                 <Metadata title="Jaskaran's Website"/>
@@ -40,7 +40,7 @@ export default function HomePage() {
                 </Section2>
                 <Footer/>
             </Layout>
-        </div>
+        </main>
     );
 }
 
@@ -64,12 +64,13 @@ function Section1() {
 
     return (
         <section id="section1" className={style.section1}>
-            <div style={springProps} className={style.section1Text}>
+            <h1 style={{fontSize: 0}}>Hey! I'm Jaskaran; ML Engineer | Software Developer</h1>
+            <div style={springProps} className={style.section1Text} aria-label={introText}>
                 <animated.div style={springProps}>
                     <TextSpill text={introText}></TextSpill>
                 </animated.div>
                 <br />
-                <div className={style.jobText}>
+                <div className={style.jobText} aria-label={`${jobText1} ${jobText2} | ${jobText3} ${jobText4}`}>
                     <animated.div style={{borderRight: "1px solid white", ...fadeInProps}}><TextSpill text={jobText1} /><TextSpill text={jobText2}/></animated.div>
                     <animated.div style={{borderLeft: "1px solid white", ...fadeInProps}}><TextSpill text={jobText3}/><TextSpill text={jobText4}/></animated.div>
                 </div>

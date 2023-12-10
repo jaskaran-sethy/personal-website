@@ -3,7 +3,7 @@ import IconLink from "./iconLink";
 
 export default function Footer() {
     return (
-        <div className={style.footer}>
+        <footer className={style.footer}>
             <div className={style.copyright}>
                 © 2023 Jaskaran Sethy
             </div>
@@ -12,6 +12,6 @@ export default function Footer() {
                 <IconLink src="/logos/linkedInIcon.png" link="https://www.linkedin.com/in/jaskaran-sethy/" width={28} height={28} />
                 <IconLink src="/logos/instagramIcon.png" link="https://www.instagram.com/sethyrical" width={27}/>
             </div>
-        </div>
+        </footer>
     );
 }

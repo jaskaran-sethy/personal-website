@@ -5,7 +5,7 @@ import blogData from '../../lib/content/blog.json';
 
 export default function BlogPage() {
     return (
-        <div className={style.blogPage}>
+        <main className={style.blogPage}>
             <Metadata title="Jaskaran's Blog"/>
             <NavBar/>
             <h1>Jaskaran's Blog</h1>
@@ -13,7 +13,7 @@ export default function BlogPage() {
             <div style={{display: "flex", justifyContent: "center", position: "relative", top: "5rem"}}>
                 <Link href="/games" style={{textDecoration: "none", textAlign: "center"}}>Games</Link>
             </div>
-        </div>
+        </main>
     )
 }
 
