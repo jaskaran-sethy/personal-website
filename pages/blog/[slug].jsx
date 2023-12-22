@@ -18,13 +18,13 @@ export default function BlogPost() {
     const blogPostHTML = blogPost['content'].map((element) => {
         const type = element["type"];
         if (type === "heading") {
-            return <h3>{element["text"]}</h3>;
+            return <h3>{element["text"]}<br /></h3>;
         }
         if (type === "paragraph") {
-            return <p>{element["text"]}</p>;
+            return <p>{element["text"]}<br /></p>;
         }
         if (type === "image") {
-            return <img src={element["src"]} alt={element["alt"]}/>;
+            return <img src={element["src"]} alt={element["alt"]} />;
         }
     })
 

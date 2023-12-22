@@ -84,7 +84,11 @@
     background-color: #dddddd;
     color: #222222;
     border-radius: 10px;
+    margin: auto;
     margin-bottom: 5vh;
+
+    width: clamp(50vw, 75ch, 100vw);
+    overflow: auto;
 }
 
 .blogContent * {
@@ -92,10 +96,11 @@
 }
 
 .blogContent img {
-    max-height: 100vh;
+    height: 50vh;
     margin: auto;
-    border: 5px solid #222222;
+    border: 0.3ch solid #222222;
     border-radius: 15px;
+
 }
 
 .links a {
