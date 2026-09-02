@@ -4,7 +4,7 @@ Personal website frontend — built with [Next.js](https://nextjs.org/), featuri
 
 ## Tech Stack
 
-- [Next.js](https://nextjs.org/) 14 (Pages Router)
+- [Next.js](https://nextjs.org/) 15 (Pages Router)
 - [React](https://react.dev/) 18
 - [@react-spring/web](https://www.react-spring.dev/) for animations
 - [SWR](https://swr.vercel.app/) for data fetching
