@@ -1,41 +1,38 @@
 import {Metadata} from '../../components/layout';
 import style from "./index.module.css";
-import React from "react";
-import { useRouter } from 'next/router'; // Import useRouter
-import getBlogPostBySlug from './blogs';
-import Link from "next/link"; // Import your function to fetch blog posts
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import TagBadges from "../../components/tagBadges";
+import {getAllPostSlugs, getPostBySlug} from '../../lib/posts';
 
-export default function BlogPost() {
-    const router = useRouter();
-    const { slug } = router.query;
+export async function getStaticPaths() {
+    return {
+        paths: getAllPostSlugs().map((slug) => ({params: {slug}})),
+        fallback: false,
+    };
+}
 
-    if (!slug) {
-        return <div>Loading...</div>;
-    }
+export async function getStaticProps({params}) {
+    return {
+        props: {
+            post: getPostBySlug(params.slug),
+        },
+    };
+}
 
-    const blogPost = getBlogPostBySlug(slug);
-
-    const blogPostHTML = blogPost['content'].map((element) => {
-        const type = element["type"];
-        if (type === "heading") {
-            return <h3>{element["text"]}<br /></h3>;
-        }
-        if (type === "paragraph") {
-            return <p>{element["text"]}<br /></p>;
-        }
-        if (type === "image") {
-            return <img src={element["src"]} alt={element["alt"]} />;
-        }
-    })
-
+export default function BlogPost({post}) {
     return (
         <div className={style.blogPage}>
-            <Metadata title={blogPost.title}/>
-            <ReturnBar />
+            <Metadata title={post.title} image={post.image} url={`/blog/${post.slug}`}/>
+            <ReturnBar/>
             <div className={style.marginLeft0}>
-                <h2>{blogPost.title}</h2>
+                <h2 className={style.postTitle}>{post.title}</h2>
+                <div className={style.postMeta}>
+                    <time dateTime={post.date}>{post.formattedDate}</time>
+                    <TagBadges tags={post.tags}/>
+                </div>
                 <div className={style.blogContent}>
-                    {blogPostHTML}
+                    <ReactMarkdown>{post.content}</ReactMarkdown>
                 </div>
             </div>
         </div>
