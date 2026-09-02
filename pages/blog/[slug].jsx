@@ -26,7 +26,7 @@ export default function BlogPost({post}) {
             <Metadata title={post.title} image={post.image} url={`/blog/${post.slug}`}/>
             <ReturnBar/>
             <div className={style.marginLeft0}>
-                <h2>{post.title}</h2>
+                <h2 className={style.postTitle}>{post.title}</h2>
                 <div className={style.postMeta}>
                     <time dateTime={post.date}>{post.formattedDate}</time>
                     <TagBadges tags={post.tags}/>

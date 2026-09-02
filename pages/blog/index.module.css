@@ -14,7 +14,7 @@
     padding-bottom: 1.5rem;
 }
 
-.blogPage h2 {
+.postTitle {
     color: ghostwhite;
     text-align: center;
     font-weight: 200;
@@ -74,8 +74,8 @@
     text-decoration: none;
     color: inherit;
     display: block;
-    flex: 1 1 300px;
-    max-width: 340px;
+    flex: 0 1 320px;
+    min-width: 0;
 }
 
 .blogCard {
@@ -128,9 +128,10 @@
 }
 
 .blogTitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: ghostwhite;
+    text-align: left;
     margin: 0;
     line-height: 1.3;
     display: -webkit-box;
@@ -214,8 +215,12 @@
         font-size: 2.8rem;
     }
 
-    .blogPage h2 {
+    .postTitle {
         font-size: 1.6rem;
+    }
+
+    .blogTitle {
+        font-size: 1rem;
     }
 
     .blogContent {
