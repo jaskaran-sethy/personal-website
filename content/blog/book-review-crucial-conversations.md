@@ -2,6 +2,7 @@
 title: "Crucial Conversations Book Review"
 date: "2023-11-30"
 image: "/crucialConversationsBook.jpg"
+tags: ["book-review", "communication", "self-improvement"]
 ---
 
 ![Crucial Conversations Book](/crucialConversationsBook.jpg)

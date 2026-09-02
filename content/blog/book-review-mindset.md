@@ -2,6 +2,7 @@
 title: "Mindset - Book Review"
 date: "2023-11-25"
 image: "/mindsetBook.jpg"
+tags: ["book-review", "growth-mindset", "self-improvement"]
 ---
 
 When I joined Sprinklr, they gave me this book called 'Mindset' in my welcome package. I wasn't quite in the habit of reading at the time, hadn't been for many years. What a shame, honestly. Mindset was the most influential book I read this year. It has completely changed the way I view challenges and opportunities in life. I no longer rely on the crutches of words like 'talent', 'natural skill', 'incompatible', 'luck' to explain my inadequacies and others' adequacies.

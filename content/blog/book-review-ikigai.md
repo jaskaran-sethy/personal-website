@@ -2,6 +2,7 @@
 title: "Ikigai - Book Review"
 date: "2023-11-27"
 image: "/ikigaiBook.jpg"
+tags: ["book-review", "self-improvement", "wellness"]
 ---
 
 Ikigai is a book I picked up simply because of its popularity. Honestly? Not a fan. It delves into the main factors of staying alive longer, doing a case study on the people on an island off Japan who tend to live extremely long lives. The main point of the book is to find your 'purpose of living - ikigai', something that resonates with you, the people around you, does good for everyone and earns you a good livelihood. It also promotes a simpler diet and eat less processed foods and even eat less meat (the last one I disagree with, at least for white meat).

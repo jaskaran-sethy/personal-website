@@ -19,13 +19,24 @@ export async function getStaticProps({params}) {
     };
 }
 
+const DATE_FORMAT = {year: "numeric", month: "long", day: "numeric"};
+
 export default function BlogPost({post}) {
+    const formattedDate = new Date(post.date).toLocaleDateString('en-US', DATE_FORMAT);
     return (
         <div className={style.blogPage}>
             <Metadata title={post.title} image={post.image} url={`/blog/${post.slug}`}/>
             <ReturnBar/>
             <div className={style.marginLeft0}>
                 <h2>{post.title}</h2>
+                <div className={style.postMeta}>
+                    <time dateTime={post.date}>{formattedDate}</time>
+                    <div className={style.blogTags}>
+                        {post.tags.map((tag) => (
+                            <span key={tag} className={style.blogTagBadge}>{tag.replace(/-/g, ' ')}</span>
+                        ))}
+                    </div>
+                </div>
                 <div className={style.blogContent}>
                     <ReactMarkdown>{post.content}</ReactMarkdown>
                 </div>
