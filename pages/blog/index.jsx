@@ -1,15 +1,23 @@
 import {Metadata, NavBar} from '../../components/layout'
 import style from "./index.module.css";
 import Link from "next/link";
-import blogData from '../../lib/content/blog.json';
+import {getAllPostsMeta} from "../../lib/posts";
 
-export default function BlogPage() {
+export async function getStaticProps() {
+    return {
+        props: {
+            posts: getAllPostsMeta(),
+        },
+    };
+}
+
+export default function BlogPage({posts}) {
     return (
         <main className={style.blogPage}>
-            <Metadata title="Jaskaran's Blog"/>
+            <Metadata title="Jaskaran's Blog" url="/blog"/>
             <NavBar/>
             <h1>Jaskaran's Blog</h1>
-            <BlogGrid/>
+            <BlogGrid posts={posts}/>
             <div style={{display: "flex", justifyContent: "center", position: "relative", top: "5rem"}}>
                 <Link href="/games" style={{textDecoration: "none", textAlign: "center"}}>Games</Link>
             </div>
@@ -17,16 +25,15 @@ export default function BlogPage() {
     )
 }
 
-function BlogGrid() {
+function BlogGrid({posts}) {
     return (
         <div className={style.blogGrid}>
-            {Object.keys(blogData).map((slug) => (
-                <Link key={slug} href={`/blog/${slug}`} style={{textDecoration: "none"}}>
-
+            {posts.map((post) => (
+                <Link key={post.slug} href={`/blog/${post.slug}`} style={{textDecoration: "none"}}>
                         <BlogCard
-                            imgSrc={blogData[slug].image}
-                            imgAlt={blogData[slug].title}
-                            title={blogData[slug].title}
+                            imgSrc={post.image}
+                            imgAlt={post.title}
+                            title={post.title}
                         />
                 </Link>
             ))}
