@@ -11,7 +11,7 @@ export default function TextSpill({text=""}) {
     };
 
     const letters = text.split('').map((letter, index) => {
-        if (letter === " ") return <span>&nbsp;</span>;
+        if (letter === " ") return <span key={index}>&nbsp;</span>;
         const translateX = translates[index % 12][0];
         const translateY = translates[index % 12][1];
         const rotate = rotates[index % 12];

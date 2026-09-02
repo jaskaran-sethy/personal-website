@@ -26,7 +26,7 @@ export default function HomePage() {
         <main className={style.wrapper} onMouseMove={(event) => {handleMouseMove(event)}}>
             <div className={style.cursorAura} style={{position: "fixed", top: `${mousePosition.y}px`, left: `${mousePosition.x}px`}}></div>
             <Layout style={{position: "relative"}} className="noScrollx noScrolly">
-                <Metadata title="Jaskaran's Website"/>
+                <Metadata title="Jaskaran's Website" type="website"/>
                 <NavBar />
                 <BackgroundImage />
                 <Section1>

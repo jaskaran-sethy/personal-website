@@ -55,7 +55,7 @@ function TicTacToe() {
         setGameState("         ");
     }
 
-    const Boxes = gameState.split("").map((boxState, index) => <Box fill={boxState} onBoxClick={() => handleBoxClick(index)}/>);
+    const Boxes = gameState.split("").map((boxState, index) => <Box key={index} fill={boxState} onBoxClick={() => handleBoxClick(index)}/>);
     return (
         <>
             <div style={{display: "grid", gridTemplate: "repeat(3, 3rem) / repeat(3, 3rem)", gap: "0.3rem"}}>
