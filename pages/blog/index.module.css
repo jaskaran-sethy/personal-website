@@ -64,8 +64,9 @@
 /* --- Blog grid / cards --- */
 
 .blogGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
 }
 
@@ -73,6 +74,8 @@
     text-decoration: none;
     color: inherit;
     display: block;
+    flex: 1 1 300px;
+    max-width: 340px;
 }
 
 .blogCard {
@@ -130,29 +133,15 @@
     color: ghostwhite;
     margin: 0;
     line-height: 1.3;
-    min-height: calc(1.3rem * 1.3 * 2);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.blogTags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+.blogTagsRow {
     margin-top: auto;
     padding-top: 0.5rem;
-}
-
-.blogTagBadge {
-    text-transform: capitalize;
-    font-size: 0.72rem;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(220,220,220,0.9);
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
 }
 
 /* --- Single post page --- */
@@ -190,6 +179,17 @@
     margin-bottom: 0;
 }
 
+.blogContent h1,
+.blogContent h2,
+.blogContent h3,
+.blogContent h4,
+.blogContent h5,
+.blogContent h6 {
+    color: ghostwhite;
+    line-height: 1.3;
+    margin: 2rem 0 1rem;
+}
+
 .blogContent img {
     max-height: 50vh;
     margin: 2rem auto;
@@ -221,9 +221,5 @@
     .blogContent {
         padding: 1.5rem 1.25rem;
         font-size: 0.95rem;
-    }
-
-    .marginLeft0 {
-        margin-left: 0;
     }
 }

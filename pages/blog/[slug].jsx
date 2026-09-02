@@ -2,6 +2,7 @@ import {Metadata} from '../../components/layout';
 import style from "./index.module.css";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import TagBadges from "../../components/tagBadges";
 import {getAllPostSlugs, getPostBySlug} from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -19,10 +20,7 @@ export async function getStaticProps({params}) {
     };
 }
 
-const DATE_FORMAT = {year: "numeric", month: "long", day: "numeric"};
-
 export default function BlogPost({post}) {
-    const formattedDate = new Date(post.date).toLocaleDateString('en-US', DATE_FORMAT);
     return (
         <div className={style.blogPage}>
             <Metadata title={post.title} image={post.image} url={`/blog/${post.slug}`}/>
@@ -30,12 +28,8 @@ export default function BlogPost({post}) {
             <div className={style.marginLeft0}>
                 <h2>{post.title}</h2>
                 <div className={style.postMeta}>
-                    <time dateTime={post.date}>{formattedDate}</time>
-                    <div className={style.blogTags}>
-                        {post.tags.map((tag) => (
-                            <span key={tag} className={style.blogTagBadge}>{tag.replace(/-/g, ' ')}</span>
-                        ))}
-                    </div>
+                    <time dateTime={post.date}>{post.formattedDate}</time>
+                    <TagBadges tags={post.tags}/>
                 </div>
                 <div className={style.blogContent}>
                     <ReactMarkdown>{post.content}</ReactMarkdown>
