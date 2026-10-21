@@ -3,6 +3,7 @@ title: "Crucial Conversations Book Review"
 date: "2023-11-30"
 image: "/crucialConversationsBook.jpg"
 tags: ["book-review", "communication", "self-improvement"]
+excerpt: "What I learned about staying calm and honest when the stakes are high."
 ---
 
 ![Crucial Conversations Book](/crucialConversationsBook.jpg)

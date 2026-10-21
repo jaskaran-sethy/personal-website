@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const DEFAULT_DESCRIPTION = "Based in India, Jaskaran is an ML engineer working to be a full stack engineer. Graduated from IIT Roorkee in 2022, Jaskaran has an active interest in the latest developments in the tech world, especially including AI and LLMs.";
+const DEFAULT_DESCRIPTION = "Jaskaran Sethy is an ML and full stack engineer at Armor in Bengaluru. IIT Roorkee class of 2022. Writing about AI, books, habits and whatever else is interesting this month.";
 
 export default function Metadata({title, description, image, url, type}) {
     const metaDescription = description || DEFAULT_DESCRIPTION;

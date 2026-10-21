@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer className={style.footer}>
             <div className={style.copyright}>
-                © 2023 Jaskaran Sethy
+                © {new Date().getFullYear()} Jaskaran Sethy
             </div>
             <div className={style.icons}>
                 <IconLink src="/logos/githubIcon.svg" link="https://www.github.com/jaskaran-sethy/" />
