@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560">
+  <rect width="1200" height="560" fill="#141417"/>
+  <line x1="600" y1="60" x2="600" y2="500" stroke="#2A2A31" stroke-width="1"/>
+
+  <g font-family="ui-monospace, 'SFMono-Regular', Consolas, monospace" font-size="15" letter-spacing="2.5" fill="#9A9AA3">
+    <text x="80" y="76">FOLDERS</text>
+    <text x="680" y="76">LINKS</text>
+  </g>
+
+  <!-- Folders: every note lives in exactly one place -->
+  <g stroke="#3A3A43" stroke-width="2" fill="none">
+    <path d="M120 140V390M120 175H198M120 300H198M120 390H198"/>
+    <path d="M222 187V250M222 215H290M222 250H290M222 312V340H290M222 402V430H290"/>
+  </g>
+  <rect x="96" y="116" width="48" height="24" rx="4" fill="#2A2A31"/>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#C9C9D1">
+    <text x="208" y="182">Books</text>
+    <text x="208" y="307">Work</text>
+    <text x="208" y="397">Health</text>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#71717A">
+    <text x="300" y="221">Mindset</text>
+    <text x="300" y="256">Ikigai</text>
+    <text x="300" y="346">Habits</text>
+    <text x="300" y="436">Sleep</text>
+  </g>
+  <!-- The connection the tree can't hold -->
+  <path d="M372 340C462 340 462 430 360 430" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3 6" fill="none"/>
+  <text x="468" y="391" font-family="ui-monospace, Consolas, monospace" font-size="18" fill="#9A9AA3">?</text>
+
+  <!-- Links: the same notes, connected however they relate -->
+  <g stroke="#3A3A43" stroke-width="2">
+    <line x1="760" y1="200" x2="900" y2="150"/>
+    <line x1="900" y1="150" x2="1060" y2="230"/>
+    <line x1="760" y1="200" x2="820" y2="360"/>
+    <line x1="1060" y1="230" x2="1010" y2="420"/>
+  </g>
+  <g stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round">
+    <line x1="820" y1="360" x2="1010" y2="420"/>
+    <line x1="900" y1="150" x2="820" y2="360"/>
+    <line x1="760" y1="200" x2="1010" y2="420"/>
+  </g>
+  <g fill="#0E0E10" stroke="#D4AF37" stroke-width="2.5">
+    <circle cx="760" cy="200" r="9"/><circle cx="900" cy="150" r="9"/><circle cx="1060" cy="230" r="9"/>
+    <circle cx="820" cy="360" r="9"/><circle cx="1010" cy="420" r="9"/>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#C9C9D1">
+    <text x="700" y="180">Mindset</text>
+    <text x="880" y="128">Ikigai</text>
+    <text x="1060" y="208" text-anchor="middle">Work</text>
+    <text x="760" y="392">Habits</text>
+    <text x="1010" y="458" text-anchor="middle">Sleep</text>
+  </g>
+</svg>

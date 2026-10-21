@@ -1,6 +1,7 @@
 ---
 title: "The Modern Over-willingness of Man to Forgive Himself"
 date: "2026-10-20"
+image: "/blog/forgiveness/cover.png"
 tags: ["essay", "accountability", "self-improvement"]
 excerpt: "Self-forgiveness is good advice for the people who need it. Most of us are using it as a licence to skip the reflection."
 ---
@@ -19,6 +20,8 @@ Genuine self-forgiveness is an occurrence that can only happen once you truly ex
 And then, once you have actually gone through this process of exploring the damage, please let yourself be the category 1 person and actually learn to forgive yourself instead of mulling over it forever.
 
 Like all things in life, people tend to act as lunatics riding on the bob of a swinging pendulum instead of stable entities with balanced outlooks and mentalities. In any binary description of populace: Don't be a category 1 or a category 2, be somewhere in the middle.
+
+![A line running from "Category 1: guilt that never lets go" to "Category 2: forgiveness before reflection", with "earned self-forgiveness" marked in gold at its centre.](/blog/forgiveness/spectrum.svg "Somewhere in the middle: reflect, own it, then move on.")
 
 And yet again, my concluding paragraph is one of "don't be like the average person"; but I think that pertains true to any venue of life where you actually want to achieve something. Even quick self-forgiveness is a venue towards psychopathy, something that does really well in achieving extraordinary career success. And yet, perhaps, there is something to being like the average person but not the median person -- if it so happens that humanity tends to divide itself into two camps on any topic, the average person would be one that subscribes to both philosophies partially even if the median person needs to necessarily belong to one or the other. That balance itself might be worth striving for -- if anything but to live an actually fulfilling life.
 

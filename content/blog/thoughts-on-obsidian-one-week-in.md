@@ -1,6 +1,7 @@
 ---
 title: "My Thoughts on Obsidian, 1 Week In"
 date: "2026-10-21"
+image: "/blog/obsidian/cover.png"
 tags: ["obsidian", "tools", "note-taking"]
 excerpt: "A decade of forcing note-taking apps to work, and then a week with one that just does."
 ---
@@ -14,6 +15,8 @@ Obsidian came across as a blip on my radar a couple years ago, but I was too ada
 That night, I thought I would give it a fair shake and watched a 20 minute Youtube tutorial on it; and god damn it became my favourite piece of personal tooling over the past week (Well, excluding Claude Code, but that has a LOT going for it).
 
 The simple idea of representing knowledge as a graph and creating links to things you know has been well explored among wiki-esque pages, but it had always been a second class citizen in note taking apps. Here, tangents and backlinks are first class citizens. You write something, another idea pops in your head: it is seamless to write it down and then go back to what you were doing earlier. Your thoughts don't have to follow strict hierarchical layering; structure will arrive naturally as your knowledge graph compounds.
+
+![A folder tree beside a graph of the same five notes. In the tree, Habits and Sleep sit in different folders with no way to connect them; in the graph, they link directly.](/blog/obsidian/folders-vs-links.svg "Folders give every note one home. Links let a note sit wherever it relates.")
 
 However, Obsidian is for individuals. It is for YOUR personal knowledge graph. It would not work as a collaborative tool without heavily changing the opinions it is built on, so if you're looking for a knowledge-base for your team, I personally don't recommend it. It also doesn't have cloud sync, but this is nothing a small auto-sync script with github and/or google drive can't fix.
 

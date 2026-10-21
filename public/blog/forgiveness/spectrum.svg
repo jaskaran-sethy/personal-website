@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420">
+  <defs>
+    <linearGradient id="track" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A4A54"/>
+      <stop offset="0.5" stop-color="#D4AF37"/>
+      <stop offset="1" stop-color="#4A4A54"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1D98B"/>
+      <stop offset="0.45" stop-color="#D4AF37"/>
+      <stop offset="1" stop-color="#A8842A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="#141417"/>
+
+  <rect x="120" y="206" width="960" height="4" rx="2" fill="url(#track)"/>
+  <g fill="#2A2A31" stroke="#4A4A54" stroke-width="2">
+    <circle cx="120" cy="208" r="14"/>
+    <circle cx="1080" cy="208" r="14"/>
+  </g>
+  <circle cx="600" cy="208" r="20" fill="url(#gold)"/>
+  <circle cx="600" cy="208" r="32" fill="none" stroke="#D4AF37" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <g font-family="ui-monospace, 'SFMono-Regular', Consolas, monospace" font-size="14" letter-spacing="2.5" fill="#9A9AA3">
+    <text x="120" y="268">CATEGORY 1</text>
+    <text x="1080" y="268" text-anchor="end">CATEGORY 2</text>
+    <text x="600" y="130" text-anchor="middle" fill="#D4AF37">THE MIDDLE</text>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#C9C9D1">
+    <text x="120" y="302">Guilt that never lets go</text>
+    <text x="1080" y="302" text-anchor="end">Forgiveness before reflection</text>
+    <text x="600" y="166" text-anchor="middle" font-size="26" fill="#F4F4F5">Earned self-forgiveness</text>
+  </g>
+  <text x="600" y="276" text-anchor="middle" font-family="ui-monospace, Consolas, monospace" font-size="13" letter-spacing="2" fill="#71717A">REFLECT · OWN IT · MOVE ON</text>
+</svg>

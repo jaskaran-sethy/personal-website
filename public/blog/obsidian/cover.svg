@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18181C"/>
+      <stop offset="1" stop-color="#0E0E10"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#D4AF37" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1D98B"/>
+      <stop offset="0.45" stop-color="#D4AF37"/>
+      <stop offset="1" stop-color="#A8842A"/>
+    </linearGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="#2A2A31"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <circle cx="600" cy="315" r="230" fill="url(#glow)"/>
+
+  <!-- Outer links -->
+  <g stroke="#3A3A43" stroke-width="1.5" fill="none">
+    <path d="M430 220L280 150M430 220L250 330M430 220L560 120M780 200L560 120M780 200L900 110M780 200L960 300M720 430L960 300M720 430L880 480M720 430L640 540M470 440L330 500M470 440L250 330M960 300L1050 420M900 110L1080 180M250 330L150 240M330 500L180 450M640 540L760 580M330 500L420 580M880 480L1050 420M560 120L430 220"/>
+  </g>
+  <!-- A tangent that became a backlink -->
+  <path d="M280 150C420 40 820 30 900 110" stroke="#D4AF37" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 7" fill="none"/>
+
+  <!-- Links into the note being written -->
+  <g stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" fill="none">
+    <path d="M600 315L430 220M600 315L780 200M600 315L720 430M600 315L470 440"/>
+  </g>
+
+  <!-- Notes -->
+  <g fill="#4A4A54">
+    <circle cx="280" cy="150" r="6"/><circle cx="250" cy="330" r="7"/><circle cx="330" cy="500" r="6"/>
+    <circle cx="560" cy="120" r="6"/><circle cx="900" cy="110" r="6"/><circle cx="960" cy="300" r="7"/>
+    <circle cx="880" cy="480" r="6"/><circle cx="640" cy="540" r="6"/><circle cx="1050" cy="420" r="5"/>
+    <circle cx="150" cy="240" r="5"/><circle cx="1080" cy="180" r="5"/><circle cx="180" cy="450" r="5"/>
+    <circle cx="760" cy="580" r="4"/><circle cx="420" cy="580" r="4"/>
+  </g>
+  <g fill="#0E0E10" stroke="#D4AF37" stroke-width="2.5">
+    <circle cx="430" cy="220" r="10"/><circle cx="780" cy="200" r="9"/>
+    <circle cx="720" cy="430" r="10"/><circle cx="470" cy="440" r="8"/>
+  </g>
+  <circle cx="600" cy="315" r="20" fill="url(#gold)"/>
+  <circle cx="600" cy="315" r="32" fill="none" stroke="#D4AF37" stroke-opacity="0.35" stroke-width="1.5"/>
+</svg>
