@@ -94,6 +94,27 @@
     color: var(--text-subtle);
 }
 
+.cursorAura {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    filter: blur(15px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms;
+}
+
+@media (hover: none) {
+    .cursorAura {
+        display: none;
+    }
+}
+
 /* Nav */
 
 .nav {
@@ -115,7 +136,7 @@
     align-items: center;
     gap: 10px;
     font-family: var(--font-display), serif;
-    font-size: 17px;
+    font-size: 16px;
     letter-spacing: -0.025em;
 }
 
@@ -132,7 +153,7 @@
 }
 
 .navLink {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--text-secondary) !important;
     transition: color 150ms;
@@ -153,7 +174,7 @@
     display: flex;
     align-items: center;
     gap: 56px;
-    padding: 88px var(--gutter) 96px;
+    padding: 72px var(--gutter) 80px;
 }
 
 .heroText {
@@ -183,15 +204,15 @@
 
 .heroName {
     font-family: var(--font-display), serif;
-    font-size: clamp(56px, 10.5vw, 148px);
+    font-size: clamp(52px, 7.6vw, 108px);
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.055em;
 }
 
 .intro {
-    max-width: 590px;
-    font-size: 20px;
+    max-width: 520px;
+    font-size: 17px;
     line-height: 1.55;
     color: var(--text-secondary);
 }
@@ -220,8 +241,8 @@
 
 .blogCtaTitle {
     font-family: var(--font-display), serif;
-    font-size: 24px;
-    letter-spacing: -0.7px;
+    font-size: 20px;
+    letter-spacing: -0.5px;
     line-height: 1.35;
 }
 
@@ -250,7 +271,7 @@
 .photo {
     position: relative;
     flex: none;
-    width: min(470px, 33.4vw);
+    width: min(400px, 29vw);
     aspect-ratio: 470 / 600;
 }
 
@@ -302,7 +323,7 @@
 
 .highlightValue {
     font-family: var(--font-display), serif;
-    font-size: 22px;
+    font-size: 19px;
     letter-spacing: -0.025em;
     line-height: 1.5;
 }
@@ -324,7 +345,7 @@
 
 .sectionTitle {
     font-family: var(--font-display), serif;
-    font-size: clamp(40px, 4.5vw, 64px);
+    font-size: clamp(32px, 3.4vw, 46px);
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: -0.04em;
@@ -352,7 +373,7 @@
 .featuredCard {
     flex: none;
     width: 44%;
-    min-height: 660px;
+    min-height: 560px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -376,14 +397,14 @@
 
 .featuredTitle {
     font-family: var(--font-display), serif;
-    font-size: 48px;
-    letter-spacing: -1.9px;
+    font-size: 36px;
+    letter-spacing: -1.2px;
     line-height: 1.35;
     transition: color 150ms;
 }
 
 .featuredDescription {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.55;
     color: #C9C9D1;
 }
@@ -399,7 +420,7 @@
 .projectCard {
     flex: 1;
     display: flex;
-    min-height: 204px;
+    min-height: 172px;
     border-radius: 6px;
     border: 1px solid var(--card-border);
     background: var(--card);
@@ -410,7 +431,7 @@
 .projectShot {
     position: relative;
     flex: none;
-    width: 300px;
+    width: 260px;
     overflow: hidden;
 }
 
@@ -437,14 +458,14 @@
 
 .projectTitle {
     font-family: var(--font-display), serif;
-    font-size: 28px;
-    letter-spacing: -1.1px;
+    font-size: 22px;
+    letter-spacing: -0.6px;
     line-height: 1.35;
     transition: color 150ms;
 }
 
 .projectDescription {
-    font-size: 14.5px;
+    font-size: 14px;
     line-height: 1.5;
     color: var(--text-secondary);
 }
@@ -469,8 +490,8 @@
     gap: 10px;
     padding-top: 16px;
     font-family: var(--font-display), serif;
-    font-size: 22px;
-    letter-spacing: -0.4px;
+    font-size: 18px;
+    letter-spacing: -0.3px;
     color: var(--text-secondary);
 }
 
@@ -507,7 +528,7 @@
 
 .postCover {
     display: block;
-    height: 240px;
+    height: 200px;
     border: 1px solid var(--card-border);
     background: #18181C;
     overflow: hidden;
@@ -526,9 +547,9 @@
 
 .postTitle {
     font-family: var(--font-display), serif;
-    font-size: 26px;
+    font-size: 21px;
     font-weight: 400;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     line-height: 1.25;
     transition: color 150ms;
 }
@@ -538,7 +559,7 @@
 }
 
 .postExcerpt {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--text-secondary);
 }
@@ -562,7 +583,7 @@
 
 .pullQuote {
     font-family: var(--font-display), serif;
-    font-size: clamp(30px, 3vw, 43px);
+    font-size: clamp(26px, 2.4vw, 34px);
     line-height: 1.15;
     letter-spacing: -0.04em;
 }
@@ -586,7 +607,7 @@
 }
 
 .fact dd {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .aboutCopy {
@@ -598,7 +619,7 @@
 }
 
 .bio {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.7;
     color: var(--text-secondary);
 }
@@ -614,7 +635,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 48px;
-    padding: 64px;
+    padding: 48px 56px;
     background: var(--accent);
     color: var(--accent-ink);
 }
@@ -622,14 +643,14 @@
 .contactHeadline {
     max-width: 720px;
     font-family: var(--font-display), serif;
-    font-size: clamp(28px, 2.8vw, 40px);
+    font-size: clamp(24px, 2.2vw, 32px);
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.04em;
 }
 
 .emailButton {
-    padding: 16px 24px;
+    padding: 14px 22px;
     background: var(--accent-ink);
     color: var(--text-primary) !important;
     font-size: 16px;
@@ -659,7 +680,7 @@
 
 .footerEmail {
     font-family: var(--font-display), serif;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: -0.025em;
 }
 
@@ -729,7 +750,7 @@
     }
 
     .heroName {
-        font-size: clamp(56px, 17vw, 120px);
+        font-size: clamp(48px, 14vw, 88px);
     }
 
     .photo {
@@ -758,7 +779,7 @@
     }
 
     .intro {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .highlights {
@@ -778,12 +799,12 @@
     }
 
     .featuredCard {
-        min-height: 460px;
+        min-height: 420px;
         padding: 24px;
     }
 
     .featuredTitle {
-        font-size: 40px;
+        font-size: 30px;
     }
 
     .projectCard {

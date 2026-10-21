@@ -1,3 +1,4 @@
+import {useEffect, useRef} from "react";
 import Link from "next/link";
 import {Noto_Serif, DM_Sans, JetBrains_Mono} from "next/font/google";
 import {Metadata} from "../components/layout";
@@ -76,6 +77,7 @@ export default function HomePage({posts}) {
     return (
         <div className={`${style.page} ${display.variable} ${body.variable} ${mono.variable}`}>
             <Metadata title="Jaskaran Sethy" type="website"/>
+            <CursorAura/>
             <Nav/>
             <Hero latestPost={posts[0]}/>
             <Highlights/>
@@ -86,6 +88,23 @@ export default function HomePage({posts}) {
             <Footer/>
         </div>
     );
+}
+
+// The soft glow that follows the pointer (from the 2023 site). Moved via a ref so the page doesn't re-render.
+function CursorAura() {
+    const auraRef = useRef(null);
+
+    useEffect(() => {
+        const aura = auraRef.current;
+        function handleMouseMove(event) {
+            aura.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%)`;
+            aura.style.opacity = "1";
+        }
+        document.addEventListener("mousemove", handleMouseMove);
+        return () => document.removeEventListener("mousemove", handleMouseMove);
+    }, []);
+
+    return <div ref={auraRef} className={style.cursorAura} aria-hidden="true"/>;
 }
 
 function cropStyle({w, h, x, y}) {
