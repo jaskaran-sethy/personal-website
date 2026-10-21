@@ -486,7 +486,7 @@
 .resumeAside {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
     padding-top: 16px;
     font-family: var(--font-display), serif;
