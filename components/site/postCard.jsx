@@ -6,10 +6,11 @@ import type from "./type.module.css";
 import style from "./postCard.module.css";
 
 // A blog post teaser: cover, meta line, title and excerpt. Posts without a cover get their title set as one.
-export default function PostCard({post}) {
+// `featured` lays it out wide, cover beside the text, for the top of the blog index.
+export default function PostCard({post, featured}) {
     const title = shortTitle(post);
     return (
-        <Link href={`/blog/${post.slug}`} className={cx(style.postCard, lift)}>
+        <Link href={`/blog/${post.slug}`} className={cx(style.postCard, featured && style.featured, lift)}>
             <span className={style.cover}>
                 {post.image ? (
                     <img src={post.image} alt=""/>
@@ -17,9 +18,11 @@ export default function PostCard({post}) {
                     <span className={style.coverFallback} aria-hidden="true">{title}</span>
                 )}
             </span>
-            <time className={type.meta} dateTime={post.date}>{formatPostMeta(post)}</time>
-            <h3 className={style.title}>{title}</h3>
-            {post.excerpt ? <p className={style.excerpt}>{post.excerpt}</p> : null}
+            <div className={style.text}>
+                <time className={type.meta} dateTime={post.date}>{formatPostMeta(post)}</time>
+                <h3 className={style.title}>{title}</h3>
+                {post.excerpt ? <p className={style.excerpt}>{post.excerpt}</p> : null}
+            </div>
         </Link>
     );
 }

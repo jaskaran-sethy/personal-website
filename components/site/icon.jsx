@@ -3,6 +3,7 @@ import style from "./icon.module.css";
 
 // Lucide icon paths (lucide.dev), inlined to avoid a dependency for a handful of glyphs.
 const ICONS = {
+    "arrow-left": <><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></>,
     "arrow-right": <><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>,
     "arrow-up-right": <><path d="M7 7h10v10"/><path d="M7 17 17 7"/></>,
     "download": <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></>,

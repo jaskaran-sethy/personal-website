@@ -1,0 +1,29 @@
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pill {
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: none;
+    color: var(--text-secondary) !important;
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.pill:hover {
+    border-color: var(--text-muted);
+    color: var(--text-primary) !important;
+}
+
+.active, .active:hover {
+    border-color: var(--accent);
+    background: var(--accent-gradient);
+    color: var(--accent-ink) !important;
+}

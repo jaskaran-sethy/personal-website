@@ -1,35 +1,24 @@
 import Link from "next/link";
-import {Caveat, Noto_Serif, DM_Sans, JetBrains_Mono} from "next/font/google";
 import {Metadata} from "../components/layout";
-import CroppedImage from "../components/home/croppedImage";
-import CursorAura from "../components/home/cursorAura";
-import ExternalLink from "../components/home/externalLink";
-import FactList from "../components/home/factList";
-import Highlight from "../components/home/highlight";
-import Icon from "../components/home/icon";
-import {lift, liftSmall} from "../components/home/lift";
-import Pill from "../components/home/pill";
-import PostCard from "../components/home/postCard";
-import ProjectCard, {FeaturedProjectCard} from "../components/home/projectCard";
-import SectionHeader from "../components/home/sectionHeader";
-import SocialLinks from "../components/home/socialLinks";
-import TextLink from "../components/home/textLink";
-import type from "../components/home/type.module.css";
+import CroppedImage from "../components/site/croppedImage";
+import Eyebrow from "../components/site/eyebrow";
+import ExternalLink from "../components/site/externalLink";
+import FactList from "../components/site/factList";
+import Highlight from "../components/site/highlight";
+import Icon from "../components/site/icon";
+import {lift, liftSmall} from "../components/site/lift";
+import Pill from "../components/site/pill";
+import PostCard from "../components/site/postCard";
+import ProjectCard, {FeaturedProjectCard} from "../components/site/projectCard";
+import SectionHeader from "../components/site/sectionHeader";
+import SiteShell from "../components/site/siteShell";
+import TextLink from "../components/site/textLink";
+import type from "../components/site/type.module.css";
 import cx from "../lib/cx";
 import {shortTitle} from "../lib/postFormat";
 import {getAllPostsMeta} from "../lib/posts";
+import {EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL} from "../lib/site";
 import style from "./index.module.css";
-
-const display = Noto_Serif({subsets: ["latin"], weight: ["400"], variable: "--font-display"});
-const body = DM_Sans({subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body"});
-const mono = JetBrains_Mono({subsets: ["latin"], weight: ["400"], variable: "--font-mono"});
-const hand = Caveat({subsets: ["latin"], weight: ["600"], variable: "--font-hand"});
-
-const EMAIL = "hello@jaskaransethy.com";
-const GITHUB_URL = "https://github.com/jaskaran-sethy";
-const LINKEDIN_URL = "https://www.linkedin.com/in/jaskaran-sethy/";
-const INSTAGRAM_URL = "https://www.instagram.com/sethyrical";
-const RESUME_URL = LINKEDIN_URL;
 
 const HIGHLIGHTS = [
     {value: "Gold Medal", label: "Department topper, IIT Roorkee '22"},
@@ -81,12 +70,6 @@ const FACTS = [
     {key: "OFF HOURS", value: "Fitness, gaming, reading, music"},
 ];
 
-const SOCIALS = [
-    {name: "github", label: "GitHub", href: GITHUB_URL},
-    {name: "linkedin", label: "LinkedIn", href: LINKEDIN_URL},
-    {name: "instagram", label: "Instagram", href: INSTAGRAM_URL},
-];
-
 export async function getStaticProps() {
     return {
         props: {
@@ -97,39 +80,15 @@ export async function getStaticProps() {
 
 export default function HomePage({posts}) {
     return (
-        <div className={`${style.page} ${display.variable} ${body.variable} ${mono.variable} ${hand.variable}`}>
+        <SiteShell>
             <Metadata title="Jaskaran Sethy" type="website"/>
-            <CursorAura/>
-            <Nav/>
             <Hero latestPost={posts[0]}/>
             <Highlights/>
             <Projects/>
             <Writing posts={posts}/>
             <About/>
             <Contact/>
-            <Footer/>
-        </div>
-    );
-}
-
-function Nav() {
-    return (
-        <header className={style.nav}>
-            <Link href="/" className={cx(style.brand, lift)}>
-                <svg className={style.slantMark} viewBox="0 0 12 28" aria-hidden="true">
-                    <path d="M5 0h7l-5 28h-7z"/>
-                </svg>
-                Jaskaran Sethy
-            </Link>
-            <nav className={style.navLinks}>
-                <a href="#projects" className={cx(style.navLink, lift)}>Projects</a>
-                <a href="#writing" className={cx(style.navLink, lift)}>Writing</a>
-                <a href="#about" className={cx(style.navLink, lift)}>About</a>
-                <Pill href={RESUME_URL} size="small" external>
-                    Resume <Icon name="download" size={14} tone="muted"/>
-                </Pill>
-            </nav>
-        </header>
+        </SiteShell>
     );
 }
 
@@ -137,10 +96,7 @@ function Hero({latestPost}) {
     return (
         <section className={style.hero}>
             <div className={style.heroText}>
-                <p className={cx(style.eyebrow, liftSmall)}>
-                    <span className={style.dash}/>
-                    ML &amp; FULL STACK ENGINEER · ARMOR · BENGALURU
-                </p>
+                <Eyebrow>ML &amp; FULL STACK ENGINEER · ARMOR · BENGALURU</Eyebrow>
                 <h1 className={cx(style.heroName, liftSmall)}>Jaskaran<br/>Sethy</h1>
                 <p className={cx(style.intro, liftSmall)}>
                     I build ML systems and the software around them, and write about the books, habits and ideas I get
@@ -246,17 +202,5 @@ function Contact() {
                 </Pill>
             </div>
         </section>
-    );
-}
-
-function Footer() {
-    return (
-        <footer className={style.footer}>
-            <div className={style.footerLeft}>
-                <a href={`mailto:${EMAIL}`} className={cx(style.footerEmail, lift)}>{EMAIL}</a>
-                <p className={cx(style.copyright, liftSmall)}>© {new Date().getFullYear()} Jaskaran Sethy</p>
-            </div>
-            <SocialLinks links={SOCIALS}/>
-        </footer>
     );
 }

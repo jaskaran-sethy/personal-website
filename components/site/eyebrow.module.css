@@ -1,0 +1,16 @@
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+}
+
+.dash {
+    flex: none;
+    width: 20px;
+    height: 2px;
+    background: var(--accent-gradient);
+}

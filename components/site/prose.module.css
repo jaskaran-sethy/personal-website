@@ -1,0 +1,105 @@
+.prose {
+    font-size: 18px;
+    line-height: 1.75;
+    color: #D4D4D8;
+}
+
+.prose > * + * {
+    margin-top: 1.4em;
+}
+
+.prose h2, .prose h3 {
+    margin-top: 2em;
+    font-family: var(--font-display), serif;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+.prose h2 {
+    font-size: 30px;
+}
+
+.prose h3 {
+    font-size: 23px;
+}
+
+.prose a {
+    color: var(--accent) !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 3px;
+}
+
+.prose strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.prose em {
+    color: var(--text-secondary);
+}
+
+.prose blockquote {
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+    font-family: var(--font-display), serif;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.prose ul, .prose ol {
+    padding-left: 1.4em;
+}
+
+.prose li + li {
+    margin-top: 0.5em;
+}
+
+.prose li::marker {
+    color: var(--accent);
+}
+
+.prose img {
+    width: 100%;
+    height: auto;
+}
+
+/* Figures break out a little wider than the text column. */
+.figure {
+    margin: 2.4em -48px;
+}
+
+.figure img {
+    border: 1px solid var(--card-border);
+}
+
+.figure figcaption {
+    margin-top: 14px;
+    padding: 0 48px;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    color: var(--text-subtle);
+    text-align: center;
+}
+
+@media (max-width: 860px) {
+    .figure {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .figure figcaption {
+        padding: 0;
+    }
+}
+
+@media (max-width: 760px) {
+    .prose {
+        font-size: 17px;
+    }
+}

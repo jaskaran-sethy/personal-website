@@ -4,6 +4,12 @@
     gap: 20px;
 }
 
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .cover {
     display: block;
     height: 200px;
@@ -56,4 +62,39 @@
     font-size: 14px;
     line-height: 1.6;
     color: var(--text-secondary);
+}
+
+/* Featured */
+
+.featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+}
+
+.featured .cover {
+    height: auto;
+    aspect-ratio: 1200 / 630;
+}
+
+.featured .cover img {
+    object-fit: cover;
+}
+
+.featured .title {
+    font-size: clamp(28px, 2.6vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
+.featured .excerpt {
+    font-size: 16px;
+}
+
+@media (max-width: 900px) {
+    .featured {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
