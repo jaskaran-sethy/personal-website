@@ -1,11 +1,11 @@
 import Link from "next/link";
-import {Space_Grotesk, Inter, JetBrains_Mono} from "next/font/google";
+import {Noto_Serif, DM_Sans, JetBrains_Mono} from "next/font/google";
 import {Metadata} from "../components/layout";
 import {getAllPostsMeta} from "../lib/posts";
 import style from "./index.module.css";
 
-const display = Space_Grotesk({subsets: ["latin"], weight: ["500", "600"], variable: "--font-display"});
-const body = Inter({subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body"});
+const display = Noto_Serif({subsets: ["latin"], weight: ["400"], variable: "--font-display"});
+const body = DM_Sans({subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body"});
 const mono = JetBrains_Mono({subsets: ["latin"], weight: ["400"], variable: "--font-mono"});
 
 const EMAIL = "hello@jaskaransethy.com";
@@ -15,31 +15,53 @@ const INSTAGRAM_URL = "https://www.instagram.com/sethyrical";
 const RESUME_URL = LINKEDIN_URL;
 
 const HIGHLIGHTS = [
-    {value: "Armor", label: "Data Science & Software Engineer since Sep 2026"},
     {value: "Gold Medal", label: "Department topper, IIT Roorkee '22"},
     {value: "$1M → $3M+", label: "Product Insights ARR growth at Sprinklr"},
-    {value: "ML · Full-stack", label: "From NLP models to the pipelines and apps around them"},
+    {value: "Samsung · Amazon · Wells Fargo", label: "Enterprise clients served by my NLP models at Sprinklr"},
 ];
 
-const WORK = [
+const FEATURED_PROJECT = {
+    title: "Breathe",
+    kicker: "ANDROID · KOTLIN · JETPACK COMPOSE",
+    description: "A calm, offline breathing app. Four rhythms, three visual guides — an orb, a tide, a trace of light — and badges you can never lose.",
+    image: "/projects/breathe-lake.jpg",
+    icon: "/projects/breathe-icon.webp",
+    href: `${GITHUB_URL}/meditation-app`,
+};
+
+// `crop` mirrors the image fill transform in the design: size and offset as fractions of the frame.
+const PROJECTS = [
     {
-        title: "Market-data pipelines",
-        meta: "ARMOR · 2026",
-        description: "The pipelines that feed Armor's platform, covering funds, IPOs and corporate actions.",
-        href: LINKEDIN_URL,
+        title: "Mermaid Nixie",
+        kicker: "OBSIDIAN PLUGIN",
+        description: "Vault-wide Mermaid layouts: the ELK engine, right-angle edges and spacing that actually applies.",
+        image: "/projects/mermaid-dark.jpg",
+        crop: {w: 1.724, h: 1.724, x: -0.345, y: -0.310},
+        href: `${GITHUB_URL}/obsidian-mermaid-nixie`,
     },
     {
-        title: "Product Insights NLP",
-        meta: "SPRINKLR · 2022–23",
-        description: "NLP models that turn customer feedback into insights for clients like Samsung, Amazon and Wells Fargo.",
-        href: LINKEDIN_URL,
+        title: "EncorePpuccin",
+        kicker: "OBSIDIAN THEME",
+        description: "FastPpuccin's speed with Encore's best UI touches, recoloured to match your accent.",
+        image: "/projects/encore-dark.jpg",
+        crop: {w: 2.083, h: 1.587, x: -0.563, y: -0.079},
+        href: `${GITHUB_URL}/obsidian-encoreppuccin`,
     },
     {
-        title: "jaskaransethy.com",
-        meta: "SIDE PROJECT",
-        description: "A personal site and blog built end-to-end, from design to deployment.",
-        href: "https://github.com/jaskaran-sethy/personal-website",
+        title: "Nested List Numbers",
+        kicker: "OBSIDIAN PLUGIN",
+        description: "Numbered lists that know their parents, so item 1 under 2.2 reads as 2.2.1.",
+        image: "/projects/nested-dark.jpg",
+        crop: {w: 1.667, h: 1.667, x: -0.317, y: -0.167},
+        href: `${GITHUB_URL}/obsidian-nested-list-numbers`,
     },
+];
+
+const FACTS = [
+    {key: "STUDIED", value: "Biotechnology · IIT Roorkee, Gold Medal"},
+    {key: "PREVIOUSLY", value: "Data Scientist · Sprinklr"},
+    {key: "NOW", value: "Data Science & Software · Armor, Bengaluru"},
+    {key: "OFF HOURS", value: "Fitness, gaming, reading, music"},
 ];
 
 export async function getStaticProps() {
@@ -55,16 +77,19 @@ export default function HomePage({posts}) {
         <div className={`${style.page} ${display.variable} ${body.variable} ${mono.variable}`}>
             <Metadata title="Jaskaran Sethy" type="website"/>
             <Nav/>
-            <Hero/>
-            <PhotoBand/>
+            <Hero latestPost={posts[0]}/>
             <Highlights/>
-            <Work/>
+            <Projects/>
             <Writing posts={posts}/>
             <About/>
             <Contact/>
             <Footer/>
         </div>
     );
+}
+
+function cropStyle({w, h, x, y}) {
+    return {width: `${w * 100}%`, height: `${h * 100}%`, left: `${x * 100}%`, top: `${y * 100}%`};
 }
 
 function Nav() {
@@ -77,7 +102,7 @@ function Nav() {
                 Jaskaran Sethy
             </Link>
             <nav className={style.navLinks}>
-                <a href="#work" className={style.navLink}>Work</a>
+                <a href="#projects" className={style.navLink}>Projects</a>
                 <a href="#writing" className={style.navLink}>Writing</a>
                 <a href="#about" className={style.navLink}>About</a>
                 <a href={RESUME_URL} className={style.pillGhost} target="_blank" rel="noopener noreferrer">
@@ -88,41 +113,46 @@ function Nav() {
     );
 }
 
-function Hero() {
+// "Ikigai - Book Review" → "Ikigai"
+function shortTitle(post) {
+    return post.title.replace(/\s*-?\s*book review$/i, "");
+}
+
+function Hero({latestPost}) {
     return (
         <section className={style.hero}>
-            <p className={style.eyebrow}>
-                <span className={style.dash}/>
-                ML &amp; FULL STACK ENGINEER · ARMOR · BENGALURU
-            </p>
-            <h1 className={style.heroName}>Jaskaran Sethy</h1>
-            <div className={style.subRow}>
+            <div className={style.heroText}>
+                <p className={style.eyebrow}>
+                    <span className={style.dash}/>
+                    ML &amp; FULL STACK ENGINEER · ARMOR · BENGALURU
+                </p>
+                <h1 className={style.heroName}>Jaskaran<br/>Sethy</h1>
                 <p className={style.intro}>
                     I build ML systems and the software around them, and write about the books, habits and ideas I get
                     obsessed with.
                 </p>
-                <div className={style.ctas}>
-                    <a href="#work" className={style.pillAccent}>
-                        See my work <Icon name="arrow-right" size={16}/>
-                    </a>
-                    <Link href="/blog" className={style.pillGhost}>
-                        Read the blog <Icon name="arrow-up-right" size={16} className={style.mutedIcon}/>
-                    </Link>
+                <Link href="/blog" className={style.blogCta}>
+                    <span className={style.kicker}>THE BLOG</span>
+                    <span className={style.blogCtaRow}>
+                        <span className={style.blogCtaTitle}>Notes on books, habits &amp; ideas</span>
+                        <span className={style.accentCircle}><Icon name="arrow-up-right" size={18}/></span>
+                    </span>
+                    {latestPost ? (
+                        <span className={style.blogCtaSub}>Latest: what {shortTitle(latestPost)} taught me</span>
+                    ) : null}
+                </Link>
+            </div>
+            <div className={style.photo}>
+                <div className={style.photoSlant}>
+                    <img src="/mountainMe.jpg" alt="Jaskaran smiling on a mountain trail in the Himalayas"
+                         style={cropStyle({w: 1.786, h: 1.852, x: -0.382, y: -0.704})}/>
                 </div>
+                <span className={style.locationTag}>
+                    <Icon name="map-pin" size={14} className={style.accentIcon}/>
+                    Somewhere in the Himalayas
+                </span>
             </div>
         </section>
-    );
-}
-
-function PhotoBand() {
-    return (
-        <div className={style.photoBand}>
-            <img src="/mountainMe.jpg" alt="Jaskaran smiling on a mountain trail in the Himalayas" className={style.photo}/>
-            <span className={style.caption}>
-                <Icon name="map-pin" size={14} className={style.accentIcon}/>
-                Somewhere in the Himalayas
-            </span>
-        </div>
     );
 }
 
@@ -151,25 +181,43 @@ function SectionHeader({title, linkLabel, href, external}) {
     );
 }
 
-function Work() {
+function Projects() {
+    const external = {target: "_blank", rel: "noopener noreferrer"};
     return (
-        <section id="work" className={style.work}>
-            <SectionHeader title="Selected work" linkLabel="View GitHub" href={GITHUB_URL} external/>
-            <ol className={style.workList}>
-                {WORK.map((item, index) => (
-                    <li key={item.title}>
-                        <a href={item.href} className={style.workRow} target="_blank" rel="noopener noreferrer">
-                            <span className={style.workNumber}>{String(index + 1).padStart(2, "0")}</span>
-                            <span className={style.workMain}>
-                                <span className={style.workTitle}>{item.title}</span>
-                                <span className={style.meta}>{item.meta}</span>
+        <section id="projects" className={style.projects}>
+            <SectionHeader title="Projects" linkLabel="View GitHub" href={GITHUB_URL} external/>
+            <div className={style.projectsGrid}>
+                <a href={FEATURED_PROJECT.href} className={style.featuredCard} {...external}
+                   style={{"--card-image": `url(${FEATURED_PROJECT.image})`}}>
+                    <img src={FEATURED_PROJECT.icon} alt="" className={style.appIcon}/>
+                    <span className={style.kickerSmall}>{FEATURED_PROJECT.kicker}</span>
+                    <span className={style.featuredTitle}>{FEATURED_PROJECT.title}</span>
+                    <span className={style.featuredDescription}>{FEATURED_PROJECT.description}</span>
+                </a>
+                <div className={style.projectColumn}>
+                    {PROJECTS.map((project) => (
+                        <a key={project.title} href={project.href} className={style.projectCard} {...external}>
+                            <span className={style.projectShot}>
+                                <img src={project.image} alt="" style={cropStyle(project.crop)}/>
                             </span>
-                            <span className={style.workDescription}>{item.description}</span>
-                            <span className={style.arrowButton}><Icon name="arrow-up-right" size={20}/></span>
+                            <span className={style.projectText}>
+                                <span className={style.projectTop}>
+                                    <span className={style.kickerSmall}>{project.kicker}</span>
+                                    <Icon name="arrow-up-right" size={18} className={style.projectArrow}/>
+                                </span>
+                                <span className={style.projectTitle}>{project.title}</span>
+                                <span className={style.projectDescription}>{project.description}</span>
+                            </span>
                         </a>
-                    </li>
-                ))}
-            </ol>
+                    ))}
+                </div>
+            </div>
+            <p className={style.resumeAside}>
+                And, well, for professional work —
+                <a href={RESUME_URL} className={style.resumeLink} target="_blank" rel="noopener noreferrer">
+                    see my resume <Icon name="download" size={18}/>
+                </a>
+            </p>
         </section>
     );
 }
@@ -179,7 +227,8 @@ const SHORT_MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "S
 function formatPostMeta(post) {
     const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(post.date);
     const date = match ? `${SHORT_MONTHS[Number(match[2]) - 1]} ${Number(match[3])}, ${match[1]}` : "UNDATED";
-    return `${date} · ${post.readingMinutes} MIN`;
+    const category = post.tags[0] ? `${post.tags[0].replace(/-/g, " ").toUpperCase()} · ` : "";
+    return `${category}${date} · ${post.readingMinutes} MIN`;
 }
 
 function Writing({posts}) {
@@ -189,9 +238,11 @@ function Writing({posts}) {
             <div className={style.postCards}>
                 {posts.map((post) => (
                     <Link key={post.slug} href={`/blog/${post.slug}`} className={style.postCard}>
-                        <img src={post.image} alt="" className={style.postCover}/>
+                        <span className={style.postCover}>
+                            <img src={post.image} alt=""/>
+                        </span>
                         <time className={style.meta} dateTime={post.date}>{formatPostMeta(post)}</time>
-                        <h3 className={style.postTitle}>{post.title}</h3>
+                        <h3 className={style.postTitle}>{shortTitle(post)}</h3>
                         {post.excerpt ? <p className={style.postExcerpt}>{post.excerpt}</p> : null}
                     </Link>
                 ))}
@@ -203,9 +254,19 @@ function Writing({posts}) {
 function About() {
     return (
         <section id="about" className={style.about}>
-            <blockquote className={style.pullQuote}>
-                “I become deeply interested in almost everything under the sun.”
-            </blockquote>
+            <div className={style.quoteColumn}>
+                <blockquote className={style.pullQuote}>
+                    “I become deeply interested in almost everything under the sun.”
+                </blockquote>
+                <dl className={style.facts}>
+                    {FACTS.map(({key, value}) => (
+                        <div key={key} className={style.fact}>
+                            <dt className={style.kicker}>{key}</dt>
+                            <dd>{value}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </div>
             <div className={style.aboutCopy}>
                 <p className={style.bio}>
                     I studied Biotechnology at IIT Roorkee, graduated with the Department Gold Medal, and fell for
@@ -241,7 +302,6 @@ const SOCIALS = [
     {name: "github", label: "GitHub", href: GITHUB_URL},
     {name: "linkedin", label: "LinkedIn", href: LINKEDIN_URL},
     {name: "instagram", label: "Instagram", href: INSTAGRAM_URL},
-    {name: "mail", label: "Email", href: `mailto:${EMAIL}`},
 ];
 
 function Footer() {
@@ -254,7 +314,7 @@ function Footer() {
             <div className={style.socials}>
                 {SOCIALS.map(({name, label, href}) => (
                     <a key={name} href={href} aria-label={label} className={style.socialButton}
-                       target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+                       target="_blank" rel="noopener noreferrer">
                         <Icon name={name} size={18}/>
                     </a>
                 ))}
