@@ -106,22 +106,20 @@
     }
 }
 
+/* Written under the photo's bottom-left corner like a caption on a print, so it never covers the subject. */
 .locationTag {
     position: absolute;
-    top: 24px;
-    right: 28px;
+    top: calc(100% + 12px);
+    left: 4px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(14, 14, 16, 0.85);
-    backdrop-filter: blur(12px);
     font-family: var(--font-hand), cursive;
-    font-size: 22px;
+    font-size: 24px;
     line-height: 1;
     white-space: nowrap;
+    color: var(--text-secondary);
+    rotate: -2deg;
 }
 
 /* Highlights */
