@@ -296,6 +296,11 @@
         width: min(100%, 470px);
         align-self: center;
     }
+
+    /* Stacked under the text, the slant turns sideways: the top and bottom edges are cut instead. */
+    .photoSlant {
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+    }
 }
 
 @media (max-width: 760px) {
