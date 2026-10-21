@@ -1,0 +1,20 @@
+.highlight {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 18px;
+    border-left: 2px solid var(--accent);
+}
+
+.value {
+    font-family: var(--font-display), serif;
+    font-size: 19px;
+    letter-spacing: -0.025em;
+    line-height: 1.5;
+}
+
+.label {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}

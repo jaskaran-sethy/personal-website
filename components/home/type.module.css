@@ -1,0 +1,21 @@
+/* Small monospace labels shared across the home page. */
+
+.kicker, .kickerSmall, .meta {
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+
+.kickerSmall {
+    font-size: 11px;
+}
+
+.meta {
+    letter-spacing: 1px;
+    line-height: 1.5;
+    color: var(--text-subtle);
+}
+
+.accent {
+    color: var(--accent);
+}

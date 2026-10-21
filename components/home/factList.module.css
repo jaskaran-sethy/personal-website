@@ -1,0 +1,31 @@
+.facts {
+    border-bottom: 1px solid var(--border);
+}
+
+.fact {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+}
+
+.key {
+    flex: none;
+    width: 120px;
+    color: var(--text-subtle);
+}
+
+.value {
+    font-size: 15px;
+}
+
+@media (max-width: 760px) {
+    .fact {
+        gap: 16px;
+    }
+
+    .key {
+        width: 96px;
+    }
+}

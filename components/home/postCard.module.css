@@ -1,0 +1,59 @@
+.postCard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cover {
+    display: block;
+    height: 200px;
+    border: 1px solid var(--card-border);
+    background: #18181C;
+    overflow: hidden;
+}
+
+.cover img, .coverFallback {
+    width: 100%;
+    height: 100%;
+    transition: transform 250ms;
+}
+
+.cover img {
+    object-fit: contain;
+}
+
+.coverFallback {
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    box-sizing: border-box;
+    border-top: 2px solid var(--accent);
+    font-family: var(--font-display), serif;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--text-secondary);
+}
+
+.postCard:hover .cover img, .postCard:hover .coverFallback {
+    transform: scale(1.03);
+}
+
+.title {
+    font-family: var(--font-display), serif;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    transition: color 150ms;
+}
+
+.postCard:hover .title {
+    color: var(--accent);
+}
+
+.excerpt {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}

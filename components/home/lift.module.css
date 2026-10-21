@@ -1,0 +1,16 @@
+/* The class is doubled so this transition wins over any single-class `transition` on the same element,
+   whichever stylesheet loads first. It lists the properties components animate on hover alongside the lift. */
+.lift.lift {
+    transition: translate 260ms cubic-bezier(0.34, 1.56, 0.64, 1), color 150ms, background-color 150ms,
+    border-color 150ms;
+}
+
+.small {
+    --lift-distance: -2px;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .lift.lift:hover {
+        translate: 0 var(--lift-distance, -4px);
+    }
+}

@@ -1,0 +1,7 @@
+.accent {
+    color: var(--accent);
+}
+
+.muted {
+    color: var(--text-secondary);
+}

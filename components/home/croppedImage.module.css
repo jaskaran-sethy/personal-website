@@ -1,0 +1,11 @@
+.frame {
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+
+.image {
+    position: absolute;
+    max-width: none;
+    object-fit: cover;
+}

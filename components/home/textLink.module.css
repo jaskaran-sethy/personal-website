@@ -1,0 +1,17 @@
+.textLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent) !important;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.textLink svg {
+    transition: transform 150ms;
+}
+
+.textLink:hover svg {
+    transform: translateX(3px);
+}
