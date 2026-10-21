@@ -108,7 +108,22 @@
     transition: transform 300ms ease;
 }
 
-.blogCard:hover .blogImage {
+/* Cover for posts without an image: the title, set large. */
+.blogImageFallback {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 1.25rem 1.5rem;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: rgba(255,255,255,0.75);
+    transition: transform 300ms ease;
+}
+
+.blogCard:hover .blogImage, .blogCard:hover .blogImageFallback {
     transform: scale(1.04);
 }
 

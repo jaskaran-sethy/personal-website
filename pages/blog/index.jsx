@@ -81,7 +81,11 @@ function BlogCard({post}) {
     return (
         <article className={style.blogCard}>
             <div className={style.blogImageWrapper}>
-                <img src={post.image} alt={post.title} className={style.blogImage}/>
+                {post.image ? (
+                    <img src={post.image} alt={post.title} className={style.blogImage}/>
+                ) : (
+                    <span className={style.blogImageFallback} aria-hidden="true">{post.title}</span>
+                )}
             </div>
             <div className={style.blogCardBody}>
                 <time className={style.blogDate} dateTime={post.date}>{post.formattedDate}</time>
