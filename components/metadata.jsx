@@ -36,6 +36,8 @@ export default function Metadata({title, description, image, url, type}) {
             <meta name="twitter:card" content="summary_large_image"/>
             <meta name="twitter:site" content="@JaskaranSethy"/>
             <meta name="twitter:creator" content="@JaskaranSethy"/>
+            <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+            <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
         </Head>)
 }
