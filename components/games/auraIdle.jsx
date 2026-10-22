@@ -17,6 +17,8 @@ const OFFLINE_CAP_S = 8 * 3600;
 const PRICE_GROWTH = 1.15;
 const GRASS_BONUS = 0.1;
 const GRASS_UNLOCK = 1e6;
+// Holding the orb taps again this often.
+const HOLD_TAP_MS = 500;
 
 // Habits: each produces `rate` aura per second, and costs 15% more for every one you own.
 const HABITS = [
@@ -112,6 +114,8 @@ export default function AuraIdle() {
     const [confirmGrass, setConfirmGrass] = useState(false);
     const [floaters, setFloaters] = useState([]);
     const floaterId = useRef(0);
+    // While the orb is held: the repeat timer, and where the pointer is (for the "+N" floaters).
+    const hold = useRef({timer: null, x: 0, y: 0});
     const redraw = () => setFrame((n) => n + 1);
 
     function save() {
@@ -165,17 +169,54 @@ export default function AuraIdle() {
         };
     }, [loaded]);
 
-    function tap(e) {
+    // One tap's worth of aura, with a "+N" floating up from (x, y) inside the orb.
+    function tap(x, y) {
         const gain = tapPower(game.current);
         earn(gain);
-        const box = e.currentTarget.getBoundingClientRect();
         const id = ++floaterId.current;
-        const x = e.clientX ? e.clientX - box.left : box.width / 2;
-        const y = e.clientY ? e.clientY - box.top : box.height / 2;
         setFloaters((f) => [...f.slice(-8), {id, x, y, text: `+${format(gain)}`}]);
         setTimeout(() => setFloaters((f) => f.filter((fl) => fl.id !== id)), 900);
         redraw();
     }
+
+    // Pressing taps at once, and holding keeps tapping every HOLD_TAP_MS until release (or the pointer leaves).
+    function startHold(e) {
+        if (e.button !== 0) return;
+        const box = e.currentTarget.getBoundingClientRect();
+        hold.current.x = e.clientX - box.left;
+        hold.current.y = e.clientY - box.top;
+        tap(hold.current.x, hold.current.y);
+        clearInterval(hold.current.timer);
+        hold.current.timer = setInterval(() => tap(hold.current.x, hold.current.y), HOLD_TAP_MS);
+    }
+
+    function moveHold(e) {
+        const box = e.currentTarget.getBoundingClientRect();
+        hold.current.x = e.clientX - box.left;
+        hold.current.y = e.clientY - box.top;
+    }
+
+    function stopHold() {
+        clearInterval(hold.current.timer);
+        hold.current.timer = null;
+    }
+
+    // Keyboard presses (Enter/Space, which also repeat while held) arrive as clicks with no pointer; pointer
+    // presses are already handled by startHold.
+    function keyboardTap(e) {
+        if (e.detail !== 0) return;
+        const box = e.currentTarget.getBoundingClientRect();
+        tap(box.width / 2, box.height / 2);
+    }
+
+    useEffect(() => {
+        const stop = () => document.hidden && stopHold();
+        document.addEventListener("visibilitychange", stop);
+        return () => {
+            document.removeEventListener("visibilitychange", stop);
+            stopHold();
+        };
+    }, []);
 
     function buyHabit(habit) {
         const s = game.current;
@@ -234,7 +275,9 @@ export default function AuraIdle() {
                 <span>aura · {format(rate)} per second</span>
             </div>
 
-            <button type="button" className={ai.orb} onClick={tap} aria-label={`Farm aura (+${format(tapPower(s))})`}>
+            <button type="button" className={ai.orb} aria-label={`Farm aura (+${format(tapPower(s))}, hold to keep farming)`}
+                    onPointerDown={startHold} onPointerMove={moveHold} onPointerUp={stopHold} onPointerLeave={stopHold}
+                    onPointerCancel={stopHold} onClick={keyboardTap} onContextMenu={(e) => e.preventDefault()}>
                 <span className={ai.orbCore} style={{"--glow": Math.min(1, 0.25 + Math.log10(1 + rate) / 8)}}/>
                 {floaters.map((f) => (
                     <span key={f.id} className={ai.floater} style={{left: f.x, top: f.y}} aria-hidden="true">{f.text}</span>
