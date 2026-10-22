@@ -143,8 +143,9 @@
     letter-spacing: -0.02em;
 }
 
-/* B2B / B2C tag beside the company name. */
+/* B2B / B2C tag, pushed to the right edge of the card on the name's line. */
 .market {
+    margin-left: auto;
     padding: 2px 7px;
     border: 1px solid var(--border);
     border-radius: 999px;
