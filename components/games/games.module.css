@@ -22,9 +22,13 @@
     color: var(--accent);
 }
 
+/* Stat, button and toggle rows use equal-width columns sized to their widest item, so a row
+   stays centred on the board even when the labels differ in length ("YOU" vs "COMPUTER"). */
 .scores {
-    display: flex;
-    gap: 32px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 24px;
 }
 
 .score {
@@ -42,14 +46,15 @@
     font-family: var(--font-display), serif;
     font-size: 26px;
     font-weight: 400;
+    font-variant-numeric: tabular-nums;
     letter-spacing: 0;
     color: var(--text-primary);
 }
 
 .controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     gap: 12px;
 }
 
@@ -79,7 +84,9 @@
 /* A small two-way switch, e.g. Easy / Hard. */
 
 .toggle {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     padding: 3px;
     margin-top: -12px;
     border: 1px solid var(--border);
