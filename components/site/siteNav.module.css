@@ -7,8 +7,9 @@
     align-items: center;
     height: 76px;
     padding: 0 var(--gutter);
-    background: rgba(14, 14, 16, 0.85);
-    backdrop-filter: blur(12px);
+    /* Nearly opaque instead of a live blur: blurring the page behind a sticky bar is redrawn on every scroll
+       frame, which costs frames on weaker phones. */
+    background: rgba(14, 14, 16, 0.94);
     border-bottom: 1px solid var(--border);
 }
 

@@ -9,7 +9,9 @@ import style from "./projectCard.module.css";
 // A tall card with the project's screenshot filling the background and the text set over its lower edge.
 export function FeaturedProjectCard({project: {title, kicker, description, image, icon, href}}) {
     return (
-        <ExternalLink href={href} className={cx(style.featured, lift)} style={{"--card-image": `url(${image})`}}>
+        <ExternalLink href={href} className={cx(style.featured, lift)}>
+            {/* A real image (not a CSS background) so it lazy-loads; it's well below the fold. */}
+            <img src={image} alt="" className={style.featuredImage} loading="lazy" decoding="async"/>
             {icon ? <img src={icon} alt="" className={style.appIcon} loading="lazy" decoding="async"/> : null}
             <span className={cx(type.kickerSmall, type.accent)}>{kicker}</span>
             <span className={style.featuredTitle}>{title}</span>
