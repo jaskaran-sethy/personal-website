@@ -8,7 +8,7 @@
     height: 560px;
     border-radius: 999px;
     /* The --accent gold (#D4AF37); slightly stronger than the old white wash since gold reads darker. */
-    background: radial-gradient(circle closest-side, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.035) 55%, transparent);
+    background: radial-gradient(circle closest-side, rgba(212, 175, 55, 0.14), rgba(212, 175, 55, 0.05) 55%, transparent);
     opacity: 0;
     pointer-events: none;
     transition: opacity 200ms;
