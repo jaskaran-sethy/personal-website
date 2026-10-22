@@ -4,14 +4,14 @@ import {useEffect} from "react";
 import {findGame, GAMES, gamePath, gamesIn, SECTIONS} from "../../components/games/registry";
 import Metadata from "../../components/metadata";
 import Eyebrow from "../../components/site/eyebrow";
-import PillFilter from "../../components/site/pillFilter";
+import SectionTabs from "../../components/site/sectionTabs";
 import {lift, liftSmall} from "../../components/site/lift";
 import SiteShell from "../../components/site/siteShell";
 import TextLink from "../../components/site/textLink";
 import cx from "../../lib/cx";
 import style from "./index.module.css";
 
-// The tile select. A pill filter at the top picks the section (normal or esoteric games); the choice lives in
+// The tile select. Serif tabs at the top pick the section (normal or esoteric games); the choice lives in
 // the URL (?section=esoteric), so it survives back/forward and can be linked. Each tile opens /games/<id>.
 export default function GamesPage() {
     const router = useRouter();
@@ -41,11 +41,8 @@ export default function GamesPage() {
                     </p>
                 </header>
                 <div className={style.sectionPicker}>
-                    <PillFilter label="Game type" value={section.id} onChange={selectSection}
-                                options={SECTIONS.map((s) => ({
-                                    value: s.id,
-                                    label: `${s.title} · ${gamesIn(s.id).length}`,
-                                }))}/>
+                    <SectionTabs label="Game type" value={section.id} onChange={selectSection}
+                                 options={SECTIONS.map((s) => ({value: s.id, label: s.title, count: gamesIn(s.id).length}))}/>
                     <p className={style.sectionBlurb}>{section.blurb}</p>
                 </div>
                 <ul className={style.grid} aria-label={section.title}>

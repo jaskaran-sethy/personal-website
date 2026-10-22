@@ -1,0 +1,67 @@
+/* A row of serif section names over a hairline; the selected one gets a gold underline that sits on the rule. */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 40px;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab {
+    position: relative;
+    margin-bottom: -1px;
+    padding: 0 0 14px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-muted);
+    font-family: var(--font-display), serif;
+    font-size: 30px;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    cursor: pointer;
+    transition: color 150ms, border-color 150ms;
+}
+
+.tab:hover {
+    color: var(--text-secondary);
+}
+
+.tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.active, .active:hover {
+    border-bottom-color: var(--accent);
+    color: var(--text-primary);
+}
+
+.count {
+    margin-left: 4px;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: var(--mono-tracking);
+    vertical-align: super;
+    line-height: 0;
+    color: var(--text-muted);
+}
+
+.active .count {
+    color: var(--accent);
+}
+
+/* Phones: a touch smaller so two section names still sit side by side. */
+@media (max-width: 760px) {
+    .tabs {
+        gap: 8px 22px;
+    }
+
+    .tab {
+        padding-bottom: 10px;
+        font-size: 19px;
+    }
+
+    .count {
+        font-size: 11px;
+    }
+}
