@@ -3,10 +3,8 @@ import Metadata from "../components/metadata";
 import CroppedImage from "../components/site/croppedImage";
 import Eyebrow from "../components/site/eyebrow";
 import ExternalLink from "../components/site/externalLink";
-import ClientLogos from "../components/site/clientLogos";
 import FactList from "../components/site/factList";
-import Journey from "../components/site/journey";
-import Highlight from "../components/site/highlight";
+import JourneyTimeline from "../components/site/journey";
 import Icon from "../components/site/icon";
 import {lift, liftSmall} from "../components/site/lift";
 import Pill from "../components/site/pill";
@@ -21,12 +19,6 @@ import {shortTitle} from "../lib/postFormat";
 import {getAllPostsMeta} from "../lib/posts";
 import {EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL} from "../lib/site";
 import style from "./index.module.css";
-
-const HIGHLIGHTS = [
-    {value: "Gold Medal", label: "First Division with Distinction, Biotechnology, IIT Roorkee '22"},
-    {value: "$1M → $3M+", label: "Product Insights ARR growth at Sprinklr"},
-    {value: <ClientLogos/>, label: "Enterprise clients served by my NLP models at Sprinklr"},
-];
 
 const FEATURED_PROJECT = {
     title: "Breathe",
@@ -85,7 +77,6 @@ export default function HomePage({posts}) {
         <SiteShell>
             <Metadata title="Jaskaran Sethy" type="website"/>
             <Hero latestPost={posts[0]}/>
-            <Highlights/>
             <Projects/>
             <Writing posts={posts}/>
             <About/>
@@ -125,17 +116,6 @@ function Hero({latestPost}) {
                     <Icon name="map-pin" size={14} tone="accent"/>
                     Chandrashila
                 </span>
-            </div>
-        </section>
-    );
-}
-
-function Highlights() {
-    return (
-        <section className={style.achievements}>
-            <Journey/>
-            <div className={style.highlights}>
-                {HIGHLIGHTS.map((highlight) => <Highlight key={highlight.label} {...highlight}/>)}
             </div>
         </section>
     );
@@ -188,6 +168,10 @@ function About() {
                     software along the way. After a year and a half as a Data Scientist at Sprinklr, I now work across
                     data science and software engineering at Armor in Bengaluru.
                 </p>
+                {/* The schools and jobs from the paragraph above, with details for each. */}
+                <div className={style.aboutJourney}>
+                    <JourneyTimeline/>
+                </div>
                 <p className={cx(style.bio, liftSmall)}>
                     Outside work it's fitness, gaming, reading, music and content creation, whatever has my attention
                     this month.

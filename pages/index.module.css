@@ -151,20 +151,6 @@
 
 /* Highlights */
 
-/* The row of school and work icons, then the three highlights under it. */
-.achievements {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    padding: 56px var(--gutter) 0;
-}
-
-.highlights {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-}
-
 /* Projects */
 
 .projects {
@@ -267,6 +253,10 @@
     color: var(--text-secondary);
 }
 
+.aboutJourney {
+    margin: 8px 0;
+}
+
 /* Contact */
 
 .contact {
@@ -363,16 +353,6 @@
 
     .intro {
         font-size: 16px;
-    }
-
-    .achievements {
-        gap: 20px;
-        padding-top: 0;
-    }
-
-    .highlights {
-        grid-template-columns: 1fr;
-        gap: 24px;
     }
 
     .projects, .writing {

@@ -1,5 +1,6 @@
 import {useState} from "react";
 import cx from "../../lib/cx";
+import ClientLogos from "./clientLogos";
 import LogoMark from "./logoMark";
 import type from "./type.module.css";
 import style from "./journey.module.css";
@@ -33,10 +34,11 @@ const STOPS = [
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         points: [
-            "Grew Product Insights ARR from $1M to $3M+ for clients like Samsung, Amazon and Wells Fargo",
+            "Grew Product Insights ARR from $1M to $3M+ for enterprise clients",
             "Lifted NLP model F1 from 60% to 80%+ by fine-tuning and quantizing transformers",
             "Built a fine-tuned LLaMA 2 cataloguing system that saved 200+ hours of manual tagging",
         ],
+        clients: true,
     },
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
@@ -61,7 +63,7 @@ export default function Journey() {
         <div className={style.journey}>
             <ol className={style.row} aria-label="School, university and work, in order"
                 onPointerLeave={() => setPreviewing(null)}>
-                {STOPS.map(({id, inset, when, points, ...mark}) => (
+                {STOPS.map(({id, inset, when, points, clients, ...mark}) => (
                     <li key={id}>
                         <button type="button" aria-pressed={pinned === id} aria-controls="journey-detail"
                                 className={cx(style.medallion, style[`inset-${inset}`], pinned === id && style.pinned,
@@ -85,6 +87,12 @@ export default function Journey() {
                         <ul className={style.points}>
                             {stop.points.map((point) => <li key={point}>{point}</li>)}
                         </ul>
+                        {stop.clients ? (
+                            <div className={style.clients}>
+                                <span className={cx(type.kickerSmall, style.clientsLabel)}>CLIENTS</span>
+                                <ClientLogos/>
+                            </div>
+                        ) : null}
                     </div>
                 ))}
             </div>
