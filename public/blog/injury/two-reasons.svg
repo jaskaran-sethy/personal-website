@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420">
+  <defs>
+    <marker id="pull" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#71717A"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="420" fill="#141417"/>
+  <line x1="600" y1="50" x2="600" y2="370" stroke="#2A2A31" stroke-width="1"/>
+
+  <g font-family="ui-monospace, 'SFMono-Regular', Consolas, monospace" font-size="14" letter-spacing="2.5" fill="#9A9AA3">
+    <text x="80" y="88">REASON 1</text>
+    <text x="680" y="88">REASON 2</text>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="24" fill="#F4F4F5">
+    <text x="80" y="124">The weak link</text>
+    <text x="680" y="124">The overloaded link</text>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#9A9AA3">
+    <text x="80" y="330">Gives first because it's the weakest part</text>
+    <text x="680" y="330">Gives because everything else leaned on it</text>
+  </g>
+
+  <!-- Reason 1: an even chain with one thin link that parts -->
+  <g fill="none" stroke-linecap="round">
+    <line x1="100" y1="222" x2="40" y2="222" stroke="#71717A" stroke-width="2" marker-end="url(#pull)"/>
+    <line x1="470" y1="222" x2="540" y2="222" stroke="#71717A" stroke-width="2" marker-end="url(#pull)"/>
+    <g stroke="#5A5A64" stroke-width="7">
+      <rect x="100" y="200" width="90" height="44" rx="22"/>
+      <rect x="170" y="217" width="90" height="10" rx="5"/>
+      <rect x="310" y="217" width="90" height="10" rx="5"/>
+      <rect x="380" y="200" width="90" height="44" rx="22"/>
+    </g>
+    <!-- The thin link, open at the top -->
+    <path d="M272 200H262C250 200 240 210 240 222S250 244 262 244H308C320 244 330 234 330 222S320 200 308 200H298" stroke="#D4AF37" stroke-width="3"/>
+    <path d="M276 190L280 182M294 190L290 182" stroke="#D4AF37" stroke-width="2"/>
+  </g>
+
+  <!-- Reason 2: one link doing all the work while the rest hang slack -->
+  <g fill="none" stroke-linecap="round">
+    <line x1="680" y1="222" x2="620" y2="222" stroke="#71717A" stroke-width="2" marker-end="url(#pull)"/>
+    <line x1="1050" y1="222" x2="1120" y2="222" stroke="#71717A" stroke-width="2" marker-end="url(#pull)"/>
+    <g stroke="#4A4A54" stroke-width="3" stroke-dasharray="5 6">
+      <rect x="680" y="206" width="90" height="36" rx="18"/>
+      <rect x="750" y="219" width="80" height="8" rx="4"/>
+      <rect x="900" y="219" width="80" height="8" rx="4"/>
+      <rect x="960" y="206" width="90" height="36" rx="18"/>
+    </g>
+    <rect x="812" y="190" width="106" height="64" rx="32" stroke="#D4AF37" stroke-width="12"/>
+    <!-- The crack -->
+    <path d="M858 184L866 196L858 204L868 214" stroke="#141417" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+</svg>

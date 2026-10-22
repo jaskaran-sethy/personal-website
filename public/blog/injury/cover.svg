@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18181C"/>
+      <stop offset="1" stop-color="#0E0E10"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#D4AF37" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1D98B"/>
+      <stop offset="0.45" stop-color="#D4AF37"/>
+      <stop offset="1" stop-color="#A8842A"/>
+    </linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D4AF37" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#D4AF37" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#1F1F25" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="60" width="1080" height="480" fill="url(#grid)"/>
+  <line x1="60" y1="540" x2="1140" y2="540" stroke="#2A2A31" stroke-width="2"/>
+
+  <!-- The old best, for reference -->
+  <line x1="500" y1="250" x2="1120" y2="250" stroke="#4A4A54" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+  <!-- Training up to the injury -->
+  <path d="M120 480C220 450 300 420 360 360S460 270 500 250" stroke="#4A4A54" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- The drop -->
+  <path d="M500 250L560 470" stroke="#4A4A54" stroke-width="2" stroke-dasharray="3 7" fill="none"/>
+  <circle cx="500" cy="250" r="9" fill="#0E0E10" stroke="#71717A" stroke-width="2.5"/>
+  <circle cx="560" cy="470" r="7" fill="#71717A"/>
+
+  <!-- Progressing back, set by set, past the old best -->
+  <path d="M560 470H630V428H700V384H770V338H840V290H910V242H980V194H1060V150" fill="url(#fill)"/>
+  <path d="M560 470H630V428H700V384H770V338H840V290H910V242H980V194H1060V150" stroke="url(#gold)" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="1060" cy="150" r="90" fill="url(#glow)"/>
+  <circle cx="1060" cy="150" r="14" fill="url(#gold)"/>
+</svg>
