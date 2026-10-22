@@ -31,6 +31,9 @@ export const GAMES = [
     {id: "aura-farm", name: "Aura Farm", glyph: "✦", section: "esoteric",
         blurb: "Stay still to farm aura. Good calls double your multiplier; bad ones reset it.",
         Game: dynamic(() => import("./auraFarm"))},
+    {id: "aura-farm-idle", name: "Aura Farm Idle", glyph: "✧", section: "esoteric",
+        blurb: "Farm aura even while you're away. Build habits, buy upgrades, touch grass.",
+        Game: dynamic(() => import("./auraIdle"))},
 ];
 
 export const SECTIONS = [
