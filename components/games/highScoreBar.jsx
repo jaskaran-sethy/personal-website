@@ -1,0 +1,109 @@
+import {useEffect, useState} from "react";
+import cx from "../../lib/cx";
+import {readHighScore} from "../../lib/highScores";
+import Icon from "../site/icon";
+import style from "./highScoreBar.module.css";
+
+// How each game's high score is stored and read out. `lower` marks games where a smaller number wins.
+const SCORES = {
+    "tic-tac-toe": {key: "games.tictactoe.best", unit: ["win in a row", "wins in a row"]},
+    "memory": {key: "games.memory.best", unit: ["move", "moves"], lower: true},
+    "reaction": {key: "games.reaction.best", unit: ["ms average", "ms average"], lower: true},
+    "snake": {key: "games.snake.best", unit: ["point", "points"]},
+    "2048": {key: "games.2048.best", unit: ["point", "points"]},
+    "minesweeper": {key: "games.minesweeper.best", unit: ["second", "seconds"], lower: true},
+    "connect-four": {key: "games.connectfour.best", unit: ["win in a row", "wins in a row"]},
+    "sliding-puzzle": {key: "games.sliding.best", unit: ["move", "moves"], lower: true},
+    "word-guess": {key: "games.words.best", unit: ["word in a row", "words in a row"]},
+    "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
+    "lights-out": {key: "games.lightsout.best", unit: ["level", "levels"]},
+    "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
+    "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
+};
+
+// Jaskaran's own bests. null shows as "—" until a score is filled in.
+const DEV_SCORES = {
+    "tic-tac-toe": null,
+    "memory": null,
+    "reaction": null,
+    "snake": null,
+    "2048": null,
+    "minesweeper": null,
+    "connect-four": null,
+    "sliding-puzzle": null,
+    "word-guess": null,
+    "simon": null,
+    "lights-out": null,
+    "whack-a-mole": null,
+    "typing": null,
+};
+
+function format(value, unit) {
+    return `${value.toLocaleString()} ${value === 1 ? unit[0] : unit[1]}`;
+}
+
+export default function HighScoreBar({gameId, gameName}) {
+    const config = SCORES[gameId];
+    const dev = DEV_SCORES[gameId];
+    const [mine, setMine] = useState(null);
+    const [shared, setShared] = useState("");
+
+    // Games save their own bests as you play, so re-read every second to pick up a new one.
+    useEffect(() => {
+        const update = () => setMine(readHighScore(config.key));
+        update();
+        const interval = setInterval(update, 1000);
+        return () => clearInterval(interval);
+    }, [config.key]);
+
+    useEffect(() => {
+        if (!shared) return;
+        const timer = setTimeout(() => setShared(""), 2500);
+        return () => clearTimeout(timer);
+    }, [shared]);
+
+    const beatDev = mine !== null && dev !== null && (config.lower ? mine < dev : mine > dev);
+
+    async function share() {
+        const url = `${window.location.origin}/games?game=${gameId}`;
+        const text = `My high score in ${gameName}: ${format(mine, config.unit)}. Can you beat it?`;
+        if (navigator.share) {
+            try {
+                await navigator.share({title: `${gameName} high score`, text, url});
+                return;
+            } catch (error) {
+                if (error.name === "AbortError") return;
+            }
+        }
+        try {
+            await navigator.clipboard.writeText(`${text} ${url}`);
+            setShared("Copied to clipboard");
+        } catch {
+            setShared("Couldn't copy, sorry");
+        }
+    }
+
+    return (
+        <div className={style.bar}>
+            <div className={style.score}>
+                <span className={style.label}>MY HIGH SCORE</span>
+                <span className={cx(style.value, mine === null && style.empty)}>
+                    {mine === null ? "Not set yet" : format(mine, config.unit)}
+                </span>
+            </div>
+            <div className={style.score}>
+                <span className={style.label}>DEV'S HIGH SCORE</span>
+                <span className={cx(style.value, dev === null && style.empty)}>
+                    {dev === null ? "—" : format(dev, config.unit)}
+                </span>
+            </div>
+            <div className={style.actions}>
+                {beatDev ? <span className={style.badge}>You beat the dev!</span> : null}
+                <button type="button" className={style.share} onClick={share} disabled={mine === null}
+                        title={mine === null ? "Play a game to set a high score first" : undefined}>
+                    <Icon name="share" size={15}/> {shared || "Share my score"}
+                </button>
+            </div>
+        </div>
+    );
+}

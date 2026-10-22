@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {saveHighScore} from "../../lib/highScores";
 import style from "./games.module.css";
 
 const ROUNDS = 5;
@@ -17,6 +18,11 @@ export default function ReactionTime() {
     const last = times[times.length - 1];
     const average = times.length ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : null;
     const best = times.length ? Math.min(...times) : null;
+
+    // High score: the lowest average over a full set of rounds.
+    useEffect(() => {
+        if (done) saveHighScore("games.reaction.best", average, true);
+    }, [done]);
 
     function start() {
         setPhase("waiting");

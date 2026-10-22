@@ -1,0 +1,97 @@
+/* My high score, the dev's high score and a share button, in one strip above the game. */
+.bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    padding: 20px 24px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.value {
+    font-family: var(--font-display), serif;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+}
+
+.empty {
+    color: var(--text-muted);
+}
+
+.score:first-child .value:not(.empty) {
+    color: var(--accent);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.share {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 150ms, color 150ms;
+}
+
+.share:hover:not(:disabled) {
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+}
+
+.share:disabled {
+    border-color: var(--border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+    .bar {
+        gap: 16px 24px;
+        padding: 16px;
+    }
+
+    .value {
+        font-size: 18px;
+    }
+
+    .actions {
+        width: 100%;
+        margin-left: 0;
+    }
+}
