@@ -103,14 +103,14 @@ function Hero({latestPost}) {
                     obsessed with.
                 </p>
                 <Link href="/blog" className={cx(style.blogCta, lift)}>
-                    <span className={cx(type.kicker, type.accent)}>THE BLOG</span>
-                    <span className={style.blogCtaRow}>
+                    <span className={style.blogCtaText}>
+                        <span className={cx(type.kicker, type.accent)}>THE BLOG</span>
                         <span className={style.blogCtaTitle}>Notes on books, habits &amp; ideas</span>
-                        <span className={style.accentCircle}><Icon name="arrow-up-right" size={18}/></span>
+                        {latestPost ? (
+                            <span className={style.blogCtaSub}>Latest: {shortTitle(latestPost)}</span>
+                        ) : null}
                     </span>
-                    {latestPost ? (
-                        <span className={style.blogCtaSub}>Latest: {shortTitle(latestPost)}</span>
-                    ) : null}
+                    <span className={style.blogCtaGlyph} aria-hidden="true">→</span>
                 </Link>
             </div>
             <div className={style.photo}>

@@ -30,46 +30,57 @@
     color: var(--text-secondary);
 }
 
+/* A dark card with a large serif arrow glyph, rather than a gold rule and circle. */
 .blogCta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 523px;
+    margin-top: 8px;
+    padding: 30px 32px;
+    background: linear-gradient(150deg, #1A1918, #111111);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.blogCtaText {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
-    max-width: 388px;
-    margin-top: 8px;
-    padding-top: 18px;
-    border-top: 2px solid var(--accent);
-}
-
-.blogCtaRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
 }
 
 .blogCtaTitle {
     font-family: var(--font-display), serif;
-    font-size: 20px;
+    font-size: 26px;
     letter-spacing: -0.5px;
-    line-height: 1.35;
+    line-height: 1.25;
 }
 
-.accentCircle {
+.blogCtaGlyph {
     flex: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    background: var(--accent-gradient);
-    color: var(--accent-ink);
+    font-family: var(--font-display), serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
     transition: transform 150ms;
 }
 
-.blogCta:hover .accentCircle {
-    transform: translate(2px, -2px);
+.blogCta:hover .blogCtaGlyph {
+    transform: translateX(4px);
+}
+
+@media (max-width: 480px) {
+    .blogCta {
+        padding: 24px 20px;
+        gap: 16px;
+    }
+
+    .blogCtaTitle {
+        font-size: 22px;
+    }
 }
 
 .blogCtaSub {
