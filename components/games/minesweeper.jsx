@@ -155,7 +155,7 @@ export default function Minesweeper() {
     else status = flagMode ? "Tap a square to flag it" : "Tap a square to dig";
 
     return (
-        <div className={style.game}>
+        <div className={style.game} style={{"--board-reserve": "470px"}}>
             <p className={style.status} aria-live="polite">{status}</p>
             <div className={style.toggle} role="group" aria-label="Tap mode">
                 <button type="button" aria-pressed={!flagMode} className={cx(style.toggleOption, !flagMode && style.toggleActive)}

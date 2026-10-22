@@ -171,7 +171,7 @@ export default function Snake() {
     else status = <>Score <em>{game.score}</em></>;
 
     return (
-        <div className={style.game}>
+        <div className={style.game} style={{"--board-reserve": "480px"}}>
             <p className={style.status} aria-live="polite">{status}</p>
             <div className={cx(own.board, phase === "over" && own.boardOver)} role="img"
                  aria-label={`Snake board, score ${game.score}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>

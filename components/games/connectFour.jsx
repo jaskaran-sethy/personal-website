@@ -148,7 +148,7 @@ export default function ConnectFour() {
     else status = vsComputer ? "Your move" : <><em>{name(turn)}</em> to play</>;
 
     return (
-        <div className={style.game}>
+        <div className={style.game} style={{"--board-reserve": "480px"}}>
             <div className={style.controls}>
                 <button type="button" className={cx(style.button, vsComputer && style.buttonActive)}
                         onClick={() => switchMode(true)}>vs Computer</button>

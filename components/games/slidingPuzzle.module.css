@@ -3,7 +3,7 @@
 .board {
     --inset: 6px;
     position: relative;
-    width: min(100%, 360px);
+    width: min(100%, 360px, var(--board-max));
     aspect-ratio: 1;
     box-sizing: border-box;
     border: 1px solid var(--card-border);

@@ -80,6 +80,29 @@
     cursor: not-allowed;
 }
 
+/* Beside the game (wide screens) the card is a narrow column: scores stacked, share button full width. */
+@media (min-width: 1101px) {
+    .bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+        margin-left: 0;
+    }
+
+    .badge {
+        align-self: flex-start;
+    }
+
+    .share {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 760px) {
     .bar {
         gap: 16px 24px;

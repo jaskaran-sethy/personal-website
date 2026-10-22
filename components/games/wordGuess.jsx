@@ -139,7 +139,7 @@ export default function WordGuess() {
     else status = `Guess ${guesses.length + 1} of ${ROWS}`;
 
     return (
-        <div className={style.game}>
+        <div className={style.game} style={{"--board-reserve": "510px"}}>
             <p className={style.status} aria-live="polite">{status}</p>
             <div className={wg.board} role="grid" aria-label="Guesses">
                 {rows.map((row, r) => (

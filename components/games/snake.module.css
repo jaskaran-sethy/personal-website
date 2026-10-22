@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: repeat(16, 1fr);
     gap: 1px;
-    width: min(100%, 384px);
+    width: min(100%, 384px, var(--board-max));
     aspect-ratio: 1;
     padding: 3px;
     box-sizing: border-box;
@@ -79,3 +79,10 @@
 .down { grid-area: down; }
 .left { grid-area: left; }
 .right { grid-area: right; }
+
+/* With a mouse and keyboard the arrow keys steer, so the on-screen cross only shows on touch screens. */
+@media (pointer: fine) {
+    .pad {
+        display: none;
+    }
+}

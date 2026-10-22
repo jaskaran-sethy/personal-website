@@ -153,7 +153,7 @@ export default function Simon() {
     else status = <>Game over after <em>{score}</em> {score === 1 ? "round" : "rounds"}</>;
 
     return (
-        <div className={style.game}>
+        <div className={style.game} style={{"--board-reserve": "450px"}}>
             <div className={style.toggle} role="group" aria-label="Sound">
                 <button type="button" aria-pressed={!muted} className={cx(style.toggleOption, !muted && style.toggleActive)}
                         onClick={() => setSound(true)}>Sound</button>

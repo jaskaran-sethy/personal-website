@@ -48,7 +48,7 @@ export default function GamesPage() {
     return (
         <SiteShell>
             <Metadata title={active ? `${active.name} · Games · Jaskaran Sethy` : "Games · Jaskaran Sethy"} url="/games"/>
-            <main className={style.games}>
+            <main className={cx(style.games, active && style.playing)}>
                 {active ? <GameView game={active}/> : <GameGrid/>}
             </main>
         </SiteShell>
@@ -86,28 +86,33 @@ function GameGrid() {
     );
 }
 
+// The game comes first: a slim bar (back, title, next) above it, and the blurb and high scores beside it
+// on wide screens (below it on narrow ones), so the board is on screen without scrolling.
 function GameView({game}) {
     const {Game} = game;
     const next = GAMES[(GAMES.indexOf(game) + 1) % GAMES.length];
     return (
         <>
-            <header className={style.gameHeader}>
-                <nav className={style.gameNav} aria-label="Games">
-                    <Link href="/games" className={style.navButton}>
-                        <Icon name="arrow-left" size={16}/> All games
-                    </Link>
-                    <Link href={{pathname: "/games", query: {game: next.id}}} className={cx(style.navButton, style.navNext)}>
-                        <span className={style.navNextLabel}>Next: <span className={style.navNextName}>{next.name}</span></span>
-                        <Icon name="arrow-right" size={16}/>
-                    </Link>
-                </nav>
-                <h1 className={cx(style.gameTitle, liftSmall)}>{game.name}</h1>
-                <p className={style.gameBlurb}>{game.blurb}</p>
+            <header className={style.gameBar}>
+                <Link href="/games" className={style.navButton} aria-label="All games">
+                    <Icon name="arrow-left" size={16}/> <span className={style.navWide}>All games</span><span className={style.navNarrow}>Games</span>
+                </Link>
+                <h1 className={style.gameTitle}>{game.name}</h1>
+                <Link href={{pathname: "/games", query: {game: next.id}}} className={cx(style.navButton, style.navNext)}
+                      aria-label={`Next game: ${next.name}`}>
+                    <span className={style.navNextLabel}>Next<span className={style.navWide}>: <span className={style.navNextName}>{next.name}</span></span></span>
+                    <Icon name="arrow-right" size={16}/>
+                </Link>
             </header>
-            {hasHighScore(game.id) ? <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/> : null}
-            <section className={style.stage} aria-label={game.name}>
-                <Game key={game.id}/>
-            </section>
+            <div className={style.playArea}>
+                <section className={style.stage} aria-label={game.name}>
+                    <Game key={game.id}/>
+                </section>
+                <aside className={style.side}>
+                    <p className={style.gameBlurb}>{game.blurb}</p>
+                    {hasHighScore(game.id) ? <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/> : null}
+                </aside>
+            </div>
         </>
     );
 }

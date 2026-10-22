@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
-    width: min(100%, 420px);
+    width: min(100%, 420px, var(--board-max) * 7 / 6);
     aspect-ratio: 7 / 6;
     padding: 6px;
     box-sizing: border-box;

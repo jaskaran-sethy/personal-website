@@ -7,7 +7,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: var(--gap);
-    width: min(100%, 360px);
+    width: min(100%, 360px, var(--board-max));
     aspect-ratio: 1;
     padding: var(--gap);
     box-sizing: border-box;
@@ -41,9 +41,17 @@
     will-change: transform;
 }
 
-/* The two halves of a merge finish their slide under the new tile, then get dropped on the next move. */
+/* The two halves of a merge finish their slide under the new tile, then fade out (the gold tints are
+   see-through, so they'd show behind it) and get dropped on the next move. */
 .gone {
     z-index: 1;
+    animation: vanish 80ms 110ms forwards;
+}
+
+@keyframes vanish {
+    to {
+        opacity: 0;
+    }
 }
 
 .face {
@@ -54,7 +62,7 @@
     height: 100%;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background: #16161A;
+    background-color: #16161A;
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 11cqi;
@@ -80,35 +88,35 @@
 
 .v8 {
     border-color: rgba(212, 175, 55, 0.25);
-    background: rgba(212, 175, 55, 0.08);
+    background: linear-gradient(rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.08)), #16161A;
 }
 
 .v16 {
     border-color: rgba(212, 175, 55, 0.35);
-    background: rgba(212, 175, 55, 0.15);
+    background: linear-gradient(rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.15)), #16161A;
 }
 
 .v32 {
     border-color: rgba(212, 175, 55, 0.45);
-    background: rgba(212, 175, 55, 0.22);
+    background: linear-gradient(rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.22)), #16161A;
     color: #F1D98B;
 }
 
 .v64 {
     border-color: rgba(212, 175, 55, 0.55);
-    background: rgba(212, 175, 55, 0.32);
+    background: linear-gradient(rgba(212, 175, 55, 0.32), rgba(212, 175, 55, 0.32)), #16161A;
     color: #F1D98B;
 }
 
 .v128 {
     border-color: rgba(212, 175, 55, 0.7);
-    background: rgba(212, 175, 55, 0.45);
+    background: linear-gradient(rgba(212, 175, 55, 0.45), rgba(212, 175, 55, 0.45)), #16161A;
     color: #FBF1D0;
 }
 
 .v256 {
     border-color: var(--accent);
-    background: rgba(212, 175, 55, 0.6);
+    background: linear-gradient(rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.6)), #16161A;
     color: #FFF8E1;
 }
 
@@ -217,5 +225,10 @@
 
     .tile {
         transition: none;
+    }
+
+    .gone {
+        animation: none;
+        opacity: 0;
     }
 }

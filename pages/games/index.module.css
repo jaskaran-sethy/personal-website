@@ -102,29 +102,37 @@
     color: var(--text-subtle);
 }
 
-/* A single open game. */
-.gameHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+/* A single open game: less space above, and everything else tucks in tighter around the board. */
+.playing {
+    gap: 20px;
+    padding-top: 20px;
 }
 
-/* "All games" on the left, "Next" on the right. Each is a 44px-tall pill: easy to hit,
-   but with a gap between them and the title so a stray tap doesn't land on one. */
-.gameNav {
-    display: flex;
-    justify-content: space-between;
+/* Back, title and next in one slim row. The two links are 44px-tall pills: easy to hit,
+   but with the title between them so a stray tap doesn't land on one. */
+.gameBar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 16px;
-    align-self: stretch;
-    margin: 0 -16px 8px;
+    gap: 12px;
+    margin: 0 -16px;
+}
+
+.gameTitle {
+    font-family: var(--font-display), serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .navButton {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    justify-self: start;
+    min-width: 0;
     min-height: 44px;
     padding: 0 16px;
     box-sizing: border-box;
@@ -133,6 +141,7 @@
     font-size: 12px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    white-space: nowrap;
     color: var(--text-secondary) !important;
     transition: background 150ms, color 150ms;
 }
@@ -147,14 +156,12 @@
 }
 
 .navNext {
-    min-width: 0;
-    text-align: right;
+    justify-self: end;
 }
 
 .navNextLabel {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .navNextName {
@@ -165,23 +172,52 @@
     color: var(--accent);
 }
 
-.gameTitle {
-    font-family: var(--font-display), serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
+.navNarrow {
+    display: none;
+}
+
+/* The game and its side panel (blurb + high scores). Side by side on wide screens, stacked on narrow ones. */
+.playArea {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: start;
+    gap: 20px;
+}
+
+.side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .gameBlurb {
-    font-size: 16px;
+    padding: 20px 24px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    font-size: 15px;
+    line-height: 1.5;
     color: var(--text-secondary);
+}
+
+@media (max-width: 1100px) {
+    .playArea {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .gameBlurb {
+        padding: 0;
+        border: none;
+        background: none;
+        text-align: center;
+        color: var(--text-subtle);
+    }
 }
 
 .stage {
     display: flex;
     justify-content: center;
-    padding: 56px 24px;
+    padding: 36px 24px;
     border: 1px solid var(--card-border);
     background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.06), transparent 60%), var(--card);
 }
@@ -225,6 +261,33 @@
     }
 
     .stage {
-        padding: 32px 12px;
+        padding: 20px 12px 24px;
+    }
+
+    .playing {
+        gap: 16px;
+        padding-top: 12px;
+    }
+
+    .gameBar {
+        gap: 4px;
+        margin: 0 -12px;
+    }
+
+    .gameTitle {
+        font-size: 19px;
+    }
+
+    .navButton {
+        gap: 6px;
+        padding: 0 12px;
+    }
+
+    .navWide {
+        display: none;
+    }
+
+    .navNarrow {
+        display: inline;
     }
 }

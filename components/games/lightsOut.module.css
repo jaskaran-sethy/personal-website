@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 6px;
-    width: min(100%, 320px);
+    width: min(100%, 320px, var(--board-max));
 }
 
 .cell {

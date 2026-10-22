@@ -1,10 +1,14 @@
 /* Shared pieces for the games on /games: the layout column, status line, scoreboard and buttons. */
 
+/* --board-max caps each board by screen height, so the whole board fits on screen without scrolling.
+   --board-reserve is the room everything else needs (site nav, title bar, status, scores, buttons);
+   games with extra rows of controls raise it on their root element. */
 .game {
+    --board-max: max(220px, calc(100svh - var(--board-reserve, 390px)));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 18px;
     width: 100%;
     max-width: 440px;
 }
@@ -12,7 +16,7 @@
 .status {
     min-height: 1.3em;
     font-family: var(--font-display), serif;
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: -0.02em;
     text-align: center;
 }
@@ -121,7 +125,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    width: min(100%, 312px);
+    width: min(100%, 312px, var(--board-max));
 }
 
 .tttCell {
@@ -163,7 +167,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    width: min(100%, 360px);
+    width: min(100%, 360px, var(--board-max));
 }
 
 .memoryCard {
