@@ -95,7 +95,7 @@ export default function Game2048() {
     const [game, setGame] = useState({tiles: [], score: 0, gained: 0, turn: 0});
     const [keepGoing, setKeepGoing] = useState(false);
     const [best, setBest] = useState(0);
-    const touch = useRef(null);
+    const swipe = useRef(null);
 
     const live = liveTiles(game.tiles);
     const started = live.length > 0;
@@ -136,25 +136,30 @@ export default function Game2048() {
         }
     }
 
+    swipe.current = move;
+
     function newGame() {
         setGame(freshGame());
         setKeepGoing(false);
     }
 
-    function onTouchStart(e) {
-        const t = e.touches[0];
-        touch.current = {x: t.clientX, y: t.clientY};
-    }
-
-    function onTouchEnd(e) {
-        if (!touch.current) return;
-        const t = e.changedTouches[0];
-        const dx = t.clientX - touch.current.x;
-        const dy = t.clientY - touch.current.y;
-        touch.current = null;
-        if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
-        if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? "right" : "left");
-        else move(dy > 0 ? "down" : "up");
+    // Swipes: one handler for mouse drags, touch and pens. The release is watched on window, so a drag that
+    // ends outside the board still counts. Presses on the overlay's buttons aren't swipes.
+    function onPointerDown(e) {
+        if (e.button !== 0 || e.target.closest("button")) return;
+        const start = {x: e.clientX, y: e.clientY};
+        function onUp(up) {
+            window.removeEventListener("pointerup", onUp);
+            window.removeEventListener("pointercancel", onUp);
+            if (up.type === "pointercancel") return;
+            const dx = up.clientX - start.x;
+            const dy = up.clientY - start.y;
+            if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+            if (Math.abs(dx) > Math.abs(dy)) swipe.current(dx > 0 ? "right" : "left");
+            else swipe.current(dy > 0 ? "down" : "up");
+        }
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
     }
 
     let status;
@@ -165,7 +170,7 @@ export default function Game2048() {
     return (
         <div className={style.game}>
             <p className={style.status} aria-live="polite">{status}</p>
-            <div className={own.board} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+            <div className={own.board} onPointerDown={onPointerDown}
                  role="group" aria-label="2048 board">
                 {Array.from({length: 16}, (_, i) => <div key={i} className={own.cell}/>)}
                 <div className={own.tiles}>

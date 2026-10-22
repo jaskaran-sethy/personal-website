@@ -16,6 +16,11 @@
     container-type: inline-size;
     touch-action: none;
     user-select: none;
+    cursor: grab;
+}
+
+.board:active {
+    cursor: grabbing;
 }
 
 .cell {
