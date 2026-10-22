@@ -151,11 +151,11 @@
 
 /* Highlights */
 
-/* The timeline of schools and jobs, then the three highlights under it. */
+/* The row of school and work icons, then the three highlights under it. */
 .achievements {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 28px;
     padding: 56px var(--gutter) 0;
 }
 
@@ -366,7 +366,7 @@
     }
 
     .achievements {
-        gap: 32px;
+        gap: 20px;
         padding-top: 0;
     }
 

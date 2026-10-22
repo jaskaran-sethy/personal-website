@@ -5,7 +5,8 @@ import style from "./logoMark.module.css";
 // - `path` + `viewBox`: an inline SVG path drawn in the current text colour (e.g. from Simple Icons),
 // - `src`: an image file under /public (for marks that need their own colours),
 // - neither: the name set as a plain wordmark, a stand-in until a real mark is added.
-// `shape` sizes it by eye: "wordmark" (wide and short), "badge" (square), or "crest" (a bit taller).
+// `shape` sizes it by eye: "wordmark" (caps only), "logo" (letters plus a symbol), "badge" (square), "crest"
+// (a bit taller), or "fill" (fills its container).
 export default function LogoMark({name, path, viewBox, src, shape = "wordmark", className}) {
     const sizing = cx(style.mark, style[shape], className);
     if (path) {

@@ -1,51 +1,51 @@
-/* A left-to-right timeline. Each stop takes an equal share of the row; inside it, the mark keeps its natural
-   width and a hairline runs from the mark to the start of the next stop, so the line reads as one path. */
+/* A plain row of four icon tiles. */
 .journey {
     display: flex;
+    gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.stop {
-    flex: 1;
-    min-width: 0;
+/* Cream to match Armor's own icon, so all four read as one set. */
+.tile {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    color: var(--text-primary);
-}
-
-.markRow {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 16px;
-    min-height: 36px;
-    padding-right: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 9px;
+    background: #F5F2ED;
+    overflow: hidden;
 }
 
-.line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border), var(--text-muted));
+.fullBleed {
+    padding: 0;
 }
 
-.caption {
-    color: var(--text-subtle);
-}
-
-.stop:last-child .caption {
-    color: var(--accent);
+.tight {
+    padding: 2px;
 }
 
 @media (max-width: 760px) {
     .journey {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px 16px;
+        gap: 10px;
     }
 
-    .line {
-        display: none;
+    .tile {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        border-radius: 8px;
+    }
+
+    .fullBleed {
+        padding: 0;
+    }
+
+    .tight {
+        padding: 2px;
     }
 }
