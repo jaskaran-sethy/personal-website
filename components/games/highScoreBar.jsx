@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
 import {readHighScore} from "../../lib/highScores";
+import {gamePath} from "./registry";
 import Icon from "../site/icon";
 import style from "./highScoreBar.module.css";
 
@@ -64,7 +65,7 @@ export default function HighScoreBar({gameId, gameName}) {
     const beatJaskaran = mine !== null && jaskaran !== null && (config.lower ? mine < jaskaran : mine > jaskaran);
 
     async function share() {
-        const url = `${window.location.origin}/games?game=${gameId}`;
+        const url = `${window.location.origin}${gamePath(gameId)}`;
         const text = `My high score in ${gameName}: ${format(mine, config.unit)}. Can you beat it?`;
         const data = {title: `${gameName} high score`, text, url};
         // Phones and tablets get the system share sheet; computers just copy, which is what people expect there.
