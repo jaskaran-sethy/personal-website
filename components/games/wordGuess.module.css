@@ -72,7 +72,7 @@
     flex-grow: 1.6;
     max-width: 64px;
     font-size: 11px;
-    letter-spacing: 0.5px;
+    letter-spacing: var(--mono-tracking);
 }
 
 /* Shared by tiles and keys. */

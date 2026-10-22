@@ -3,7 +3,7 @@
 .kicker, .kickerSmall, .meta {
     font-family: var(--font-mono), monospace;
     font-size: 12px;
-    letter-spacing: 1.5px;
+    letter-spacing: var(--mono-tracking);
 }
 
 .kickerSmall {
@@ -11,7 +11,7 @@
 }
 
 .meta {
-    letter-spacing: 1px;
+    letter-spacing: var(--mono-tracking);
     line-height: 1.5;
     color: var(--text-subtle);
 }

@@ -81,7 +81,7 @@
     padding: 0 48px;
     font-family: var(--font-mono), monospace;
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: var(--mono-tracking);
     line-height: 1.6;
     color: var(--text-subtle);
     text-align: center;

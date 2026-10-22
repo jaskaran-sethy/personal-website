@@ -12,7 +12,7 @@
     color: var(--text-secondary) !important;
     font-family: var(--font-mono), monospace;
     font-size: 11px;
-    letter-spacing: 1.5px;
+    letter-spacing: var(--mono-tracking);
     text-transform: uppercase;
     cursor: pointer;
 }

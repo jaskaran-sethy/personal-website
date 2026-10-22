@@ -12,6 +12,8 @@
     /* Brushed gold for larger gold surfaces; text and hairlines use the flat --accent. */
     --accent-gradient: linear-gradient(135deg, #F1D98B 0%, #D4AF37 42%, #A8842A 100%);
     --accent-ink: #1C1606;
+    /* Letter-spacing for every JetBrains Mono label (eyebrows, kickers, stat labels, pills). */
+    --mono-tracking: 0.05em;
     --gutter: 64px;
 
     min-height: 100vh;

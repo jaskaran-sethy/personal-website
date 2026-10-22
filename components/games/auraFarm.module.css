@@ -136,7 +136,7 @@
     gap: 6px;
     font-family: var(--font-mono), monospace;
     font-size: 10px;
-    letter-spacing: 1.2px;
+    letter-spacing: var(--mono-tracking);
     color: var(--text-muted);
 }
 
@@ -376,7 +376,7 @@
     min-height: 2.4em;
     font-family: var(--font-mono), monospace;
     font-size: 9.5px;
-    letter-spacing: 1px;
+    letter-spacing: var(--mono-tracking);
     line-height: 1.2;
     text-align: center;
     text-transform: uppercase;
