@@ -40,7 +40,7 @@ const GAMES = [
     {id: "typing", name: "Typing Test", glyph: "wpm", blurb: "How many words a minute can you type?",
         Game: dynamic(() => import("../../components/games/typingTest"))},
     {id: "aura-farm", name: "Aura Farm", glyph: "✦", section: "esoteric",
-        blurb: "Gain aura by staying perfectly still. Resist the urge to explain yourself.",
+        blurb: "Stay still to farm aura. Good calls double your multiplier; bad ones reset it.",
         Game: dynamic(() => import("../../components/games/auraFarm"))},
 ];
 

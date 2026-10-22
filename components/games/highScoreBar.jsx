@@ -20,7 +20,7 @@ const SCORES = {
 };
 
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
-const DEV_SCORES = {
+const JASKARAN_SCORES = {
     "memory": 13,
     "reaction": 242,
     "snake": 56,
@@ -30,7 +30,7 @@ const DEV_SCORES = {
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
-    "aura-farm": 6840,
+    "aura-farm": 264512,
 };
 
 export function hasHighScore(gameId) {
@@ -43,7 +43,7 @@ function format(value, unit) {
 
 export default function HighScoreBar({gameId, gameName}) {
     const config = SCORES[gameId];
-    const dev = DEV_SCORES[gameId];
+    const jaskaran = JASKARAN_SCORES[gameId];
     const [mine, setMine] = useState(null);
     const [shared, setShared] = useState("");
 
@@ -61,7 +61,7 @@ export default function HighScoreBar({gameId, gameName}) {
         return () => clearTimeout(timer);
     }, [shared]);
 
-    const beatDev = mine !== null && dev !== null && (config.lower ? mine < dev : mine > dev);
+    const beatJaskaran = mine !== null && jaskaran !== null && (config.lower ? mine < jaskaran : mine > jaskaran);
 
     async function share() {
         const url = `${window.location.origin}/games?game=${gameId}`;
@@ -95,13 +95,13 @@ export default function HighScoreBar({gameId, gameName}) {
                 </span>
             </div>
             <div className={style.score}>
-                <span className={style.label}>DEV'S HIGH SCORE</span>
-                <span className={cx(style.value, dev === null && style.empty)}>
-                    {dev === null ? "—" : format(dev, config.unit)}
+                <span className={style.label}>JASKARAN'S HIGH SCORE</span>
+                <span className={cx(style.value, jaskaran === null && style.empty)}>
+                    {jaskaran === null ? "—" : format(jaskaran, config.unit)}
                 </span>
             </div>
             <div className={style.actions}>
-                {beatDev ? <span className={style.badge}>You beat the dev!</span> : null}
+                {beatJaskaran ? <span className={style.badge}>You beat Jaskaran!</span> : null}
                 <button type="button" className={style.share} onClick={share} disabled={mine === null}
                         title={mine === null ? "Play a game to set a high score first" : undefined}>
                     <Icon name="share" size={15}/> {shared || "Share my score"}

@@ -1,4 +1,4 @@
-/* My high score, the dev's high score and a share button, in one strip above the game. */
+/* My high score, Jaskaran's high score and a share button, next to (or below) the game. */
 .bar {
     display: flex;
     flex-wrap: wrap;

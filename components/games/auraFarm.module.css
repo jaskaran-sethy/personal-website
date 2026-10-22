@@ -1,8 +1,17 @@
 /* Aura Farm */
 
+.arena {
+    position: relative;
+    display: grid;
+    grid-template-columns: min(400px, var(--board-max), calc(100% - 84px)) 72px;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+}
+
 .field {
     position: relative;
-    width: min(100%, 400px, var(--board-max));
+    width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
     border: 1px solid var(--card-border);
@@ -34,41 +43,188 @@
     opacity: 1;
 }
 
-/* Temptations: plain, slightly pushy pills that fade out over their 2.6s. */
-.temptation {
+/* Hot pocket: a warm patch of aura that breathes while it lasts and lights up when you're resting in it. */
+.pocket {
     position: absolute;
-    z-index: 2;
-    max-width: 46%;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1;
+    border: 1.5px dashed rgba(241, 217, 139, 0.55);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(241, 217, 139, 0.28), rgba(212, 175, 55, 0.08) 60%, transparent 72%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pocketIn 400ms ease-out, breathe 1400ms ease-in-out 400ms infinite alternate;
+}
+
+.pocketActive {
+    border-style: solid;
+    border-color: #F1D98B;
+    box-shadow: 0 0 24px rgba(241, 217, 139, 0.45);
+}
+
+.pocketLabel {
+    font-family: var(--font-display), serif;
+    font-size: 16px;
+    color: #F1D98B;
+}
+
+@keyframes pocketIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+}
+
+@keyframes breathe {
+    to {
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+}
+
+/* A decision freezes time: the field dims and desaturates, and the card comes up in the middle. */
+.frozen .aura {
+    filter: grayscale(1);
+    opacity: 0.4;
+}
+
+.freeze {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    background: rgba(10, 10, 12, 0.55);
+    backdrop-filter: grayscale(0.8);
+    animation: freezeIn 160ms ease-out;
+}
+
+@keyframes freezeIn {
+    from {
+        background: rgba(10, 10, 12, 0);
+    }
+}
+
+/* The card: a tiny app notification. */
+.bait {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: min(100%, 280px);
+    padding: 14px 16px 16px;
+    box-sizing: border-box;
+    border: 1px solid #2C2C34;
+    border-radius: 14px;
+    background: #1B1B21;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    animation: cardIn 220ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.94);
+    }
+}
+
+.baitApp {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono), monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+}
+
+/* Countdown: drains left to right over the decision's time limit, turning red near the end. */
+.countdown {
+    height: 3px;
     border-radius: 999px;
-    background: #1D1D23;
+    background: linear-gradient(90deg, #E5484D, #D4AF37 30%, #F1D98B);
+    transform-origin: left;
+    animation: drain var(--limit) linear forwards;
+}
+
+@keyframes drain {
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* The red "unread" dot. */
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #E5484D;
+    box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.18);
+}
+
+.baitText {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--text-primary);
+}
+
+/* A spell-check squiggle under the mistake. */
+.typo {
+    text-decoration: underline wavy #E5484D;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+}
+
+/* Both choices look the same, so judgment calls give nothing away. */
+.choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.choice {
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 10px;
+    background: rgba(212, 175, 55, 0.08);
     color: var(--text-primary);
     font: inherit;
     font-size: 13px;
+    font-weight: 500;
     line-height: 1.25;
-    text-align: center;
     cursor: pointer;
-    transform: translate(-50%, -50%);
-    animation: tempt 2600ms ease-in forwards;
+    transition: background 120ms, border-color 120ms;
 }
 
-.temptation:hover {
-    border-color: var(--text-muted);
+.choice:hover {
+    border-color: var(--accent);
+    background: rgba(212, 175, 55, 0.18);
 }
 
-@keyframes tempt {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -30%);
+/* On bait cards, the trap is dressed up: solid brushed gold that pulses, begging to be clicked. */
+.lure {
+    border-color: transparent;
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+    font-weight: 600;
+    animation: beg 900ms ease-in-out infinite alternate;
+}
+
+.lure:hover {
+    background: var(--accent-gradient);
+    filter: brightness(1.1);
+}
+
+@keyframes beg {
+    from {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55);
     }
-    12%, 70% {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -70%);
+    to {
+        box-shadow: 0 0 0 7px rgba(212, 175, 55, 0);
     }
 }
 
@@ -108,7 +264,7 @@
 
 .floater {
     position: absolute;
-    z-index: 4;
+    z-index: 5;
     font-family: var(--font-display), serif;
     font-size: 15px;
     white-space: nowrap;
@@ -139,7 +295,7 @@
 .overlay {
     position: absolute;
     inset: 0;
-    z-index: 5;
+    z-index: 6;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -163,14 +319,122 @@
     color: var(--accent);
 }
 
+/* Side column: avatar, current rank, and a vertical meter that fills the rest of the field's height. */
+.side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-height: 0;
+}
+
+.avatar {
+    width: 64px;
+    height: 72px;
+    overflow: visible;
+}
+
+.head {
+    transform-origin: 32px 58px;
+}
+
+.nodding .head {
+    animation: nod 700ms ease-in-out;
+}
+
+@keyframes nod {
+    35% {
+        transform: rotate(0) translateY(4px);
+    }
+    65% {
+        transform: translateY(-1px);
+    }
+}
+
+.halo {
+    animation: float 1600ms ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    to {
+        transform: translateY(-2px);
+    }
+}
+
+.sparkles {
+    animation: twinkle 1100ms ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.35;
+    }
+}
+
+.rankLabel {
+    min-height: 2.4em;
+    font-family: var(--font-mono), monospace;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.meter {
+    position: relative;
+    flex: 1;
+    width: 14px;
+    min-height: 80px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #111114;
+    overflow: hidden;
+}
+
+.meterNegative {
+    border-color: #7F1D1D;
+    background: rgba(127, 29, 29, 0.2);
+}
+
+.meterFill {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(0deg, #A8842A, #D4AF37 60%, #F1D98B);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+    transition: height 200ms ease-out;
+}
+
+/* A notch at each rank threshold. */
+.tick {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+}
+
+.tickReached {
+    background: var(--accent-ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .temptation, .floater {
+    .floater {
         animation-duration: 1ms;
         animation-delay: 0ms;
     }
 
-    .temptation {
+    .freeze, .bait, .lure, .halo, .sparkles, .nodding .head, .pocket {
         animation: none;
+    }
+
+    /* The countdown is information, not decoration, so it keeps running. */
+
+    .meterFill {
+        transition: none;
     }
 
     .moment {
