@@ -1,0 +1,241 @@
+/* Shared pieces for the games on /games: the layout column, status line, scoreboard and buttons. */
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.status {
+    min-height: 1.3em;
+    font-family: var(--font-display), serif;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+.status em {
+    font-style: normal;
+    color: var(--accent);
+}
+
+.scores {
+    display: flex;
+    gap: 32px;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.score strong {
+    font-family: var(--font-display), serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--text-primary);
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 150ms, background 150ms;
+}
+
+.button:hover {
+    border-color: var(--text-muted);
+    background: var(--surface);
+}
+
+.buttonActive {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Tic Tac Toe */
+
+.tttBoard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: min(100%, 312px);
+}
+
+.tttCell {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--card-border);
+    background: #111114;
+    color: var(--text-primary);
+    font-family: var(--font-display), serif;
+    font-size: 48px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 150ms, border-color 150ms;
+}
+
+.tttCell:hover:not(:disabled) {
+    border-color: var(--text-muted);
+    background: var(--surface);
+}
+
+.tttCell:disabled {
+    cursor: default;
+}
+
+.tttO {
+    color: var(--accent);
+}
+
+.tttWin {
+    border-color: var(--accent);
+    background: rgba(212, 175, 55, 0.12);
+}
+
+/* Memory Match */
+
+.memoryBoard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: min(100%, 360px);
+}
+
+.memoryCard {
+    aspect-ratio: 1;
+    padding: 0;
+    border: none;
+    background: transparent;
+    perspective: 600px;
+    cursor: pointer;
+}
+
+.memoryCard:disabled {
+    cursor: default;
+}
+
+.memoryInner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 350ms;
+}
+
+.memoryFlipped .memoryInner {
+    transform: rotateY(180deg);
+}
+
+.memoryBack, .memoryFace {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--card-border);
+    backface-visibility: hidden;
+}
+
+.memoryBack {
+    background: repeating-linear-gradient(135deg, #16161A 0 6px, #1B1B20 6px 12px);
+}
+
+.memoryCard:hover:not(:disabled) .memoryBack {
+    border-color: var(--text-muted);
+}
+
+.memoryFace {
+    transform: rotateY(180deg);
+    background: #111114;
+    font-family: var(--font-display), serif;
+    font-size: 32px;
+    color: var(--text-primary);
+}
+
+.memoryMatched .memoryFace {
+    border-color: var(--accent);
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--accent);
+}
+
+/* Reaction Time */
+
+.reactionPad {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 240px;
+    padding: 24px;
+    box-sizing: border-box;
+    border: 1px solid var(--card-border);
+    background: #111114;
+    color: var(--text-primary);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: background 120ms, border-color 120ms;
+}
+
+.reactionPad strong {
+    font-family: var(--font-display), serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+}
+
+.reactionPad span {
+    font-size: 14px;
+    color: var(--text-subtle);
+}
+
+.reactionWaiting {
+    border-color: var(--border);
+    background: #18181C;
+}
+
+.reactionGo {
+    border-color: var(--accent);
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+}
+
+.reactionGo span {
+    color: var(--accent-ink);
+}
+
+.reactionEarly {
+    border-color: #7F1D1D;
+    background: rgba(127, 29, 29, 0.25);
+}

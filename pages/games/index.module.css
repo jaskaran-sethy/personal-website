@@ -1,0 +1,127 @@
+.games {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 88px var(--gutter) 120px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 760px;
+}
+
+.title {
+    font-family: var(--font-display), serif;
+    font-size: clamp(44px, 6vw, 84px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+}
+
+.intro {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.picker {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Each game is a card; the selected one gets the gold top rule the post cards use. */
+.pick {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 24px 24px;
+    border: 1px solid var(--card-border);
+    border-top: 2px solid var(--card-border);
+    background: var(--card);
+    color: var(--text-primary);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 150ms, background 150ms;
+}
+
+.pick:hover {
+    background: var(--surface);
+}
+
+.pickActive {
+    border-top-color: var(--accent);
+    background: linear-gradient(150deg, #1A1918, #111111);
+}
+
+.pickNumber {
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.pickActive .pickNumber {
+    color: var(--accent);
+}
+
+.pickName {
+    font-family: var(--font-display), serif;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+}
+
+.pickBlurb {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-subtle);
+}
+
+.stage {
+    display: flex;
+    justify-content: center;
+    padding: 56px 24px;
+    border: 1px solid var(--card-border);
+    background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.06), transparent 60%), var(--card);
+}
+
+.aside {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+    .picker {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pick {
+        padding: 16px 20px;
+    }
+
+    .pickBlurb {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .games {
+        gap: 32px;
+        padding: 56px var(--gutter) 80px;
+    }
+
+    .stage {
+        padding: 32px 16px;
+    }
+}

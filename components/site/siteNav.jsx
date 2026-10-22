@@ -12,6 +12,7 @@ const LINKS = [
     {label: "Projects", href: "/#projects"},
     {label: "Writing", href: "/blog"},
     {label: "About", href: "/#about"},
+    {label: "Fun", href: "/games"},
 ];
 
 export default function SiteNav() {
