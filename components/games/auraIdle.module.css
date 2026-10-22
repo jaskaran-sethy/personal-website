@@ -214,7 +214,7 @@
 
 .habit {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 40px 64px;
+    grid-template-columns: minmax(0, 1fr) 40px 70px;
     align-items: center;
     gap: 12px;
     width: 100%;
@@ -248,7 +248,15 @@
 }
 
 .habit .cost {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     text-align: right;
+}
+
+.count {
+    font-size: 10px;
+    color: var(--text-subtle);
 }
 
 /* Touch grass: the reset, kept quiet at the bottom. */

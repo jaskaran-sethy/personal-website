@@ -65,6 +65,19 @@ function priceOf(habit, owned, count) {
     return habit.cost * PRICE_GROWTH ** owned * (PRICE_GROWTH ** count - 1) / (PRICE_GROWTH - 1);
 }
 
+// How many of a habit `aura` can buy right now (the inverse of priceOf).
+function maxAffordable(habit, owned, aura) {
+    const next = habit.cost * PRICE_GROWTH ** owned;
+    const n = Math.max(0, Math.floor(Math.log(aura * (PRICE_GROWTH - 1) / next + 1) / Math.log(PRICE_GROWTH)));
+    // Floating-point rounding can land one over; step back so the price never exceeds what you have.
+    return n > 0 && priceOf(habit, owned, n) > aura ? n - 1 : n;
+}
+
+// How many a press buys: 1, 10, or as many as you can afford ("max", at least 1 so the price still shows).
+function buyQuantity(buyCount, habit, owned, aura) {
+    return buyCount === "max" ? Math.max(1, maxAffordable(habit, owned, aura)) : buyCount;
+}
+
 function grassMultiplier(s) {
     return 1 + GRASS_BONUS * s.grass;
 }
@@ -167,10 +180,11 @@ export default function AuraIdle() {
     function buyHabit(habit) {
         const s = game.current;
         const owned = s.owned[habit.id] ?? 0;
-        const price = priceOf(habit, owned, buyCount);
+        const count = buyQuantity(buyCount, habit, owned, s.aura);
+        const price = priceOf(habit, owned, count);
         if (s.aura < price) return;
         s.aura -= price;
-        s.owned = {...s.owned, [habit.id]: owned + buyCount};
+        s.owned = {...s.owned, [habit.id]: owned + count};
         save();
         redraw();
     }
@@ -253,12 +267,13 @@ export default function AuraIdle() {
                 <div className={ai.headingRow}>
                     <h3 className={ai.heading}>Habits</h3>
                     <Toggle label="Buy amount" value={buyCount} onChange={setBuyCount}
-                            options={[{value: 1, label: "×1"}, {value: 10, label: "×10"}]}/>
+                            options={[{value: 1, label: "×1"}, {value: 10, label: "×10"}, {value: "max", label: "Max"}]}/>
                 </div>
                 <ul className={ai.habits}>
                     {visibleHabits.map((h) => {
                         const owned = s.owned[h.id] ?? 0;
-                        const price = priceOf(h, owned, buyCount);
+                        const count = buyQuantity(buyCount, h, owned, s.aura);
+                        const price = priceOf(h, owned, count);
                         return (
                             <li key={h.id}>
                                 <button type="button" className={ai.habit} disabled={s.aura < price} onClick={() => buyHabit(h)}>
@@ -267,7 +282,11 @@ export default function AuraIdle() {
                                         <span className={ai.habitFlavor}>{h.flavor} +{format(habitRate(s, h))}/s each</span>
                                     </span>
                                     <span className={ai.owned}>{owned}</span>
-                                    <span className={ai.cost}>{format(price)}</span>
+                                    <span className={ai.cost}>
+                                        {/* On Max, say how many a press will buy. */}
+                                        {buyCount === "max" && count > 1 ? <span className={ai.count}>×{count}</span> : null}
+                                        {format(price)}
+                                    </span>
                                 </button>
                             </li>
                         );
