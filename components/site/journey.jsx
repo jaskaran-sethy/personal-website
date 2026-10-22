@@ -43,7 +43,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
-        points: ["Working across data science and software engineering"],
+        points: ["Building data pipelines and wealth analytics"],
     },
 ];
 
