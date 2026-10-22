@@ -3,6 +3,7 @@ import Metadata from "../components/metadata";
 import CroppedImage from "../components/site/croppedImage";
 import Eyebrow from "../components/site/eyebrow";
 import ExternalLink from "../components/site/externalLink";
+import ClientLogos from "../components/site/clientLogos";
 import FactList from "../components/site/factList";
 import Highlight from "../components/site/highlight";
 import Icon from "../components/site/icon";
@@ -21,9 +22,9 @@ import {EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL} from "../lib/site";
 import style from "./index.module.css";
 
 const HIGHLIGHTS = [
-    {value: "Gold Medal", label: "Department topper, IIT Roorkee '22"},
+    {value: "Gold Medal", label: "First Division with Distinction, Biotechnology, IIT Roorkee '22"},
     {value: "$1M → $3M+", label: "Product Insights ARR growth at Sprinklr"},
-    {value: "Samsung · Amazon · Wells Fargo", label: "Enterprise clients served by my NLP models at Sprinklr"},
+    {value: <ClientLogos/>, label: "Enterprise clients served by my NLP models at Sprinklr"},
 ];
 
 const FEATURED_PROJECT = {
@@ -131,7 +132,7 @@ function Hero({latestPost}) {
 function Highlights() {
     return (
         <section className={style.highlights}>
-            {HIGHLIGHTS.map((highlight) => <Highlight key={highlight.value} {...highlight}/>)}
+            {HIGHLIGHTS.map((highlight) => <Highlight key={highlight.label} {...highlight}/>)}
         </section>
     );
 }

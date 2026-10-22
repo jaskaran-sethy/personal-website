@@ -1,0 +1,36 @@
+/* A row of client logos, sized by eye so a wide wordmark and a square badge feel the same weight. */
+.logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    min-height: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-primary);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.wordmark {
+    height: 15px;
+    width: auto;
+}
+
+.badge {
+    height: 28px;
+    width: auto;
+}
+
+/* Stand-in for a brand without an openly licensed mark. */
+.text {
+    font-family: var(--font-body), sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
