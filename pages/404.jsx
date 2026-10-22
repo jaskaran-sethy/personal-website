@@ -9,7 +9,7 @@ import style from "./404.module.css";
 const PLACES = [
     {href: "/", label: "Home", note: "Who I am and what I'm building"},
     {href: "/blog", label: "The blog", note: "Notes on books, habits & ideas"},
-    {href: "/games", label: "Games", note: "Fourteen small games, one of them about aura"},
+    {href: "/games", label: "Games", note: "Fourteen small games to play in the browser"},
 ];
 
 // Shown for any URL that doesn't exist, in the same Editorial Dark frame as the rest of the site.
