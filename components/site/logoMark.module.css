@@ -20,6 +20,11 @@
     height: 22px;
 }
 
+/* A logo whose symbol runs its full height (e.g. Microsoft's squares), so it reads large at the "logo" size. */
+.logoCompact {
+    height: 18px;
+}
+
 /* Fills its container, keeping its proportions (e.g. an icon inside a tile). */
 .fill {
     width: 100%;
