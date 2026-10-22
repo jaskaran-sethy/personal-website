@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
-import {saveHighScore} from "../../lib/highScores";
 import style from "./games.module.css";
 import wg from "./wordGuess.module.css";
 
@@ -94,7 +93,6 @@ export default function WordGuess() {
         const next = won ? readStreak() + 1 : 0;
         setStreak(next);
         saveStreak(next);
-        saveHighScore("games.words.best", next);
     }, [over]);
 
     useEffect(() => {

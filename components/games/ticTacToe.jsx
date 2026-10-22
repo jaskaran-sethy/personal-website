@@ -1,6 +1,5 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
-import {saveHighScore} from "../../lib/highScores";
 import style from "./games.module.css";
 
 const LINES = [
@@ -60,7 +59,6 @@ export default function TicTacToe() {
     const [vsComputer, setVsComputer] = useState(true);
     const [hard, setHard] = useState(false);
     const [scores, setScores] = useState({X: 0, O: 0, draw: 0});
-    const winStreak = useRef(0);
 
     const winner = findWinner(board);
     const full = board.every(Boolean);
@@ -71,10 +69,6 @@ export default function TicTacToe() {
     useEffect(() => {
         if (!over) return;
         setScores((s) => winner ? {...s, [winner.mark]: s[winner.mark] + 1} : {...s, draw: s.draw + 1});
-        // High score: wins in a row against the computer. Draws don't break the run; a loss does.
-        if (!vsComputer || !winner) return;
-        winStreak.current = winner.mark === "X" ? winStreak.current + 1 : 0;
-        saveHighScore("games.tictactoe.best", winStreak.current);
     }, [over]);
 
     useEffect(() => {
@@ -90,7 +84,6 @@ export default function TicTacToe() {
 
     // Changing opponent or difficulty starts a fresh match.
     function switchMode(computer, hardMode = hard) {
-        winStreak.current = 0;
         setVsComputer(computer);
         setHard(hardMode);
         setScores({X: 0, O: 0, draw: 0});

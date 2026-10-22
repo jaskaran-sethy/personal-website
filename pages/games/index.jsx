@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import HighScoreBar from "../../components/games/highScoreBar";
+import HighScoreBar, {hasHighScore} from "../../components/games/highScoreBar";
 import {Metadata} from "../../components/layout";
 import Eyebrow from "../../components/site/eyebrow";
 import Icon from "../../components/site/icon";
@@ -97,7 +97,7 @@ function GameView({game}) {
                 <h1 className={cx(style.gameTitle, liftSmall)}>{game.name}</h1>
                 <p className={style.gameBlurb}>{game.blurb}</p>
             </header>
-            <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/>
+            {hasHighScore(game.id) ? <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/> : null}
             <section className={style.stage} aria-label={game.name}>
                 <Game key={game.id}/>
             </section>

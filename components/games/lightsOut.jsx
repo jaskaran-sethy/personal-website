@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
-import {saveHighScore} from "../../lib/highScores";
 import style from "./games.module.css";
 import lo from "./lightsOut.module.css";
 
@@ -45,11 +44,6 @@ export default function LightsOut() {
     useEffect(() => {
         newPuzzle(1);
     }, []);
-
-    // High score: the highest level cleared.
-    useEffect(() => {
-        if (solved) saveHighScore("games.lightsout.best", level);
-    }, [solved]);
 
     function newPuzzle(atLevel) {
         const puzzle = makePuzzle(atLevel);

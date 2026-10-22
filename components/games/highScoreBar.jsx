@@ -5,38 +5,35 @@ import Icon from "../site/icon";
 import style from "./highScoreBar.module.css";
 
 // How each game's high score is stored and read out. `lower` marks games where a smaller number wins.
+// Games you could push forever just by grinding (Tic Tac Toe, Connect Four, Word Guess, Lights Out) have none.
 const SCORES = {
-    "tic-tac-toe": {key: "games.tictactoe.best", unit: ["win in a row", "wins in a row"]},
     "memory": {key: "games.memory.best", unit: ["move", "moves"], lower: true},
     "reaction": {key: "games.reaction.best", unit: ["ms average", "ms average"], lower: true},
     "snake": {key: "games.snake.best", unit: ["point", "points"]},
     "2048": {key: "games.2048.best", unit: ["point", "points"]},
     "minesweeper": {key: "games.minesweeper.best", unit: ["second", "seconds"], lower: true},
-    "connect-four": {key: "games.connectfour.best", unit: ["win in a row", "wins in a row"]},
     "sliding-puzzle": {key: "games.sliding.best", unit: ["move", "moves"], lower: true},
-    "word-guess": {key: "games.words.best", unit: ["word in a row", "words in a row"]},
     "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
-    "lights-out": {key: "games.lightsout.best", unit: ["level", "levels"]},
     "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
     "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
 };
 
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
 const DEV_SCORES = {
-    "tic-tac-toe": null,
     "memory": null,
     "reaction": null,
     "snake": null,
     "2048": null,
     "minesweeper": null,
-    "connect-four": null,
     "sliding-puzzle": null,
-    "word-guess": null,
     "simon": null,
-    "lights-out": null,
     "whack-a-mole": null,
     "typing": null,
 };
+
+export function hasHighScore(gameId) {
+    return gameId in SCORES;
+}
 
 function format(value, unit) {
     return `${value.toLocaleString()} ${value === 1 ? unit[0] : unit[1]}`;
