@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
 import {saveHighScore} from "../../lib/highScores";
+import {randomBetween, shuffle} from "../../lib/random";
 import style from "./games.module.css";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import af from "./auraFarm.module.css";
 
 // Aura Farm: aura only comes from composure. Keep the pointer (or a held finger) perfectly still on the field
@@ -108,8 +110,6 @@ function levelFor(aura) {
     return RANKS.length - 1 - RANKS.findIndex(([min]) => aura >= min);
 }
 
-const random = (min, max) => min + Math.random() * (max - min);
-
 function inPocket(pocket, p) {
     return Boolean(pocket) && Math.hypot(p.x - pocket.x, p.y - pocket.y) < POCKET_RADIUS;
 }
@@ -118,15 +118,15 @@ function inPocket(pocket, p) {
 // decision all run off it. Floaters and avatar reactions use real time, so they still animate during a freeze.
 function freshRound() {
     return {
-        clock: 0, aura: 0, mult: 1, moved: 0, lastFidget: 0, pocket: null, nextPocket: random(5000, 8000),
+        clock: 0, aura: 0, mult: 1, moved: 0, lastFidget: 0, pocket: null, nextPocket: randomBetween(5000, 8000),
         decision: null, decisionsSeen: 0, moment: null, floaters: [], reaction: null, deck: [],
-        nextDecision: random(3000, 4500), nextMoment: random(6000, 9000), nextId: 1,
+        nextDecision: randomBetween(3000, 4500), nextMoment: randomBetween(6000, 9000), nextId: 1,
     };
 }
 
 // Deals decisions without repeats until the deck runs out, then reshuffles.
 function draw(g) {
-    if (!g.deck.length) g.deck = [...DECISIONS].sort(() => Math.random() - 0.5);
+    if (!g.deck.length) g.deck = shuffle(DECISIONS);
     const card = g.deck.pop();
     const order = card.bait === undefined && Math.random() < 0.5 ? [1, 0] : [0, 1];
     const limit = Math.max(FASTEST_DECISION_MS, FIRST_DECISION_MS * DECISION_SPEEDUP ** g.decisionsSeen++);
@@ -180,8 +180,8 @@ export default function AuraFarm() {
 
         if (g.pocket && g.clock > g.pocket.until) g.pocket = null;
         if (!g.pocket && g.clock > g.nextPocket) {
-            g.pocket = {id: g.nextId++, x: random(0.2, 0.8), y: random(0.2, 0.8), until: g.clock + 6000};
-            g.nextPocket = g.clock + random(9000, 13000);
+            g.pocket = {id: g.nextId++, x: randomBetween(0.2, 0.8), y: randomBetween(0.2, 0.8), until: g.clock + 6000};
+            g.nextPocket = g.clock + randomBetween(9000, 13000);
         }
 
         // Fidgeting: a lot of movement within one tick drains aura.
@@ -196,13 +196,13 @@ export default function AuraFarm() {
 
         if (g.moment && g.clock > g.moment.until) g.moment = null;
         if (!g.moment && g.clock > g.nextMoment) {
-            g.moment = {id: g.nextId++, x: random(0.15, 0.85), y: random(0.15, 0.85), until: g.clock + 1400};
-            g.nextMoment = g.clock + random(7000, 10000);
+            g.moment = {id: g.nextId++, x: randomBetween(0.15, 0.85), y: randomBetween(0.15, 0.85), until: g.clock + 1400};
+            g.nextMoment = g.clock + randomBetween(7000, 10000);
         }
 
         if (g.clock > g.nextDecision && !g.moment) {
             g.decision = draw(g);
-            g.nextDecision = g.clock + random(4500, 6500);
+            g.nextDecision = g.clock + randomBetween(4500, 6500);
         }
 
         setFrame((n) => n + 1);
@@ -302,7 +302,7 @@ export default function AuraFarm() {
     return (
         // Wider than the other games: the field plus a side column for the avatar and meter.
         <div className={style.game} style={{maxWidth: 520}}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={af.arena}>
             <div ref={field} className={cx(af.field, playing && af.live, frozen && af.frozen)}
                  style={{"--glow": playing && p.inside ? (still ? Math.min(1, 0.25 + Math.log2(mult) / 6) : 0.12) : 0,
@@ -338,9 +338,9 @@ export default function AuraFarm() {
                                 Rest in hot pockets for ×2. Catch the gold ring for a nod.
                             </p>
                         )}
-                        <button type="button" className={cx(style.button, style.buttonActive)} onClick={start}>
+                        <GameButton active onClick={start}>
                             {phase === "done" ? "Farm again" : "Start farming"}
-                        </button>
+                        </GameButton>
                     </div>
                 ) : null}
             </div>
@@ -369,12 +369,12 @@ export default function AuraFarm() {
                 </div>
             ) : null}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{aura.toLocaleString()}</strong>AURA</span>
-                <span className={style.score}><strong>×{playing ? mult : 1}</strong>COMPOSURE</span>
-                <span className={style.score}><strong>×{pocketed ? POCKET_BONUS : 1}</strong>POCKET</span>
-                <span className={style.score}><strong>{seconds}</strong>SECONDS</span>
-            </div>
+            <Stats>
+                <Stat value={aura.toLocaleString()} label="AURA"/>
+                <Stat value={`×${playing ? mult : 1}`} label="COMPOSURE"/>
+                <Stat value={`×${pocketed ? POCKET_BONUS : 1}`} label="POCKET"/>
+                <Stat value={seconds} label="SECONDS"/>
+            </Stats>
         </div>
     );
 }

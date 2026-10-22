@@ -1,5 +1,9 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {pick} from "../../lib/random";
+import {DIRECTION_KEYS, useGameKeys, useSwipe} from "./hooks";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import style from "./games.module.css";
 import own from "./game2048.module.css";
 
@@ -13,24 +17,8 @@ const LINES = {
     up: COLS,
     down: COLS.map((line) => [...line].reverse()),
 };
-const KEYS = {
-    ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
-    w: "up", s: "down", a: "left", d: "right",
-};
 
 let nextId = 1;
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || 0;
-    } catch {
-        return 0;
-    }
-}
-
-function isTyping(target) {
-    return target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
-}
 
 // Tiles are objects with a stable id, so React keeps the same element and CSS can animate it to its new square.
 // A merge slides both tiles onto the same square, marks them `gone`, and adds a new doubled tile there that pops in.
@@ -76,7 +64,7 @@ function slide(tiles, dir) {
 function addTile(tiles) {
     const taken = new Set(liveTiles(tiles).map((t) => t.pos));
     const empty = [...Array(16).keys()].filter((i) => !taken.has(i));
-    const pos = empty[Math.floor(Math.random() * empty.length)];
+    const pos = pick(empty);
     return [...tiles, {id: nextId++, value: Math.random() < 0.1 ? 4 : 2, pos, fresh: true}];
 }
 
@@ -94,8 +82,7 @@ export default function Game2048() {
     // Tiles are dealt in an effect, so the server render and first client render agree.
     const [game, setGame] = useState({tiles: [], score: 0, gained: 0, turn: 0});
     const [keepGoing, setKeepGoing] = useState(false);
-    const [best, setBest] = useState(0);
-    const swipe = useRef(null);
+    const [best, recordBest] = useHighScore(BEST_KEY);
 
     const live = liveTiles(game.tiles);
     const started = live.length > 0;
@@ -105,20 +92,14 @@ export default function Game2048() {
 
     useEffect(() => {
         setGame(freshGame());
-        setBest(readBest());
     }, []);
 
-    useEffect(() => {
-        function onKey(e) {
-            if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey || blocked) return;
-            const dir = KEYS[e.key.length === 1 ? e.key.toLowerCase() : e.key];
-            if (!dir) return;
-            e.preventDefault();
-            move(dir);
-        }
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [game, blocked, best]);
+    useGameKeys((key, e) => {
+        const dir = DIRECTION_KEYS[key];
+        if (!dir) return;
+        e.preventDefault();
+        move(dir);
+    }, !blocked);
 
     function move(dir) {
         if (blocked) return;
@@ -126,40 +107,15 @@ export default function Game2048() {
         if (!result.moved) return;
         const score = game.score + result.gained;
         setGame({tiles: addTile(result.tiles), score, gained: result.gained, turn: game.turn + 1});
-        if (score > best) {
-            setBest(score);
-            try {
-                localStorage.setItem(BEST_KEY, String(score));
-            } catch {
-                // Best score just won't persist.
-            }
-        }
+        recordBest(score);
     }
 
-    swipe.current = move;
+    // Swipes: mouse drags, touch and pens. Presses on the overlay's buttons aren't swipes.
+    const onSwipe = useSwipe(move);
 
     function newGame() {
         setGame(freshGame());
         setKeepGoing(false);
-    }
-
-    // Swipes: one handler for mouse drags, touch and pens. The release is watched on window, so a drag that
-    // ends outside the board still counts. Presses on the overlay's buttons aren't swipes.
-    function onPointerDown(e) {
-        if (e.button !== 0 || e.target.closest("button")) return;
-        const start = {x: e.clientX, y: e.clientY};
-        function onUp(up) {
-            window.removeEventListener("pointerup", onUp);
-            window.removeEventListener("pointercancel", onUp);
-            if (up.type === "pointercancel") return;
-            const dx = up.clientX - start.x;
-            const dy = up.clientY - start.y;
-            if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
-            if (Math.abs(dx) > Math.abs(dy)) swipe.current(dx > 0 ? "right" : "left");
-            else swipe.current(dy > 0 ? "down" : "up");
-        }
-        window.addEventListener("pointerup", onUp);
-        window.addEventListener("pointercancel", onUp);
     }
 
     let status;
@@ -169,8 +125,8 @@ export default function Game2048() {
 
     return (
         <div className={style.game}>
-            <p className={style.status} aria-live="polite">{status}</p>
-            <div className={own.board} onPointerDown={onPointerDown}
+            <Status>{status}</Status>
+            <div className={own.board} onPointerDown={onSwipe}
                  role="group" aria-label="2048 board">
                 {Array.from({length: 16}, (_, i) => <div key={i} className={own.cell}/>)}
                 <div className={own.tiles}>
@@ -189,22 +145,21 @@ export default function Game2048() {
                         <p>{won ? "You win!" : "Game over"}</p>
                         <div className={style.controls}>
                             {won ? (
-                                <button type="button" className={cx(style.button, style.buttonActive)}
-                                        onClick={() => setKeepGoing(true)}>Keep going</button>
+                                <GameButton active onClick={() => setKeepGoing(true)}>Keep going</GameButton>
                             ) : null}
-                            <button type="button" className={style.button} onClick={newGame}>New game</button>
+                            <GameButton onClick={newGame}>New game</GameButton>
                         </div>
                     </div>
                 ) : null}
             </div>
-            <div className={style.scores}>
-                <span className={cx(style.score, own.scoreBox)}>
-                    <strong>{game.score.toLocaleString()}</strong>SCORE
+            <Stats>
+                <Stat className={own.scoreBox} value={game.score.toLocaleString()} label={<>
+                    SCORE
                     {game.gained ? <span key={game.turn} className={own.gain}>+{game.gained}</span> : null}
-                </span>
-                <span className={style.score}><strong>{best ? best.toLocaleString() : "–"}</strong>BEST</span>
-            </div>
-            <button type="button" className={style.button} onClick={newGame}>New game</button>
+                </>}/>
+                <Stat value={best ? best.toLocaleString() : "–"} label="BEST"/>
+            </Stats>
+            <GameButton onClick={newGame}>New game</GameButton>
         </div>
     );
 }

@@ -1,25 +1,15 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {shuffle} from "../../lib/random";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import style from "./games.module.css";
 
 const SYMBOLS = ["♠", "♥", "♦", "♣", "★", "☾", "☀", "♪"];
 const BEST_KEY = "games.memory.best";
 
 function shuffledDeck() {
-    const deck = [...SYMBOLS, ...SYMBOLS];
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck;
-}
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || null;
-    } catch {
-        return null;
-    }
+    return shuffle([...SYMBOLS, ...SYMBOLS]);
 }
 
 export default function MemoryMatch() {
@@ -28,13 +18,12 @@ export default function MemoryMatch() {
     const [open, setOpen] = useState([]);
     const [matched, setMatched] = useState([]);
     const [moves, setMoves] = useState(0);
-    const [best, setBest] = useState(null);
+    const [best, recordBest] = useHighScore(BEST_KEY, true);
 
     const won = matched.length === deck.length;
 
     useEffect(() => {
         setDeck(shuffledDeck());
-        setBest(readBest());
     }, []);
 
     useEffect(() => {
@@ -50,13 +39,7 @@ export default function MemoryMatch() {
     }, [open]);
 
     useEffect(() => {
-        if (!won || (best && moves >= best)) return;
-        setBest(moves);
-        try {
-            localStorage.setItem(BEST_KEY, String(moves));
-        } catch {
-            // Best score just won't persist.
-        }
+        if (won) recordBest(moves);
     }, [won]);
 
     function flip(index) {
@@ -74,9 +57,9 @@ export default function MemoryMatch() {
 
     return (
         <div className={style.game}>
-            <p className={style.status} aria-live="polite">
+            <Status>
                 {won ? <>All pairs in <em>{moves}</em> moves!</> : `${matched.length / 2} of ${SYMBOLS.length} pairs found`}
-            </p>
+            </Status>
             <div className={style.memoryBoard}>
                 {deck.map((symbol, i) => {
                     const faceUp = open.includes(i) || matched.includes(i);
@@ -92,11 +75,11 @@ export default function MemoryMatch() {
                     );
                 })}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{moves}</strong>MOVES</span>
-                <span className={style.score}><strong>{best ?? "–"}</strong>BEST</span>
-            </div>
-            <button type="button" className={style.button} onClick={newGame}>New game</button>
+            <Stats>
+                <Stat value={moves} label="MOVES"/>
+                <Stat value={best ?? "–"} label="BEST"/>
+            </Stats>
+            <GameButton onClick={newGame}>New game</GameButton>
         </div>
     );
 }

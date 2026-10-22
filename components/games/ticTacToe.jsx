@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {pick} from "../../lib/random";
+import {ButtonGroup, GameButton, Stat, Stats, Status, Toggle} from "./kit";
 import style from "./games.module.css";
 
 const LINES = [
@@ -31,7 +33,7 @@ function pickEasyMove(board) {
     const open = (cells) => cells.filter((i) => !board[i]);
     const corners = open([0, 2, 6, 8]);
     if (!board[4]) return 4;
-    if (corners.length) return corners[Math.floor(Math.random() * corners.length)];
+    if (corners.length) return pick(corners);
     return open([1, 3, 5, 7])[0];
 }
 
@@ -51,7 +53,7 @@ function pickHardMove(board) {
     const moves = board.flatMap((cell, i) => cell ? [] : [{i, score: minimax(board.map((c, j) => j === i ? "O" : c), "X", 1)}]);
     const top = Math.max(...moves.map((m) => m.score));
     const best = moves.filter((m) => m.score === top);
-    return best[Math.floor(Math.random() * best.length)].i;
+    return pick(best).i;
 }
 
 export default function TicTacToe() {
@@ -98,21 +100,13 @@ export default function TicTacToe() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "530px"}}>
-            <div className={style.controls}>
-                <button type="button" className={cx(style.button, vsComputer && style.buttonActive)}
-                        onClick={() => switchMode(true)}>vs Computer</button>
-                <button type="button" className={cx(style.button, !vsComputer && style.buttonActive)}
-                        onClick={() => switchMode(false)}>2 Players</button>
-            </div>
+            <ButtonGroup options={[{value: true, label: "vs Computer"}, {value: false, label: "2 Players"}]}
+                         value={vsComputer} onChange={(computer) => switchMode(computer)}/>
             {vsComputer ? (
-                <div className={style.toggle} role="group" aria-label="Difficulty">
-                    <button type="button" aria-pressed={!hard} className={cx(style.toggleOption, !hard && style.toggleActive)}
-                            onClick={() => switchMode(true, false)}>Easy</button>
-                    <button type="button" aria-pressed={hard} className={cx(style.toggleOption, hard && style.toggleActive)}
-                            onClick={() => switchMode(true, true)}>Hard</button>
-                </div>
+                <Toggle label="Difficulty" options={[{value: false, label: "Easy"}, {value: true, label: "Hard"}]}
+                        value={hard} onChange={(hardMode) => switchMode(true, hardMode)}/>
             ) : null}
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={style.tttBoard}>
                 {board.map((cell, i) => (
                     <button key={i} type="button" aria-label={cell ? `Square ${i + 1}, ${cell}` : `Square ${i + 1}`}
@@ -122,14 +116,14 @@ export default function TicTacToe() {
                     </button>
                 ))}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{scores.X}</strong>{vsComputer ? "YOU" : "X"}</span>
-                <span className={style.score}><strong>{scores.draw}</strong>DRAWS</span>
-                <span className={style.score}><strong>{scores.O}</strong>{vsComputer ? "COMPUTER" : "O"}</span>
-            </div>
-            <button type="button" className={style.button} onClick={() => setBoard(EMPTY)}>
+            <Stats>
+                <Stat value={scores.X} label={vsComputer ? "YOU" : "X"}/>
+                <Stat value={scores.draw} label="DRAWS"/>
+                <Stat value={scores.O} label={vsComputer ? "COMPUTER" : "O"}/>
+            </Stats>
+            <GameButton onClick={() => setBoard(EMPTY)}>
                 {over ? "Play again" : "Restart"}
-            </button>
+            </GameButton>
         </div>
     );
 }

@@ -300,21 +300,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    padding: 24px;
+    gap: clamp(10px, 5cqi, 20px);
+    padding: clamp(12px, 6cqi, 24px);
     background: rgba(14, 14, 16, 0.72);
     text-align: center;
 }
 
+/* Scales with the field (a container), so the rules fit even when the field is small on a phone. */
 .rules {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: clamp(11.5px, 3.8cqi, 15px);
+    line-height: 1.5;
     color: var(--text-secondary);
 }
 
 .rank {
     font-family: var(--font-display), serif;
-    font-size: 34px;
+    font-size: clamp(24px, 9cqi, 34px);
     letter-spacing: -0.02em;
     color: var(--accent);
 }

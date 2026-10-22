@@ -1,29 +1,17 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {pick} from "../../lib/random";
+import {DIRECTION_KEYS, useGameKeys, useSwipe} from "./hooks";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import style from "./games.module.css";
 import own from "./snake.module.css";
 
 const SIZE = 16;
 const BEST_KEY = "games.snake.best";
 const DIRS = {up: {x: 0, y: -1}, down: {x: 0, y: 1}, left: {x: -1, y: 0}, right: {x: 1, y: 0}};
-const KEYS = {
-    ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
-    w: "up", s: "down", a: "left", d: "right",
-};
 // Fixed start (food included) so the server render and first client render agree.
 const START = {snake: [{x: 6, y: 8}, {x: 5, y: 8}, {x: 4, y: 8}], dir: "right", food: {x: 11, y: 8}, score: 0};
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || null;
-    } catch {
-        return null;
-    }
-}
-
-function isTyping(target) {
-    return target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
-}
 
 // A random free square, or null when the snake fills the board.
 function placeFood(snake) {
@@ -31,24 +19,19 @@ function placeFood(snake) {
     const free = [];
     for (let i = 0; i < SIZE * SIZE; i++) if (!taken.has(i)) free.push(i);
     if (!free.length) return null;
-    const i = free[Math.floor(Math.random() * free.length)];
+    const i = pick(free);
     return {x: i % SIZE, y: Math.floor(i / SIZE)};
 }
 
 export default function Snake() {
     const [game, setGame] = useState(START);
     const [phase, setPhase] = useState("ready"); // ready | running | paused | over
-    const [best, setBest] = useState(null);
+    const [best, recordBest] = useHighScore(BEST_KEY);
     const gameRef = useRef(START);
     const queue = useRef([]); // Turns waiting for the next tick, so quick double-taps aren't lost.
-    const touch = useRef(null);
 
     const running = phase === "running";
     const delay = Math.max(70, 150 - game.score * 4);
-
-    useEffect(() => {
-        setBest(readBest());
-    }, []);
 
     useEffect(() => {
         if (!running) return;
@@ -56,39 +39,29 @@ export default function Snake() {
         return () => clearInterval(timer);
     }, [running, delay]);
 
-    useEffect(() => {
-        function onKey(e) {
-            if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey) return;
-            const dir = KEYS[e.key.length === 1 ? e.key.toLowerCase() : e.key];
-            if (dir && running) {
-                e.preventDefault();
-                turn(dir);
-            } else if (e.key === " " && running && e.target.tagName !== "BUTTON") {
-                // A focused button handles Space itself (e.g. Pause), so only catch it elsewhere.
-                e.preventDefault();
-                setPhase("paused");
-            }
+    useGameKeys((key, e) => {
+        const dir = DIRECTION_KEYS[key];
+        if (dir) {
+            e.preventDefault();
+            turn(dir);
+        } else if (key === " " && e.target.tagName !== "BUTTON") {
+            // A focused button handles Space itself (e.g. Pause), so only catch it elsewhere.
+            e.preventDefault();
+            setPhase("paused");
         }
-        // Pause when the tab is hidden, rather than dying off-screen.
+    }, running);
+
+    // Pause when the tab is hidden, rather than dying off-screen.
+    useEffect(() => {
         function onVisibility() {
             if (document.hidden && running) setPhase("paused");
         }
-        window.addEventListener("keydown", onKey);
         document.addEventListener("visibilitychange", onVisibility);
-        return () => {
-            window.removeEventListener("keydown", onKey);
-            document.removeEventListener("visibilitychange", onVisibility);
-        };
+        return () => document.removeEventListener("visibilitychange", onVisibility);
     }, [running]);
 
     useEffect(() => {
-        if (phase !== "over" || (best && game.score <= best)) return;
-        setBest(game.score);
-        try {
-            localStorage.setItem(BEST_KEY, String(game.score));
-        } catch {
-            // Best score just won't persist.
-        }
+        if (phase === "over") recordBest(game.score);
     }, [phase]);
 
     function update(next) {
@@ -141,21 +114,7 @@ export default function Snake() {
         else setPhase(running ? "paused" : "running");
     }
 
-    function onTouchStart(e) {
-        const t = e.touches[0];
-        touch.current = {x: t.clientX, y: t.clientY};
-    }
-
-    function onTouchEnd(e) {
-        if (!touch.current) return;
-        const t = e.changedTouches[0];
-        const dx = t.clientX - touch.current.x;
-        const dy = t.clientY - touch.current.y;
-        touch.current = null;
-        if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
-        if (Math.abs(dx) > Math.abs(dy)) steer(dx > 0 ? "right" : "left");
-        else steer(dy > 0 ? "down" : "up");
-    }
+    const onSwipe = useSwipe(steer);
 
     const cells = Array(SIZE * SIZE).fill(null);
     game.snake.forEach((p, i) => {
@@ -172,24 +131,24 @@ export default function Snake() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "480px"}}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={cx(own.board, phase === "over" && own.boardOver)} role="img"
-                 aria-label={`Snake board, score ${game.score}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+                 aria-label={`Snake board, score ${game.score}`} onPointerDown={onSwipe}>
                 {cells.map((cell, i) => <span key={i} className={cell || undefined}/>)}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{game.score}</strong>SCORE</span>
-                <span className={style.score}><strong>{best ?? "–"}</strong>BEST</span>
-            </div>
+            <Stats>
+                <Stat value={game.score} label="SCORE"/>
+                <Stat value={best ?? "–"} label="BEST"/>
+            </Stats>
             <div className={own.pad}>
                 <button type="button" className={cx(own.arrow, own.up)} aria-label="Up" onClick={() => steer("up")}>▲</button>
                 <button type="button" className={cx(own.arrow, own.left)} aria-label="Left" onClick={() => steer("left")}>◀</button>
                 <button type="button" className={cx(own.arrow, own.right)} aria-label="Right" onClick={() => steer("right")}>▶</button>
                 <button type="button" className={cx(own.arrow, own.down)} aria-label="Down" onClick={() => steer("down")}>▼</button>
             </div>
-            <button type="button" className={cx(style.button, phase === "ready" && style.buttonActive)} onClick={mainAction}>
+            <GameButton active={phase === "ready"} onClick={mainAction}>
                 {{ready: "Start", running: "Pause", paused: "Resume", over: "Play again"}[phase]}
-            </button>
+            </GameButton>
         </div>
     );
 }

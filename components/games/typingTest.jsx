@@ -1,6 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {pick} from "../../lib/random";
 import style from "./games.module.css";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import tt from "./typingTest.module.css";
 
 const WORDS = (
@@ -23,15 +26,7 @@ const TEST_MS = 30000;
 const BEST_KEY = "games.typing.best";
 
 function makePassage() {
-    return Array.from({length: PASSAGE_WORDS}, () => WORDS[Math.floor(Math.random() * WORDS.length)]).join(" ");
-}
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || 0;
-    } catch {
-        return 0;
-    }
+    return Array.from({length: PASSAGE_WORDS}, () => pick(WORDS)).join(" ");
 }
 
 // ready → running (timer starts on the first keystroke) → done (time's up or passage finished).
@@ -42,7 +37,7 @@ export default function TypingTest() {
     const [phase, setPhase] = useState("ready");
     const [timeLeft, setTimeLeft] = useState(TEST_MS);
     const [result, setResult] = useState(null);
-    const [best, setBest] = useState(0);
+    const [best, recordBest] = useHighScore(BEST_KEY);
     const [keystrokes, setKeystrokes] = useState({total: 0, correct: 0});
     const startedAt = useRef(0);
     const ticker = useRef(null);
@@ -54,7 +49,6 @@ export default function TypingTest() {
 
     useEffect(() => {
         setPassage(makePassage());
-        setBest(readBest());
         return () => clearInterval(ticker.current);
     }, []);
 
@@ -70,14 +64,7 @@ export default function TypingTest() {
         setResult({wpm, accuracy});
         setPhase("done");
         setTimeLeft(Math.max(0, TEST_MS - elapsed));
-        if (wpm > readBest()) {
-            setBest((b) => Math.max(b, wpm));
-            try {
-                localStorage.setItem(BEST_KEY, String(wpm));
-            } catch {
-                // Best score just won't persist.
-            }
-        }
+        recordBest(wpm);
     }
 
     function onChange(e) {
@@ -131,7 +118,7 @@ export default function TypingTest() {
 
     return (
         <div className={style.game}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={tt.passage} onClick={() => input.current?.focus()} aria-hidden="true">
                 {[...passage].map((char, i) => {
                     const state = i >= typed.length ? null : typed[i] === char ? tt.correct : tt.wrong;
@@ -148,14 +135,14 @@ export default function TypingTest() {
                    aria-label="Type the passage here" placeholder={phase === "ready" ? "Type here…" : ""}
                    autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck={false}
                    enterKeyHint="done"/>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{Math.ceil(timeLeft / 1000)}</strong>SECONDS</span>
-                <span className={style.score}><strong>{result ? result.wpm : "–"}</strong>WPM</span>
-                <span className={style.score}><strong>{best || "–"}</strong>BEST WPM</span>
-            </div>
-            <button type="button" className={style.button} onClick={restart}>
+            <Stats>
+                <Stat value={Math.ceil(timeLeft / 1000)} label="SECONDS"/>
+                <Stat value={result ? result.wpm : "–"} label="WPM"/>
+                <Stat value={best ?? "–"} label="BEST WPM"/>
+            </Stats>
+            <GameButton onClick={restart}>
                 {phase === "done" ? "Try again" : "Restart"}
-            </button>
+            </GameButton>
         </div>
     );
 }

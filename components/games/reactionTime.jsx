@@ -1,6 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
 import {saveHighScore} from "../../lib/highScores";
+import {randomBetween} from "../../lib/random";
+import {Stat, Stats} from "./kit";
 import style from "./games.module.css";
 
 const ROUNDS = 5;
@@ -29,7 +31,7 @@ export default function ReactionTime() {
         timer.current = setTimeout(() => {
             goAt.current = performance.now();
             setPhase("go");
-        }, 1500 + Math.random() * 2500);
+        }, randomBetween(1500, 4000));
     }
 
     function handlePress() {
@@ -67,11 +69,11 @@ export default function ReactionTime() {
                 <strong aria-live="assertive">{heading}</strong>
                 <span>{hint}</span>
             </button>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{times.length}/{ROUNDS}</strong>ROUND</span>
-                <span className={style.score}><strong>{best ?? "–"}</strong>BEST MS</span>
-                <span className={style.score}><strong>{average ?? "–"}</strong>AVERAGE MS</span>
-            </div>
+            <Stats>
+                <Stat value={`${times.length}/${ROUNDS}`} label="ROUND"/>
+                <Stat value={best ?? "–"} label="BEST MS"/>
+                <Stat value={average ?? "–"} label="AVERAGE MS"/>
+            </Stats>
         </div>
     );
 }

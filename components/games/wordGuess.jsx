@@ -1,6 +1,10 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {pick} from "../../lib/random";
+import {useStoredNumber} from "../../lib/storage";
 import style from "./games.module.css";
+import {useGameKeys} from "./hooks";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import wg from "./wordGuess.module.css";
 import {ANSWERS, VALID_GUESSES} from "./wordList";
 
@@ -29,25 +33,9 @@ function scoreGuess(guess, answer) {
 
 function pickAnswer(previous) {
     let word;
-    do word = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
+    do word = pick(ANSWERS);
     while (word === previous);
     return word;
-}
-
-function readStreak() {
-    try {
-        return Number(localStorage.getItem(STREAK_KEY)) || 0;
-    } catch {
-        return 0;
-    }
-}
-
-function saveStreak(value) {
-    try {
-        localStorage.setItem(STREAK_KEY, String(value));
-    } catch {
-        // Streak just won't persist.
-    }
 }
 
 export default function WordGuess() {
@@ -56,7 +44,7 @@ export default function WordGuess() {
     const [guesses, setGuesses] = useState([]);
     const [current, setCurrent] = useState("");
     const [note, setNote] = useState("");
-    const [streak, setStreak] = useState(0);
+    const [streak, setStreak] = useStoredNumber(STREAK_KEY, 0);
 
     const won = guesses.includes(answer);
     const lost = !won && guesses.length === ROWS;
@@ -64,28 +52,18 @@ export default function WordGuess() {
 
     useEffect(() => {
         setAnswer(pickAnswer());
-        setStreak(readStreak());
     }, []);
 
     useEffect(() => {
-        if (!over) return;
-        const next = won ? readStreak() + 1 : 0;
-        setStreak(next);
-        saveStreak(next);
+        if (over) setStreak(won ? streak + 1 : 0);
     }, [over]);
 
-    useEffect(() => {
-        function onKey(e) {
-            if (e.ctrlKey || e.metaKey || e.altKey) return;
-            if (e.target instanceof Element && e.target.closest("input, textarea")) return;
-            if (e.key === "Enter" || e.key === "Backspace" || /^[a-z]$/i.test(e.key)) {
-                // Enter on a focused button would also click it.
-                e.preventDefault();
-                press(e.key);
-            }
+    useGameKeys((key, e) => {
+        if (key === "Enter" || key === "Backspace" || /^[a-z]$/.test(key)) {
+            // Enter on a focused button would also click it.
+            e.preventDefault();
+            press(key);
         }
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
     });
 
     function press(key) {
@@ -107,10 +85,7 @@ export default function WordGuess() {
 
     function newWord() {
         // Skipping a word you've started breaks the streak.
-        if (!over && guesses.length) {
-            setStreak(0);
-            saveStreak(0);
-        }
+        if (!over && guesses.length) setStreak(0);
         setAnswer(pickAnswer(answer));
         setGuesses([]);
         setCurrent("");
@@ -140,7 +115,7 @@ export default function WordGuess() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "510px"}}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={wg.board} role="grid" aria-label="Guesses">
                 {rows.map((row, r) => (
                     <div key={r} className={wg.row} role="row">
@@ -174,12 +149,12 @@ export default function WordGuess() {
                     </div>
                 ))}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{streak}</strong>STREAK</span>
-            </div>
-            <button type="button" className={style.button} onClick={newWord}>
+            <Stats>
+                <Stat value={streak} label="STREAK"/>
+            </Stats>
+            <GameButton onClick={newWord}>
                 {over ? "Next word" : "New word"}
-            </button>
+            </GameButton>
         </div>
     );
 }

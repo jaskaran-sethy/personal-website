@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {shuffle} from "../../lib/random";
 import style from "./games.module.css";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import lo from "./lightsOut.module.css";
 
 const SIZE = 5;
@@ -24,7 +26,7 @@ function makePuzzle(level) {
     let grid;
     do {
         grid = OFF;
-        const cells = [...OFF.keys()].sort(() => Math.random() - 0.5).slice(0, presses);
+        const cells = shuffle(OFF.keys()).slice(0, presses);
         for (const cell of cells) grid = toggle(grid, cell);
     } while (grid.every((on) => !on));
     return grid;
@@ -71,7 +73,7 @@ export default function LightsOut() {
 
     return (
         <div className={style.game}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={lo.board}>
                 {grid.map((on, i) => (
                     <button key={i} type="button" aria-pressed={on}
@@ -79,19 +81,19 @@ export default function LightsOut() {
                             className={cx(lo.cell, on && lo.on)} disabled={!ready || solved} onClick={() => press(i)}/>
                 ))}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{level}</strong>LEVEL</span>
-                <span className={style.score}><strong>{moves}</strong>MOVES</span>
-            </div>
+            <Stats>
+                <Stat value={level} label="LEVEL"/>
+                <Stat value={moves} label="MOVES"/>
+            </Stats>
             <div className={style.controls}>
                 {solved ? (
-                    <button type="button" className={cx(style.button, style.buttonActive)} onClick={() => newPuzzle(level + 1)}>
+                    <GameButton active onClick={() => newPuzzle(level + 1)}>
                         Next level
-                    </button>
+                    </GameButton>
                 ) : (
                     <>
-                        <button type="button" className={style.button} onClick={resetLevel} disabled={!ready}>Reset level</button>
-                        <button type="button" className={style.button} onClick={() => newPuzzle(level)}>New puzzle</button>
+                        <GameButton onClick={resetLevel} disabled={!ready}>Reset level</GameButton>
+                        <GameButton onClick={() => newPuzzle(level)}>New puzzle</GameButton>
                     </>
                 )}
             </div>

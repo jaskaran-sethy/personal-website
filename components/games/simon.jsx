@@ -1,6 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {randomInt} from "../../lib/random";
 import style from "./games.module.css";
+import {GameButton, Stat, Stats, Status, Toggle} from "./kit";
 import sm from "./simon.module.css";
 
 const PADS = [
@@ -10,14 +13,7 @@ const PADS = [
     {name: "Violet", tone: 164.81, className: sm.violet},
 ];
 const BEST_KEY = "games.simon.best";
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || 0;
-    } catch {
-        return 0;
-    }
-}
+const SOUND_OPTIONS = [{value: true, label: "Sound"}, {value: false, label: "Mute"}];
 
 // idle → showing (the game plays the sequence) → input (the player repeats it) → over.
 export default function Simon() {
@@ -26,14 +22,13 @@ export default function Simon() {
     const [step, setStep] = useState(0);
     const [lit, setLit] = useState(null);
     const [score, setScore] = useState(0);
-    const [best, setBest] = useState(0);
+    const [best, recordBest] = useHighScore(BEST_KEY);
     const [muted, setMuted] = useState(false);
     const timers = useRef(new Set());
     const audio = useRef(null);
     const mutedRef = useRef(false);
 
     useEffect(() => {
-        setBest(readBest());
         return () => {
             timers.current.forEach(clearTimeout);
             audio.current?.close()?.catch?.(() => {});
@@ -104,7 +99,7 @@ export default function Simon() {
         clearTimers();
         setLit(null);
         setScore(0);
-        const first = [Math.floor(Math.random() * PADS.length)];
+        const first = [randomInt(PADS.length)];
         setSequence(first);
         playSequence(first);
     }
@@ -117,14 +112,7 @@ export default function Simon() {
             beep(110, 500, "square");
             later(() => setLit(null), 300);
             setPhase("over");
-            if (score > best) {
-                setBest(score);
-                try {
-                    localStorage.setItem(BEST_KEY, String(score));
-                } catch {
-                    // Best score just won't persist.
-                }
-            }
+            recordBest(score);
             return;
         }
         flash(pad, 220);
@@ -135,7 +123,7 @@ export default function Simon() {
         // Round complete: add a pad and play it all again.
         setScore(sequence.length);
         setPhase("showing");
-        const next = [...sequence, Math.floor(Math.random() * PADS.length)];
+        const next = [...sequence, randomInt(PADS.length)];
         setSequence(next);
         later(() => playSequence(next), 500);
     }
@@ -154,13 +142,8 @@ export default function Simon() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "450px"}}>
-            <div className={style.toggle} role="group" aria-label="Sound">
-                <button type="button" aria-pressed={!muted} className={cx(style.toggleOption, !muted && style.toggleActive)}
-                        onClick={() => setSound(true)}>Sound</button>
-                <button type="button" aria-pressed={muted} className={cx(style.toggleOption, muted && style.toggleActive)}
-                        onClick={() => setSound(false)}>Mute</button>
-            </div>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Toggle label="Sound" options={SOUND_OPTIONS} value={!muted} onChange={setSound}/>
+            <Status>{status}</Status>
             <div className={cx(sm.board, phase === "input" && sm.playable)}>
                 {PADS.map((pad, i) => (
                     <button key={pad.name} type="button" aria-label={`${pad.name} pad`}
@@ -173,13 +156,13 @@ export default function Simon() {
                             onKeyDown={(e) => (e.key === " " || e.key === "Enter") && (e.preventDefault(), press(i))}/>
                 ))}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{score}</strong>SCORE</span>
-                <span className={style.score}><strong>{best || "–"}</strong>BEST</span>
-            </div>
-            <button type="button" className={style.button} onClick={start}>
+            <Stats>
+                <Stat value={score} label="SCORE"/>
+                <Stat value={best ?? "–"} label="BEST"/>
+            </Stats>
+            <GameButton onClick={start}>
                 {phase === "idle" ? "Start" : phase === "over" ? "Play again" : "Restart"}
-            </button>
+            </GameButton>
         </div>
     );
 }

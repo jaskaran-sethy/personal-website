@@ -1,5 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {randomInt} from "../../lib/random";
+import {GameButton, Stat, Stats, Status, Toggle} from "./kit";
 import style from "./games.module.css";
 import own from "./minesweeper.module.css";
 
@@ -24,20 +27,12 @@ function blankBoard() {
     return Array.from({length: SIZE * SIZE}, () => ({mine: false, adj: 0, revealed: false, flagged: false}));
 }
 
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || null;
-    } catch {
-        return null;
-    }
-}
-
 // Mines are laid on the first dig, away from that square and its neighbours, so it always opens a patch.
 function layMines(board, safe) {
     const banned = new Set([safe, ...NEIGHBOURS[safe]]);
     const pool = board.flatMap((_, i) => banned.has(i) ? [] : [i]);
     for (let n = 0; n < MINES; n++) {
-        const pick = Math.floor(Math.random() * (pool.length - n)) + n;
+        const pick = n + randomInt(pool.length - n);
         [pool[n], pool[pick]] = [pool[pick], pool[n]];
         board[pool[n]].mine = true;
     }
@@ -64,15 +59,11 @@ export default function Minesweeper() {
     const [flagMode, setFlagMode] = useState(false);
     const [exploded, setExploded] = useState(null);
     const [elapsed, setElapsed] = useState(0);
-    const [best, setBest] = useState(null);
+    const [best, recordBest] = useHighScore(BEST_KEY, true);
     const startedAt = useRef(0);
 
     const over = phase === "won" || phase === "lost";
     const flags = board.filter((c) => c.flagged).length;
-
-    useEffect(() => {
-        setBest(readBest());
-    }, []);
 
     useEffect(() => {
         if (phase !== "playing") return;
@@ -121,13 +112,7 @@ export default function Minesweeper() {
         const seconds = Math.floor((Date.now() - startedAt.current) / 1000);
         setElapsed(seconds);
         setPhase(result);
-        if (result !== "won" || (best && seconds >= best)) return;
-        setBest(seconds);
-        try {
-            localStorage.setItem(BEST_KEY, String(seconds));
-        } catch {
-            // Best time just won't persist.
-        }
+        if (result === "won") recordBest(seconds);
     }
 
     function toggleFlag(index) {
@@ -156,13 +141,9 @@ export default function Minesweeper() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "470px"}}>
-            <p className={style.status} aria-live="polite">{status}</p>
-            <div className={style.toggle} role="group" aria-label="Tap mode">
-                <button type="button" aria-pressed={!flagMode} className={cx(style.toggleOption, !flagMode && style.toggleActive)}
-                        onClick={() => setFlagMode(false)}>Dig</button>
-                <button type="button" aria-pressed={flagMode} className={cx(style.toggleOption, flagMode && style.toggleActive)}
-                        onClick={() => setFlagMode(true)}>Flag</button>
-            </div>
+            <Status>{status}</Status>
+            <Toggle label="Tap mode" options={[{value: false, label: "Dig"}, {value: true, label: "Flag"}]}
+                    value={flagMode} onChange={setFlagMode}/>
             <div className={cx(own.board, over && own.boardOver)}>
                 {board.map((cell, i) => (
                     <button key={i} type="button" aria-label={label(cell, i)}
@@ -178,12 +159,12 @@ export default function Minesweeper() {
                     </button>
                 ))}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{MINES - flags}</strong>MINES</span>
-                <span className={style.score}><strong>{elapsed}</strong>TIME</span>
-                <span className={style.score}><strong>{best ?? "–"}</strong>BEST</span>
-            </div>
-            <button type="button" className={style.button} onClick={newGame}>New game</button>
+            <Stats>
+                <Stat value={MINES - flags} label="MINES"/>
+                <Stat value={elapsed} label="TIME"/>
+                <Stat value={best ?? "–"} label="BEST"/>
+            </Stats>
+            <GameButton onClick={newGame}>New game</GameButton>
         </div>
     );
 }

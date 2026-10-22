@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
+import {ButtonGroup, GameButton, Stat, Stats, Status} from "./kit";
 import style from "./games.module.css";
 import own from "./connectFour.module.css";
 
@@ -149,13 +150,9 @@ export default function ConnectFour() {
 
     return (
         <div className={style.game} style={{"--board-reserve": "480px"}}>
-            <div className={style.controls}>
-                <button type="button" className={cx(style.button, vsComputer && style.buttonActive)}
-                        onClick={() => switchMode(true)}>vs Computer</button>
-                <button type="button" className={cx(style.button, !vsComputer && style.buttonActive)}
-                        onClick={() => switchMode(false)}>2 Players</button>
-            </div>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <ButtonGroup options={[{value: true, label: "vs Computer"}, {value: false, label: "2 Players"}]}
+                         value={vsComputer} onChange={switchMode}/>
+            <Status>{status}</Status>
             <div className={own.board}>
                 {Array.from({length: COLS}, (_, col) => {
                     const filled = ROWS - 1 - openRow(board, col);
@@ -179,14 +176,14 @@ export default function ConnectFour() {
                     );
                 })}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{scores.P}</strong>{vsComputer ? "YOU" : "GOLD"}</span>
-                <span className={style.score}><strong>{scores.draw}</strong>DRAWS</span>
-                <span className={style.score}><strong>{scores.C}</strong>{vsComputer ? "COMPUTER" : "SILVER"}</span>
-            </div>
-            <button type="button" className={style.button} onClick={reset}>
+            <Stats>
+                <Stat value={scores.P} label={vsComputer ? "YOU" : "GOLD"}/>
+                <Stat value={scores.draw} label="DRAWS"/>
+                <Stat value={scores.C} label={vsComputer ? "COMPUTER" : "SILVER"}/>
+            </Stats>
+            <GameButton onClick={reset}>
                 {over ? "Play again" : "Restart"}
-            </button>
+            </GameButton>
         </div>
     );
 }

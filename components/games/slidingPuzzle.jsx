@@ -1,28 +1,17 @@
 import {useEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
+import {useHighScore} from "../../lib/highScores";
+import {randomInt} from "../../lib/random";
 import style from "./games.module.css";
+import {DIRECTION_KEYS, useGameKeys} from "./hooks";
+import {GameButton, Stat, Stats, Status} from "./kit";
 import own from "./slidingPuzzle.module.css";
 
 const SIZE = 4;
 const SOLVED = [...Array.from({length: SIZE * SIZE - 1}, (_, i) => i + 1), 0];
 const BEST_KEY = "games.sliding.best";
-// Which square's tile moves into the gap for each key, as an offset from the gap.
-const KEY_OFFSETS = {
-    ArrowUp: SIZE, ArrowDown: -SIZE, ArrowLeft: 1, ArrowRight: -1,
-    w: SIZE, s: -SIZE, a: 1, d: -1,
-};
-
-function readBest() {
-    try {
-        return Number(localStorage.getItem(BEST_KEY)) || null;
-    } catch {
-        return null;
-    }
-}
-
-function isTyping(target) {
-    return target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
-}
+// Which square's tile moves into the gap for each direction, as an offset from the gap.
+const OFFSETS = {up: SIZE, down: -SIZE, left: 1, right: -1};
 
 function adjacent(a, b) {
     const sameRow = Math.floor(a / SIZE) === Math.floor(b / SIZE);
@@ -38,7 +27,7 @@ function shuffled() {
     let previous = -1;
     for (let step = 0; step < 200 || isSolved(tiles); step++) {
         const options = tiles.flatMap((_, i) => adjacent(i, gap) && i !== previous ? [i] : []);
-        const next = options[Math.floor(Math.random() * options.length)];
+        const next = options[randomInt(options.length)];
         [tiles[gap], tiles[next]] = [tiles[next], tiles[gap]];
         previous = gap;
         gap = next;
@@ -56,7 +45,7 @@ export default function SlidingPuzzle() {
     const [dealt, setDealt] = useState(false);
     const [moves, setMoves] = useState(0);
     const [elapsed, setElapsed] = useState(0);
-    const [best, setBest] = useState(null);
+    const [best, recordBest] = useHighScore(BEST_KEY, true);
     const startedAt = useRef(null);
 
     const solved = dealt && isSolved(tiles);
@@ -66,7 +55,6 @@ export default function SlidingPuzzle() {
     useEffect(() => {
         setTiles(shuffled());
         setDealt(true);
-        setBest(readBest());
     }, []);
 
     useEffect(() => {
@@ -78,27 +66,16 @@ export default function SlidingPuzzle() {
     useEffect(() => {
         if (!solved) return;
         setElapsed(Math.floor((Date.now() - startedAt.current) / 1000));
-        if (best && moves >= best) return;
-        setBest(moves);
-        try {
-            localStorage.setItem(BEST_KEY, String(moves));
-        } catch {
-            // Best score just won't persist.
-        }
+        recordBest(moves);
     }, [solved]);
 
-    useEffect(() => {
-        function onKey(e) {
-            if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey || !dealt || solved) return;
-            const offset = KEY_OFFSETS[e.key.length === 1 ? e.key.toLowerCase() : e.key];
-            if (!offset) return;
-            e.preventDefault();
-            const from = gap + offset;
-            if (from >= 0 && from < tiles.length && adjacent(from, gap)) slide(from);
-        }
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [tiles, dealt, solved]);
+    useGameKeys((key, e) => {
+        const offset = OFFSETS[DIRECTION_KEYS[key]];
+        if (!offset) return;
+        e.preventDefault();
+        const from = gap + offset;
+        if (from >= 0 && from < tiles.length && adjacent(from, gap)) slide(from);
+    }, dealt && !solved);
 
     function slide(index) {
         if (!dealt || solved || !adjacent(index, gap)) return;
@@ -124,7 +101,7 @@ export default function SlidingPuzzle() {
 
     return (
         <div className={style.game}>
-            <p className={style.status} aria-live="polite">{status}</p>
+            <Status>{status}</Status>
             <div className={cx(own.board, solved && own.solved)}>
                 {/* Tiles render in number order and move by transform, so they glide between squares. */}
                 {SOLVED.filter(Boolean).map((value) => {
@@ -141,14 +118,14 @@ export default function SlidingPuzzle() {
                     );
                 })}
             </div>
-            <div className={style.scores}>
-                <span className={style.score}><strong>{moves}</strong>MOVES</span>
-                <span className={style.score}><strong>{clock(elapsed)}</strong>TIME</span>
-                <span className={style.score}><strong>{best ?? "–"}</strong>BEST</span>
-            </div>
-            <button type="button" className={style.button} onClick={newGame}>
+            <Stats>
+                <Stat value={moves} label="MOVES"/>
+                <Stat value={clock(elapsed)} label="TIME"/>
+                <Stat value={best ?? "–"} label="BEST"/>
+            </Stats>
+            <GameButton onClick={newGame}>
                 {solved ? "Play again" : "Shuffle"}
-            </button>
+            </GameButton>
         </div>
     );
 }
