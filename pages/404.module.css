@@ -1,0 +1,98 @@
+.notFound {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    min-height: 60vh;
+    padding: 88px var(--gutter) 120px;
+    overflow: hidden;
+}
+
+/* A huge brushed-gold "404" sitting faintly behind the text, like a watermark. */
+.code {
+    position: absolute;
+    top: 24px;
+    right: var(--gutter);
+    font-family: var(--font-display), serif;
+    font-size: clamp(140px, 26vw, 360px);
+    line-height: 1;
+    letter-spacing: -0.06em;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.16;
+    pointer-events: none;
+    user-select: none;
+}
+
+.header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 760px;
+}
+
+.title {
+    font-family: var(--font-display), serif;
+    font-size: clamp(44px, 6vw, 84px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+}
+
+.intro {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.aura {
+    color: #E58A8A;
+    white-space: nowrap;
+}
+
+/* Where to go instead: one row per place, a gold link with a short note, split by hairlines. */
+.places {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 640px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+}
+
+.place {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.note {
+    font-size: 15px;
+    color: var(--text-subtle);
+}
+
+@media (max-width: 760px) {
+    .notFound {
+        gap: 36px;
+        padding: 56px var(--gutter) 80px;
+    }
+
+    .code {
+        top: 8px;
+    }
+
+    .place {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

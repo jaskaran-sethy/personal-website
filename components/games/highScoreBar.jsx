@@ -31,7 +31,7 @@ const JASKARAN_SCORES = {
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
-    "aura-farm": 264512,
+    "aura-farm": 86744,
 };
 
 export function hasHighScore(gameId) {
