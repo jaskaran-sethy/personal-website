@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import cx from "../../lib/cx";
 import ClientLogos from "./clientLogos";
 import LogoMark from "./logoMark";
@@ -49,10 +49,26 @@ const STOPS = [
 
 const PRESENT = STOPS[STOPS.length - 1].id;
 
+// Measures before paint in the browser (no flash of the wrong height); falls back quietly when server rendering.
+const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 export default function Journey() {
     const [pinned, setPinned] = useState(PRESENT);
     const [previewing, setPreviewing] = useState(null);
     const shown = STOPS.find((stop) => stop.id === (previewing ?? pinned));
+    const panel = useRef(null);
+    const [panelHeight, setPanelHeight] = useState(null);
+
+    // The panel takes the height of the card it shows, and CSS eases between heights, so switching cards glides
+    // rather than jumping. (Cards share one grid cell; the shown one is the only visible one.)
+    useBrowserLayoutEffect(() => {
+        const card = panel.current.querySelector(`[data-stop="${shown.id}"]`);
+        const update = () => setPanelHeight(card.offsetHeight);
+        update();
+        const observer = new ResizeObserver(update);
+        observer.observe(card);
+        return () => observer.disconnect();
+    }, [shown.id]);
 
     function togglePin(id) {
         // Clicking the pinned stop again goes back to the present.
@@ -61,6 +77,8 @@ export default function Journey() {
 
     return (
         <div className={style.journey}>
+            {/* A labelled divider opens the section, so it doesn't start abruptly under the hero. */}
+            <p className={cx(type.kickerSmall, style.label)}>ALONG THE WAY</p>
             <ol className={style.row} aria-label="School, university and work, in order"
                 onPointerLeave={() => setPreviewing(null)}>
                 {STOPS.map(({id, inset, when, points, clients, ...mark}) => (
@@ -76,11 +94,10 @@ export default function Journey() {
                     </li>
                 ))}
             </ol>
-            {/* Every stop's details sit in the same spot and only the shown one is visible, so the panel is always as
-                tall as the longest and the highlights below never jump. */}
-            <div id="journey-detail" className={style.detail} aria-live="polite">
+            <div id="journey-detail" ref={panel} className={style.detail} aria-live="polite">
+                <div className={style.cards} style={panelHeight === null ? undefined : {height: panelHeight}}>
                 {STOPS.map((stop) => (
-                    <div key={stop.id} className={cx(style.card, stop.id === shown.id && style.cardShown)}
+                    <div key={stop.id} data-stop={stop.id} className={cx(style.card, stop.id === shown.id && style.cardShown)}
                          aria-hidden={stop.id !== shown.id}>
                         <p className={cx(type.kickerSmall, style.when)}>{stop.when}</p>
                         <p className={style.name}>{stop.name}</p>
@@ -95,6 +112,7 @@ export default function Journey() {
                         ) : null}
                     </div>
                 ))}
+                </div>
             </div>
         </div>
     );

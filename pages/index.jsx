@@ -77,6 +77,9 @@ export default function HomePage({posts}) {
         <SiteShell>
             <Metadata title="Jaskaran Sethy" type="website"/>
             <Hero latestPost={posts[0]}/>
+            <section className={style.journey} aria-label="Along the way">
+                <JourneyTimeline/>
+            </section>
             <Projects/>
             <Writing posts={posts}/>
             <About/>
@@ -168,10 +171,6 @@ function About() {
                     software along the way. After a year and a half as a Data Scientist at Sprinklr, I now work across
                     data science and software engineering at Armor in Bengaluru.
                 </p>
-                {/* The schools and jobs from the paragraph above, with details for each. */}
-                <div className={style.aboutJourney}>
-                    <JourneyTimeline/>
-                </div>
                 <p className={cx(style.bio, liftSmall)}>
                     Outside work it's fitness, gaming, reading, music and content creation, whatever has my attention
                     this month.
