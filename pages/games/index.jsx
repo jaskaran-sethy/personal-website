@@ -39,6 +39,15 @@ const GAMES = [
         Game: dynamic(() => import("../../components/games/whackAMole"))},
     {id: "typing", name: "Typing Test", glyph: "wpm", blurb: "How many words a minute can you type?",
         Game: dynamic(() => import("../../components/games/typingTest"))},
+    {id: "aura-farm", name: "Aura Farm", glyph: "✦", section: "esoteric",
+        blurb: "Gain aura by staying perfectly still. Resist the urge to explain yourself.",
+        Game: dynamic(() => import("../../components/games/auraFarm"))},
+];
+
+// Games without a `section` are normal games.
+const SECTIONS = [
+    {id: "normal", title: "Normal games", blurb: "The classics. Rules you already know."},
+    {id: "esoteric", title: "Esoteric games", blurb: "Stranger ones, with rules you'll have to work out."},
 ];
 
 export default function GamesPage() {
@@ -65,20 +74,28 @@ function GameGrid() {
                     A few small games I built for fun. Pick one and play right here.
                 </p>
             </header>
-            <ul className={style.grid}>
-                {GAMES.map((game, index) => (
-                    <li key={game.id}>
-                        <Link href={{pathname: "/games", query: {game: game.id}}} className={cx(style.tile, lift)}>
-                            <span className={style.tileGlyph} aria-hidden="true">{game.glyph}</span>
-                            <span className={style.tileText}>
-                                <span className={style.tileNumber}>{String(index + 1).padStart(2, "0")}</span>
-                                <span className={style.tileName}>{game.name}</span>
-                                <span className={style.tileBlurb}>{game.blurb}</span>
-                            </span>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+            {SECTIONS.map((section) => (
+                <section key={section.id} className={style.section} aria-labelledby={`section-${section.id}`}>
+                    <div className={style.sectionHeader}>
+                        <h2 id={`section-${section.id}`} className={style.sectionTitle}>{section.title}</h2>
+                        <p className={style.sectionBlurb}>{section.blurb}</p>
+                    </div>
+                    <ul className={style.grid}>
+                        {GAMES.filter((game) => (game.section ?? "normal") === section.id).map((game) => (
+                            <li key={game.id}>
+                                <Link href={{pathname: "/games", query: {game: game.id}}} className={cx(style.tile, lift)}>
+                                    <span className={style.tileGlyph} aria-hidden="true">{game.glyph}</span>
+                                    <span className={style.tileText}>
+                                        <span className={style.tileNumber}>{String(GAMES.indexOf(game) + 1).padStart(2, "0")}</span>
+                                        <span className={style.tileName}>{game.name}</span>
+                                        <span className={style.tileBlurb}>{game.blurb}</span>
+                                    </span>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            ))}
             <p className={style.aside}>
                 Had enough fun? <TextLink href="/blog">Read the blog</TextLink>
             </p>

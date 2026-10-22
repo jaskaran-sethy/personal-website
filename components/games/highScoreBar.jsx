@@ -16,6 +16,7 @@ const SCORES = {
     "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
     "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
     "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
+    "aura-farm": {key: "games.aura.best", unit: ["aura", "aura"]},
 };
 
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
@@ -29,6 +30,7 @@ const DEV_SCORES = {
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
+    "aura-farm": 6840,
 };
 
 export function hasHighScore(gameId) {

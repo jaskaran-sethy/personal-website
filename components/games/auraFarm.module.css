@@ -1,0 +1,183 @@
+/* Aura Farm */
+
+.field {
+    position: relative;
+    width: min(100%, 400px, var(--board-max));
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: radial-gradient(circle at 50% 50%, #17161A, #0F0F12 70%);
+    container-type: inline-size;
+    touch-action: none;
+    user-select: none;
+}
+
+/* The aura follows the pointer and swells and brightens with composure (--glow, 0 to 1). */
+.aura {
+    position: absolute;
+    left: calc(var(--x) * 100%);
+    top: calc(var(--y) * 100%);
+    width: calc(20% + 70% * var(--glow));
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle closest-side,
+        rgba(241, 217, 139, calc(0.15 + 0.6 * var(--glow))),
+        rgba(212, 175, 55, calc(0.08 + 0.3 * var(--glow))) 45%,
+        transparent);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: width 400ms ease-out, opacity 300ms;
+}
+
+.live .aura {
+    opacity: 1;
+}
+
+/* Temptations: plain, slightly pushy pills that fade out over their 2.6s. */
+.temptation {
+    position: absolute;
+    z-index: 2;
+    max-width: 46%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #1D1D23;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.25;
+    text-align: center;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    animation: tempt 2600ms ease-in forwards;
+}
+
+.temptation:hover {
+    border-color: var(--text-muted);
+}
+
+@keyframes tempt {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -30%);
+    }
+    12%, 70% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -70%);
+    }
+}
+
+/* The nod: a gold ring that pulses for 1.4s. */
+.moment {
+    position: absolute;
+    z-index: 3;
+    width: 15%;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.35), transparent 70%);
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.5);
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    animation: pulse 700ms ease-in-out infinite alternate, momentOut 1400ms linear forwards;
+}
+
+@keyframes pulse {
+    from {
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+@keyframes momentOut {
+    0%, 75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.floater {
+    position: absolute;
+    z-index: 4;
+    font-family: var(--font-display), serif;
+    font-size: 15px;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: rise 1100ms ease-out forwards;
+}
+
+.good {
+    color: var(--accent);
+}
+
+.bad {
+    color: #E58A8A;
+}
+
+@keyframes rise {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -260%);
+    }
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: rgba(14, 14, 16, 0.72);
+    text-align: center;
+}
+
+.rules {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.rank {
+    font-family: var(--font-display), serif;
+    font-size: 34px;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .temptation, .floater {
+        animation-duration: 1ms;
+        animation-delay: 0ms;
+    }
+
+    .temptation {
+        animation: none;
+    }
+
+    .moment {
+        animation: momentOut 1400ms linear forwards;
+    }
+
+    .aura {
+        transition: none;
+    }
+}
