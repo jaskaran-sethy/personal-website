@@ -27,27 +27,13 @@
     color: var(--text-secondary);
 }
 
-/* "Normal games" / "Esoteric games": a title and one-line description over each grid of tiles. */
-.section {
+/* Normal / esoteric picker above the grid, with the chosen section's one-line description. */
+.sectionPicker {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-}
-
-.sectionHeader {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 8px 20px;
-    padding-bottom: 16px;
+    gap: 14px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
-}
-
-.sectionTitle {
-    font-family: var(--font-display), serif;
-    font-size: 28px;
-    font-weight: 400;
-    letter-spacing: -0.03em;
 }
 
 .sectionBlurb {

@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 
 // Every game on /games, in grid order. Each game loads only when it's opened, so the tile grid stays light.
-// Games without a `section` are normal games.
 export const GAMES = [
     {id: "tic-tac-toe", name: "Tic Tac Toe", glyph: "×○", blurb: "Beat the computer on Easy. Try to draw on Hard.",
         Game: dynamic(() => import("./ticTacToe"))},
@@ -38,6 +37,11 @@ export const SECTIONS = [
     {id: "normal", title: "Normal games", blurb: "The classics. Rules you already know."},
     {id: "esoteric", title: "Esoteric games", blurb: "Stranger ones, with rules you'll have to work out."},
 ];
+
+// The games in one section, in grid order. Games without a `section` are normal.
+export function gamesIn(sectionId) {
+    return GAMES.filter((game) => (game.section ?? "normal") === sectionId);
+}
 
 // Each game lives at its own URL, e.g. /games/aura-farm.
 export function gamePath(id) {
