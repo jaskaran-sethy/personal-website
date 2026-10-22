@@ -8,6 +8,9 @@
 
 .tab {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: -1px;
     padding: 0 0 14px;
     border: none;
@@ -15,9 +18,9 @@
     background: none;
     color: var(--text-muted);
     font-family: var(--font-display), serif;
-    font-size: 30px;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     cursor: pointer;
     transition: color 150ms, border-color 150ms;
 }
@@ -36,17 +39,23 @@
     color: var(--text-primary);
 }
 
+/* The number of items, in a small outlined badge so it reads as a count. */
 .count {
-    margin-left: 4px;
+    min-width: 22px;
+    padding: 2px 7px;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 999px;
     font-family: var(--font-mono), monospace;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: var(--mono-tracking);
-    vertical-align: super;
-    line-height: 0;
+    line-height: 1.3;
+    text-align: center;
     color: var(--text-muted);
 }
 
 .active .count {
+    border-color: rgba(212, 175, 55, 0.5);
     color: var(--accent);
 }
 
@@ -57,11 +66,12 @@
     }
 
     .tab {
+        gap: 8px;
         padding-bottom: 10px;
-        font-size: 19px;
+        font-size: 17px;
     }
 
     .count {
-        font-size: 11px;
+        font-size: 10px;
     }
 }
