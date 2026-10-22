@@ -17,7 +17,9 @@
 
 .heroName {
     font-family: var(--font-display), serif;
-    font-size: clamp(52px, 7.6vw, 108px);
+    /* Up to 1440px wide this is the usual clamp; past that the second term takes over and the name keeps growing
+       with the screen (meeting the clamp exactly at 1440, so there's no jump), up to 240px. */
+    font-size: min(240px, max(clamp(52px, 7.6vw, 108px), calc(17vw - 137px)));
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.055em;
@@ -91,7 +93,9 @@
 .photo {
     position: relative;
     flex: none;
-    width: min(600px, 42vw);
+    /* Same idea as the name: 600px up to 1440px wide, then it grows with the screen (up to 1200px), so on wide
+       monitors the photo and the name fill the row instead of leaving a gap between them. */
+    width: min(1200px, max(min(600px, 42vw), calc(60vw - 264px)));
     aspect-ratio: 600 / 540;
 }
 
