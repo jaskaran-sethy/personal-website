@@ -151,11 +151,18 @@
 
 /* Highlights */
 
+/* The timeline of schools and jobs, then the three highlights under it. */
+.achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 56px var(--gutter) 0;
+}
+
 .highlights {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
-    padding: 56px var(--gutter) 0;
 }
 
 /* Projects */
@@ -358,10 +365,14 @@
         font-size: 16px;
     }
 
+    .achievements {
+        gap: 32px;
+        padding-top: 0;
+    }
+
     .highlights {
         grid-template-columns: 1fr;
         gap: 24px;
-        padding-top: 0;
     }
 
     .projects, .writing {

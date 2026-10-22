@@ -5,6 +5,7 @@ import Eyebrow from "../components/site/eyebrow";
 import ExternalLink from "../components/site/externalLink";
 import ClientLogos from "../components/site/clientLogos";
 import FactList from "../components/site/factList";
+import Journey from "../components/site/journey";
 import Highlight from "../components/site/highlight";
 import Icon from "../components/site/icon";
 import {lift, liftSmall} from "../components/site/lift";
@@ -131,8 +132,11 @@ function Hero({latestPost}) {
 
 function Highlights() {
     return (
-        <section className={style.highlights}>
-            {HIGHLIGHTS.map((highlight) => <Highlight key={highlight.label} {...highlight}/>)}
+        <section className={style.achievements}>
+            <Journey/>
+            <div className={style.highlights}>
+                {HIGHLIGHTS.map((highlight) => <Highlight key={highlight.label} {...highlight}/>)}
+            </div>
         </section>
     );
 }
