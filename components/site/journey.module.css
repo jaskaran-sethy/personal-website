@@ -135,9 +135,20 @@
 }
 
 .name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display), serif;
     font-size: 20px;
     letter-spacing: -0.02em;
+}
+
+/* B2B / B2C tag beside the company name. */
+.market {
+    padding: 2px 7px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-subtle);
 }
 
 .points {

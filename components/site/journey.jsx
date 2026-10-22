@@ -33,6 +33,7 @@ const STOPS = [
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
+        market: "B2B",
         points: [
             "Grew Product Insights ARR from $1M to $3M+ for enterprise clients",
             "Lifted NLP model F1 from 60% to 80%+ by fine-tuning and quantizing transformers",
@@ -43,6 +44,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
+        market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
     },
 ];
@@ -81,7 +83,7 @@ export default function Journey() {
             <p className={cx(type.kickerSmall, style.label)}>ALONG THE WAY</p>
             <ol className={style.row} aria-label="School, university and work, in order"
                 onPointerLeave={() => setPreviewing(null)}>
-                {STOPS.map(({id, inset, when, points, clients, ...mark}) => (
+                {STOPS.map(({id, inset, when, points, clients, market, ...mark}) => (
                     <li key={id}>
                         <button type="button" aria-pressed={pinned === id} aria-controls="journey-detail"
                                 className={cx(style.medallion, style[`inset-${inset}`], pinned === id && style.pinned,
@@ -100,7 +102,11 @@ export default function Journey() {
                     <div key={stop.id} data-stop={stop.id} className={cx(style.card, stop.id === shown.id && style.cardShown)}
                          aria-hidden={stop.id !== shown.id}>
                         <p className={cx(type.kickerSmall, style.when)}>{stop.when}</p>
-                        <p className={style.name}>{stop.name}</p>
+                        <p className={style.name}>
+                            {stop.name}
+                            {/* Who the company sells to: businesses (B2B) or consumers (B2C). */}
+                            {stop.market ? <span className={cx(type.kickerSmall, style.market)}>{stop.market}</span> : null}
+                        </p>
                         <ul className={style.points}>
                             {stop.points.map((point) => <li key={point}>{point}</li>)}
                         </ul>
