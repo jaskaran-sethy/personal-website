@@ -2,29 +2,8 @@ import {useEffect, useState} from "react";
 import cx from "../../lib/cx";
 import style from "./games.module.css";
 import wg from "./wordGuess.module.css";
+import {ANSWERS, VALID_GUESSES} from "./wordList";
 
-const ANSWERS = (
-    "about above actor acute adult after again agree ahead alarm album alert alike alive allow alone along alter " +
-    "angel anger angle angry apple apply arena argue arise armor aside asset award aware badge baker basic beach " +
-    "begin being below bench birth black blade blame blank blast blend bless blind block blood board boost brain " +
-    "brave bread break brick bride brief bring broad brown brush build bunch burst buyer cabin cable candy carry " +
-    "catch cause chain chair chalk charm chart chase cheap check chess chest chief child chose civil claim class " +
-    "clean clear climb clock close cloud coach coast color couch could count cover crane crash cream crime crowd " +
-    "dance delay depth dream dress drink drive eagle early earth eight empty enjoy enter equal event every exact " +
-    "faith false fancy feast fence field fifty final flame flash fleet float floor focus force frame fresh fruit " +
-    "ghost giant given glass globe grace grade grain grand grape grass great green group guard guess guide happy " +
-    "heart heavy honey horse hotel house human humor ideal image index inner input joint judge juice knife label " +
-    "laser later laugh layer learn lemon level light limit lucky lunch magic major maple march match mayor metal " +
-    "model money month moral motor mount mouse mouth movie music night noble noise north novel ocean offer olive " +
-    "opera orbit order other paint panel paper party peace pearl phone photo piano pilot pitch place plain plane " +
-    "plant plate point power press price pride prize proof proud queen quick quiet quite radio raise range rapid " +
-    "reach ready river robin rough round royal salad scale scene scope score sense shade shape share sharp sheep " +
-    "shelf shell shine shirt shore short sight skill sleep slice smart smile smoke snake solid sound south space " +
-    "spare speak speed spice spoon sport staff stage stand start steam steel stone storm story sugar sunny sweet " +
-    "table taste teach thank theme thick thing think tiger toast topic total touch tower trace track trade train " +
-    "treat trend trial truck trust truth uncle under unity upper urban usual value video visit vivid voice waste " +
-    "watch water whale wheat wheel white whole woman world worry write young youth zebra"
-).split(" ");
 const ROWS = 6;
 const LENGTH = 5;
 const KEY_ROWS = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
@@ -114,6 +93,7 @@ export default function WordGuess() {
         setNote("");
         if (key === "Enter") {
             if (current.length < LENGTH) setNote("Not enough letters");
+            else if (!VALID_GUESSES.has(current)) setNote("Not in word list");
             else {
                 setGuesses([...guesses, current]);
                 setCurrent("");

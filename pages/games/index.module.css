@@ -110,19 +110,59 @@
     gap: 16px;
 }
 
-.back {
+/* "All games" on the left, "Next" on the right. Each is a 44px-tall pill: easy to hit,
+   but with a gap between them and the title so a stray tap doesn't land on one. */
+.gameNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+    margin: 0 -16px 8px;
+}
+
+.navButton {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border-radius: 999px;
     font-family: var(--font-mono), monospace;
     font-size: 12px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-secondary) !important;
+    transition: background 150ms, color 150ms;
 }
 
-.back:hover {
+.navButton:hover {
+    background: var(--surface);
     color: var(--accent) !important;
+}
+
+.navButton:active {
+    background: var(--card-border);
+}
+
+.navNext {
+    min-width: 0;
+    text-align: right;
+}
+
+.navNextLabel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.navNextName {
+    color: var(--text-primary);
+}
+
+.navNext:hover .navNextName {
+    color: var(--accent);
 }
 
 .gameTitle {

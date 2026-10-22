@@ -20,15 +20,15 @@ const SCORES = {
 
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
 const DEV_SCORES = {
-    "memory": null,
-    "reaction": null,
-    "snake": null,
-    "2048": null,
-    "minesweeper": null,
+    "memory": 13,
+    "reaction": 242,
+    "snake": 56,
+    "2048": 47932,
+    "minesweeper": 14,
     "sliding-puzzle": null,
-    "simon": null,
-    "whack-a-mole": null,
-    "typing": null,
+    "simon": 32,
+    "whack-a-mole": 46,
+    "typing": 141,
 };
 
 export function hasHighScore(gameId) {
@@ -64,9 +64,13 @@ export default function HighScoreBar({gameId, gameName}) {
     async function share() {
         const url = `${window.location.origin}/games?game=${gameId}`;
         const text = `My high score in ${gameName}: ${format(mine, config.unit)}. Can you beat it?`;
-        if (navigator.share) {
+        const data = {title: `${gameName} high score`, text, url};
+        // Phones and tablets get the system share sheet; computers just copy, which is what people expect there.
+        // share() must run straight from the tap (no await before it), or the browser refuses it.
+        const touch = window.matchMedia("(pointer: coarse)").matches;
+        if (touch && navigator.share && (!navigator.canShare || navigator.canShare(data))) {
             try {
-                await navigator.share({title: `${gameName} high score`, text, url});
+                await navigator.share(data);
                 return;
             } catch (error) {
                 if (error.name === "AbortError") return;

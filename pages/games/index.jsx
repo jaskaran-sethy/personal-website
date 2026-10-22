@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import HighScoreBar, {hasHighScore} from "../../components/games/highScoreBar";
-import {Metadata} from "../../components/layout";
+import Metadata from "../../components/metadata";
 import Eyebrow from "../../components/site/eyebrow";
 import Icon from "../../components/site/icon";
 import {lift, liftSmall} from "../../components/site/lift";
@@ -88,12 +88,19 @@ function GameGrid() {
 
 function GameView({game}) {
     const {Game} = game;
+    const next = GAMES[(GAMES.indexOf(game) + 1) % GAMES.length];
     return (
         <>
             <header className={style.gameHeader}>
-                <Link href="/games" className={cx(style.back, lift)}>
-                    <Icon name="arrow-left" size={16}/> All games
-                </Link>
+                <nav className={style.gameNav} aria-label="Games">
+                    <Link href="/games" className={style.navButton}>
+                        <Icon name="arrow-left" size={16}/> All games
+                    </Link>
+                    <Link href={{pathname: "/games", query: {game: next.id}}} className={cx(style.navButton, style.navNext)}>
+                        <span className={style.navNextLabel}>Next: <span className={style.navNextName}>{next.name}</span></span>
+                        <Icon name="arrow-right" size={16}/>
+                    </Link>
+                </nav>
                 <h1 className={cx(style.gameTitle, liftSmall)}>{game.name}</h1>
                 <p className={style.gameBlurb}>{game.blurb}</p>
             </header>
