@@ -1,0 +1,67 @@
+/* Whack-a-Mole: a 3 x 3 grid of holes; a gold mole rises out of one at a time. */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: min(100%, 312px);
+}
+
+.hole {
+    position: relative;
+    aspect-ratio: 1;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: radial-gradient(ellipse 60% 22% at 50% 78%, #050506 0 90%, transparent 100%), #111114;
+    cursor: default;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.running .hole {
+    cursor: pointer;
+}
+
+.mole {
+    position: absolute;
+    left: 50%;
+    bottom: 22%;
+    width: 52%;
+    aspect-ratio: 1;
+    border-radius: 50% 50% 42% 42%;
+    background: var(--accent-gradient);
+    box-shadow: 0 0 22px rgba(212, 175, 55, 0.3);
+    transform: translate(-50%, 160%);
+    transition: transform 110ms ease-out;
+    pointer-events: none;
+}
+
+/* Eyes. */
+.mole::before, .mole::after {
+    content: "";
+    position: absolute;
+    top: 34%;
+    width: 9%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--accent-ink);
+}
+
+.mole::before {
+    left: 30%;
+}
+
+.mole::after {
+    right: 30%;
+}
+
+.up .mole {
+    transform: translate(-50%, 0);
+}
+
+.whacked {
+    border-color: var(--accent);
+    background: radial-gradient(ellipse 60% 22% at 50% 78%, #050506 0 90%, transparent 100%), rgba(212, 175, 55, 0.14);
+}

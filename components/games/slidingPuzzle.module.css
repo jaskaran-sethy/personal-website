@@ -1,0 +1,72 @@
+/* Sliding Puzzle */
+
+.board {
+    --inset: 6px;
+    position: relative;
+    width: min(100%, 360px);
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border: 1px solid var(--card-border);
+    background: #111114;
+    container-type: inline-size;
+    user-select: none;
+}
+
+/* Each tile is a quarter of the board; its transform places it on a square. */
+.tile {
+    position: absolute;
+    top: var(--inset);
+    left: var(--inset);
+    width: calc((100% - var(--inset) * 2) / 4);
+    height: calc((100% - var(--inset) * 2) / 4);
+    padding: 3px;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+    cursor: default;
+    touch-action: manipulation;
+    transition: transform 120ms ease-out;
+}
+
+.face {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--card-border);
+    background: #1B1B20;
+    color: var(--text-primary);
+    font-family: var(--font-display), serif;
+    font-size: 9cqi;
+    line-height: 1;
+    transition: background 150ms, border-color 150ms, color 150ms;
+}
+
+.movable {
+    cursor: pointer;
+}
+
+.movable:hover .face {
+    border-color: var(--text-muted);
+    background: var(--surface);
+}
+
+/* A tile on its own square gets a hint of gold. */
+.home .face {
+    border-color: rgba(212, 175, 55, 0.45);
+    color: var(--accent);
+}
+
+.solved .face {
+    border-color: #F1D98B;
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tile {
+        transition: none;
+    }
+}

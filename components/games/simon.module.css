@@ -1,0 +1,60 @@
+/* Simon: four tinted pads that light up brightly. */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: min(100%, 300px);
+}
+
+.pad {
+    --pad: 212, 175, 55;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid rgba(var(--pad), 0.3);
+    background: rgba(var(--pad), 0.08);
+    cursor: default;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 120ms, border-color 120ms, box-shadow 120ms;
+}
+
+.gold {
+    --pad: 212, 175, 55;
+    border-top-left-radius: 40%;
+}
+
+.teal {
+    --pad: 45, 190, 170;
+    border-top-right-radius: 40%;
+}
+
+.rose {
+    --pad: 225, 90, 120;
+    border-bottom-left-radius: 40%;
+}
+
+.violet {
+    --pad: 140, 120, 235;
+    border-bottom-right-radius: 40%;
+}
+
+.playable .pad {
+    cursor: pointer;
+}
+
+.playable .pad:hover {
+    border-color: rgba(var(--pad), 0.6);
+}
+
+.pad.lit {
+    border-color: rgb(var(--pad));
+    background: rgba(var(--pad), 0.85);
+    box-shadow: 0 0 32px rgba(var(--pad), 0.45);
+    transition-duration: 40ms;
+}
+
+.gold.lit {
+    background: var(--accent-gradient);
+}

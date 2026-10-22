@@ -1,0 +1,33 @@
+/* Lights Out: a 5 x 5 grid of cells, lit ones gold. */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    width: min(100%, 320px);
+}
+
+.cell {
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid var(--card-border);
+    background: #111114;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 150ms, border-color 150ms, box-shadow 150ms;
+}
+
+.cell:hover:not(:disabled) {
+    border-color: var(--text-muted);
+}
+
+.cell:disabled {
+    cursor: default;
+}
+
+.on, .on:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-gradient);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+}

@@ -27,58 +27,115 @@
     color: var(--text-secondary);
 }
 
-.picker {
+/* The tile select: one card per game, a big gold glyph on top and the name underneath. */
+.grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-/* Each game is a card; the selected one gets the gold top rule the post cards use. */
-.pick {
+.tile {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 22px 24px 24px;
+    height: 100%;
+    box-sizing: border-box;
     border: 1px solid var(--card-border);
-    border-top: 2px solid var(--card-border);
     background: var(--card);
-    color: var(--text-primary);
-    font: inherit;
-    text-align: left;
-    cursor: pointer;
     transition: border-color 150ms, background 150ms;
 }
 
-.pick:hover {
-    background: var(--surface);
-}
-
-.pickActive {
-    border-top-color: var(--accent);
+.tile:hover {
+    border-color: var(--accent);
     background: linear-gradient(150deg, #1A1918, #111111);
 }
 
-.pickNumber {
+.tileGlyph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 16 / 9;
+    border-bottom: 1px solid var(--card-border);
+    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.08), transparent 65%), #111114;
+    font-family: var(--font-display), serif;
+    font-size: 44px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-variant-emoji: text;
+    transition: transform 250ms;
+}
+
+.tile:hover .tileGlyph {
+    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.16), transparent 65%), #111114;
+}
+
+.tileText {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px 22px;
+}
+
+.tileNumber {
     font-family: var(--font-mono), monospace;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 1.5px;
     color: var(--text-muted);
 }
 
-.pickActive .pickNumber {
+.tileName {
+    font-family: var(--font-display), serif;
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    transition: color 150ms;
+}
+
+.tile:hover .tileName {
     color: var(--accent);
 }
 
-.pickName {
-    font-family: var(--font-display), serif;
-    font-size: 22px;
-    letter-spacing: -0.02em;
-}
-
-.pickBlurb {
+.tileBlurb {
     font-size: 14px;
     line-height: 1.5;
     color: var(--text-subtle);
+}
+
+/* A single open game. */
+.gameHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary) !important;
+}
+
+.back:hover {
+    color: var(--accent) !important;
+}
+
+.gameTitle {
+    font-family: var(--font-display), serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.gameBlurb {
+    font-size: 16px;
+    color: var(--text-secondary);
 }
 
 .stage {
@@ -100,28 +157,34 @@
     color: var(--text-secondary);
 }
 
-@media (max-width: 900px) {
-    .picker {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .pick {
-        padding: 16px 20px;
-    }
-
-    .pickBlurb {
-        display: none;
-    }
-}
-
 @media (max-width: 760px) {
     .games {
         gap: 32px;
         padding: 56px var(--gutter) 80px;
     }
 
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .tileGlyph {
+        font-size: 32px;
+    }
+
+    .tileText {
+        padding: 14px 14px 16px;
+    }
+
+    .tileName {
+        font-size: 18px;
+    }
+
+    .tileBlurb {
+        display: none;
+    }
+
     .stage {
-        padding: 32px 16px;
+        padding: 32px 12px;
     }
 }
