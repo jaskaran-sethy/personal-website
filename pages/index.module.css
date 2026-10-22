@@ -1,6 +1,10 @@
 /* Hero */
 
+/* --u is the hero's scale unit: 1px up to 1440px wide, then it grows with the screen (up to 2.22px, i.e. a
+   240px name). Sizes below are written as "N * var(--u)", so the name, intro, eyebrow and blog card all grow
+   together and stay in proportion; below 1440px everything is exactly its normal size. */
 .hero {
+    --u: clamp(1px, calc(0.1574vw - 1.2685px), 2.2222px);
     display: flex;
     align-items: center;
     gap: 56px;
@@ -12,22 +16,26 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: calc(32 * var(--u));
+}
+
+/* The eyebrow above the name (a shared component, so it's sized from here). */
+.heroText > :first-child {
+    font-size: calc(12 * var(--u));
 }
 
 .heroName {
     font-family: var(--font-display), serif;
-    /* Up to 1440px wide this is the usual clamp; past that the second term takes over and the name keeps growing
-       with the screen (meeting the clamp exactly at 1440, so there's no jump), up to 240px. */
-    font-size: min(240px, max(clamp(52px, 7.6vw, 108px), calc(17vw - 137px)));
+    /* The usual clamp up to 1440px wide; past that the scale unit takes over, meeting it exactly at 108px. */
+    font-size: max(clamp(52px, 7.6vw, 108px), calc(108 * var(--u)));
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.055em;
 }
 
 .intro {
-    max-width: 520px;
-    font-size: 17px;
+    max-width: calc(520 * var(--u));
+    font-size: calc(17 * var(--u));
     line-height: 1.55;
     color: var(--text-secondary);
 }
@@ -36,11 +44,11 @@
 .blogCta {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: calc(24 * var(--u));
     width: 100%;
-    max-width: 523px;
-    margin-top: 8px;
-    padding: 30px 32px;
+    max-width: calc(523 * var(--u));
+    margin-top: calc(8 * var(--u));
+    padding: calc(30 * var(--u)) calc(32 * var(--u));
     background: linear-gradient(150deg, #1A1918, #111111);
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -50,20 +58,25 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: calc(10 * var(--u));
+}
+
+/* The card's "THE BLOG" kicker. */
+.blogCtaText > :first-child {
+    font-size: calc(12 * var(--u));
 }
 
 .blogCtaTitle {
     font-family: var(--font-display), serif;
-    font-size: 26px;
-    letter-spacing: -0.5px;
+    font-size: calc(26 * var(--u));
+    letter-spacing: -0.02em;
     line-height: 1.25;
 }
 
 .blogCtaGlyph {
     flex: none;
     font-family: var(--font-display), serif;
-    font-size: 44px;
+    font-size: calc(44 * var(--u));
     font-weight: 300;
     line-height: 1;
     color: var(--accent);
@@ -86,16 +99,15 @@
 }
 
 .blogCtaSub {
-    font-size: 14px;
+    font-size: calc(14 * var(--u));
     color: var(--text-subtle);
 }
 
 .photo {
     position: relative;
     flex: none;
-    /* Same idea as the name: 600px up to 1440px wide, then it grows with the screen (up to 1200px), so on wide
-       monitors the photo and the name fill the row instead of leaving a gap between them. */
-    width: min(1200px, max(min(600px, 42vw), calc(60vw - 264px)));
+    /* Below 1280px wide; from there the photo fills the rest of the row (see the wide desktop rules below). */
+    width: min(600px, 42vw);
     aspect-ratio: 600 / 540;
 }
 
@@ -274,6 +286,23 @@
 }
 
 /* Responsive */
+
+/* Wide desktop: the text column takes its (scaled) width and the photo fills whatever is left of the row, up to
+   1200px, so text and photo always meet with the normal gap however wide the screen is. From 1280px up this
+   lands within a couple of pixels of the fixed-size layout, so there's no jump. */
+@media (min-width: 1280px) {
+    .heroText {
+        flex: none;
+        width: calc(540 * var(--u));
+    }
+
+    .photo {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 0;
+        max-width: 1200px;
+    }
+}
 
 @media (max-width: 1100px) {
     .projectsGrid {
