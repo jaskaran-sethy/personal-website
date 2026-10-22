@@ -14,20 +14,28 @@ import style from "./journey.module.css";
 const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
-        when: "SCHOOL · NEW DELHI",
-        points: ["Where it all started."],
+        when: "CLASS OF '18 · NEW DELHI",
+        points: [
+            "96% in Class XII (PCM, English, Engineering Drawing)",
+            "Pradeepta Roy Chowdhury Memorial Trophy: overall academic topper of Class XI (2016–17)",
+        ],
     },
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
-        when: "BIOTECHNOLOGY · CLASS OF '22",
-        points: ["Department Gold Medal", "First Division with Distinction", "Fell for software along the way"],
+        when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
+        points: [
+            "Department Gold Medal",
+            "First Division with Distinction",
+            "Thesis: predicting the function of hypothetical proteins with machine learning",
+        ],
     },
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
-        when: "DATA SCIENTIST · 1.5 YEARS",
+        when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         points: [
-            "Grew Product Insights ARR from $1M to $3M+",
-            "Built NLP models serving Samsung, Amazon and Wells Fargo",
+            "Grew Product Insights ARR from $1M to $3M+ for clients like Samsung, Amazon and Wells Fargo",
+            "Lifted NLP model F1 from 60% to 80%+ by fine-tuning and quantizing transformers",
+            "Built a fine-tuned LLaMA 2 cataloguing system that saved 200+ hours of manual tagging",
         ],
     },
     {
@@ -66,12 +74,19 @@ export default function Journey() {
                     </li>
                 ))}
             </ol>
+            {/* Every stop's details sit in the same spot and only the shown one is visible, so the panel is always as
+                tall as the longest and the highlights below never jump. */}
             <div id="journey-detail" className={style.detail} aria-live="polite">
-                <p className={cx(type.kickerSmall, style.when)}>{shown.when}</p>
-                <p className={style.name}>{shown.name}</p>
-                <ul className={style.points}>
-                    {shown.points.map((point) => <li key={point}>{point}</li>)}
-                </ul>
+                {STOPS.map((stop) => (
+                    <div key={stop.id} className={cx(style.card, stop.id === shown.id && style.cardShown)}
+                         aria-hidden={stop.id !== shown.id}>
+                        <p className={cx(type.kickerSmall, style.when)}>{stop.when}</p>
+                        <p className={style.name}>{stop.name}</p>
+                        <ul className={style.points}>
+                            {stop.points.map((point) => <li key={point}>{point}</li>)}
+                        </ul>
+                    </div>
+                ))}
             </div>
         </div>
     );

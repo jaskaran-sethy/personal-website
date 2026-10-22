@@ -76,19 +76,31 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
-/* The panel: role and dates in mono, the name in serif, and a few points. A fixed minimum height keeps the
-   highlights below from jumping as it changes. */
+/* The panel: role and dates in mono, the name in serif, and a few points. All four cards share one grid cell
+   (only the shown one is visible), so the panel is as tall as the longest card. */
 .detail {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-width: 560px;
-    min-height: 118px;
+    display: grid;
+    max-width: 600px;
     padding: 16px 20px;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
     border-left: 2px solid var(--accent);
     background: linear-gradient(150deg, #1A1918, #111111);
+}
+
+.card {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 150ms;
+}
+
+.cardShown {
+    visibility: visible;
+    opacity: 1;
 }
 
 .when {
@@ -113,9 +125,16 @@
     color: var(--text-secondary);
 }
 
+/* A gold dot hangs in the margin, so wrapped lines line up with the text. */
+.points li {
+    position: relative;
+    padding-left: 14px;
+}
+
 .points li::before {
     content: "·";
-    margin-right: 8px;
+    position: absolute;
+    left: 2px;
     color: var(--accent);
 }
 
@@ -142,13 +161,12 @@
     }
 
     .detail {
-        min-height: 128px;
         padding: 14px 16px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .medallion {
+    .medallion, .card {
         transition: none;
     }
 }
