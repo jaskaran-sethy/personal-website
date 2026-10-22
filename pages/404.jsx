@@ -23,8 +23,7 @@ export default function NotFound() {
                     <Eyebrow>ERROR 404 · PAGE NOT FOUND</Eyebrow>
                     <h1 className={cx(style.title, liftSmall)}>This page wandered off</h1>
                     <p className={cx(style.intro, liftSmall)}>
-                        The link might be old, or the URL has a typo. Either way, that's <span className={style.aura}>−404 aura</span>.
-                        Here's somewhere real instead:
+                        The link might be old, or the URL has a typo. Here's somewhere real instead:
                     </p>
                 </header>
                 <ul className={style.places}>

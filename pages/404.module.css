@@ -49,11 +49,6 @@
     color: var(--text-secondary);
 }
 
-.aura {
-    color: #E58A8A;
-    white-space: nowrap;
-}
-
 /* Where to go instead: one row per place, a gold link with a short note, split by hairlines. */
 .places {
     position: relative;
