@@ -10,8 +10,8 @@ import style from "./journey.module.css";
 // clicking pins it so it stays when the pointer leaves, and clicking it again unpins. The present stop is pinned
 // to start with, so the panel always shows something and the page never jumps. On touch screens a tap pins.
 // `inset` is how much room each mark gets inside its medallion, tuned by eye: the round IIT seal can nearly
-// fill it, the crest and splash need a little air, and Armor's shield (drawn in its cream, since its usual dark
-// green disappears on dark) needs the most.
+// fill it, the crest and splash need a little air, and Armor's outlined shield (the mark from its own site
+// header, made for dark backgrounds) needs the most.
 const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
