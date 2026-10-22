@@ -76,6 +76,38 @@
     color: var(--accent);
 }
 
+/* A small two-way switch, e.g. Easy / Hard. */
+
+.toggle {
+    display: flex;
+    padding: 3px;
+    margin-top: -12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+}
+
+.toggleOption {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-subtle);
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 150ms, color 150ms;
+}
+
+.toggleOption:hover {
+    color: var(--text-primary);
+}
+
+.toggleActive, .toggleActive:hover {
+    background: var(--accent-gradient);
+    color: var(--accent-ink);
+}
+
 /* Tic Tac Toe */
 
 .tttBoard {

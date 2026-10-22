@@ -18,8 +18,9 @@ function findWinner(board) {
     return null;
 }
 
-// The computer (O): win if it can, block X if it must, then centre, corners, edges.
-function pickComputerMove(board) {
+// Easy computer (O): win if it can, block X if it must, then centre, corners, edges.
+// Beatable on purpose: it never sees a fork (corner, then the opposite corner).
+function pickEasyMove(board) {
     for (const mark of ["O", "X"]) {
         for (const [a, b, c] of LINES) {
             const marks = [board[a], board[b], board[c]];
@@ -34,9 +35,29 @@ function pickComputerMove(board) {
     return open([1, 3, 5, 7])[0];
 }
 
+// Scores a board for O by searching every remaining game: +10 for an O win, -10 for an X win,
+// less the moves it takes, so O wins sooner and loses later. Tic Tac Toe is small enough to search fully.
+function minimax(board, turn, depth) {
+    const winner = findWinner(board);
+    if (winner) return winner.mark === "O" ? 10 - depth : depth - 10;
+    if (board.every(Boolean)) return 0;
+    const next = turn === "O" ? "X" : "O";
+    const scores = board.flatMap((cell, i) => cell ? [] : [minimax(board.map((c, j) => j === i ? turn : c), next, depth + 1)]);
+    return turn === "O" ? Math.max(...scores) : Math.min(...scores);
+}
+
+// Hard computer (O): always picks a best move, so it never loses. Ties are broken randomly for variety.
+function pickHardMove(board) {
+    const moves = board.flatMap((cell, i) => cell ? [] : [{i, score: minimax(board.map((c, j) => j === i ? "O" : c), "X", 1)}]);
+    const top = Math.max(...moves.map((m) => m.score));
+    const best = moves.filter((m) => m.score === top);
+    return best[Math.floor(Math.random() * best.length)].i;
+}
+
 export default function TicTacToe() {
     const [board, setBoard] = useState(EMPTY);
     const [vsComputer, setVsComputer] = useState(true);
+    const [hard, setHard] = useState(false);
     const [scores, setScores] = useState({X: 0, O: 0, draw: 0});
 
     const winner = findWinner(board);
@@ -52,17 +73,19 @@ export default function TicTacToe() {
 
     useEffect(() => {
         if (!computerTurn) return;
-        const timer = setTimeout(() => play(pickComputerMove(board)), 450);
+        const timer = setTimeout(() => play(hard ? pickHardMove(board) : pickEasyMove(board)), 450);
         return () => clearTimeout(timer);
-    }, [computerTurn, board]);
+    }, [computerTurn, board, hard]);
 
     function play(index) {
         if (over || board[index]) return;
         setBoard(board.map((cell, i) => i === index ? turn : cell));
     }
 
-    function switchMode(computer) {
+    // Changing opponent or difficulty starts a fresh match.
+    function switchMode(computer, hardMode = hard) {
         setVsComputer(computer);
+        setHard(hardMode);
         setScores({X: 0, O: 0, draw: 0});
         setBoard(EMPTY);
     }
@@ -81,6 +104,14 @@ export default function TicTacToe() {
                 <button type="button" className={cx(style.button, !vsComputer && style.buttonActive)}
                         onClick={() => switchMode(false)}>2 Players</button>
             </div>
+            {vsComputer ? (
+                <div className={style.toggle} role="group" aria-label="Difficulty">
+                    <button type="button" aria-pressed={!hard} className={cx(style.toggleOption, !hard && style.toggleActive)}
+                            onClick={() => switchMode(true, false)}>Easy</button>
+                    <button type="button" aria-pressed={hard} className={cx(style.toggleOption, hard && style.toggleActive)}
+                            onClick={() => switchMode(true, true)}>Hard</button>
+                </div>
+            ) : null}
             <p className={style.status} aria-live="polite">{status}</p>
             <div className={style.tttBoard}>
                 {board.map((cell, i) => (
