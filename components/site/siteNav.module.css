@@ -47,12 +47,63 @@
     box-shadow: 0 1px 0 var(--accent);
 }
 
+.menuButton, .menu {
+    display: none;
+}
+
 @media (max-width: 760px) {
     .links {
-        gap: 20px;
+        gap: 12px;
     }
 
     .link {
         display: none;
+    }
+
+    .menuButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-right: -8px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: var(--text-primary);
+        cursor: pointer;
+    }
+
+    .menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        padding: 8px var(--gutter) 20px;
+        /* Solid: a blur nested inside the bar's own blur doesn't render, so the page would show through. */
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .menuOpen {
+        display: flex;
+    }
+
+    .menuLink {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+        font-family: var(--font-display), serif;
+        font-size: 22px;
+        letter-spacing: -0.02em;
+        color: var(--text-secondary) !important;
+    }
+
+    .menuLink:last-child {
+        border-bottom: none;
+    }
+
+    .menuCurrent {
+        color: var(--accent) !important;
     }
 }
