@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import {Metadata} from "../../components/layout";
+import Metadata from "../../components/metadata";
 import Eyebrow from "../../components/site/eyebrow";
 import {liftSmall} from "../../components/site/lift";
 import PostCard from "../../components/site/postCard";

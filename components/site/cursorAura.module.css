@@ -11,6 +11,7 @@
     background: radial-gradient(circle closest-side, rgba(212, 175, 55, 0.14), rgba(212, 175, 55, 0.05) 55%, transparent);
     opacity: 0;
     pointer-events: none;
+    will-change: transform;
     transition: opacity 200ms;
 }
 

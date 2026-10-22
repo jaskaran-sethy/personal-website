@@ -13,7 +13,7 @@ export default function PostCard({post, featured}) {
         <Link href={`/blog/${post.slug}`} className={cx(style.postCard, featured && style.featured, lift)}>
             <span className={style.cover}>
                 {post.image ? (
-                    <img src={post.image} alt=""/>
+                    <img src={post.image} alt="" loading="lazy" decoding="async"/>
                 ) : (
                     <span className={style.coverFallback} aria-hidden="true">{title}</span>
                 )}

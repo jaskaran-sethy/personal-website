@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {Metadata} from "../components/layout";
+import Metadata from "../components/metadata";
 import CroppedImage from "../components/site/croppedImage";
 import Eyebrow from "../components/site/eyebrow";
 import ExternalLink from "../components/site/externalLink";
@@ -30,7 +30,7 @@ const FEATURED_PROJECT = {
     title: "Breathe",
     kicker: "ANDROID · KOTLIN · JETPACK COMPOSE",
     description: "A calm, offline breathing app. Four rhythms, three visual guides — an orb, a tide, a trace of light — and badges you can never lose.",
-    image: "/projects/breathe-lake.jpg",
+    image: "/projects/breathe-lake.webp",
     icon: "/projects/breathe-icon.webp",
     href: `${GITHUB_URL}/meditation-app`,
 };
@@ -115,7 +115,8 @@ function Hero({latestPost}) {
             </div>
             <div className={style.photo}>
                 <div className={style.photoSlant}>
-                    <CroppedImage src="/mountainMe.jpg" alt="Jaskaran smiling on the trail to Chandrashila in the Himalayas"
+                    <CroppedImage src="/mountainMe-900.webp" srcSet="/mountainMe-900.webp 900w, /mountainMe-1600.webp 1600w"
+                                  sizes="(max-width: 1100px) 660px, 840px" priority alt="Jaskaran smiling on the trail to Chandrashila in the Himalayas"
                                   crop={{w: 1.398, h: 2.058, x: -0.191, y: -0.837}} className={style.photoImage}/>
                 </div>
                 <span className={cx(style.locationTag, liftSmall)}>

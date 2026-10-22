@@ -1,7 +1,8 @@
-import {Metadata} from "../../components/layout";
+import Metadata from "../../components/metadata";
 import {liftSmall} from "../../components/site/lift";
 import PostCard from "../../components/site/postCard";
 import Prose from "../../components/site/prose";
+import renderProse from "../../components/site/renderProse";
 import SectionHeader from "../../components/site/sectionHeader";
 import SiteShell from "../../components/site/siteShell";
 import {TagList} from "../../components/site/tagPills";
@@ -21,10 +22,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
     const allPosts = getAllPostsMeta();
+    // The Markdown becomes HTML here, so the page ships the HTML instead of the Markdown and its renderer.
+    const {content, ...post} = getPostBySlug(params.slug);
     return {
         props: {
             // `readingMinutes` comes from the list metadata, which the meta line needs.
-            post: {...getPostBySlug(params.slug), ...allPosts.find((post) => post.slug === params.slug)},
+            post: {...post, ...allPosts.find((meta) => meta.slug === params.slug), html: renderProse(content)},
             morePosts: allPosts.filter((post) => post.slug !== params.slug).slice(0, 3),
         },
     };
@@ -47,7 +50,7 @@ export default function BlogPost({post, morePosts}) {
                     </div>
                 ) : null}
                 <div className={style.body}>
-                    <Prose>{post.content}</Prose>
+                    <Prose html={post.html}/>
                     <TagList tags={post.tags}/>
                 </div>
             </article>

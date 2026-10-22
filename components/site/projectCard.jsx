@@ -10,7 +10,7 @@ import style from "./projectCard.module.css";
 export function FeaturedProjectCard({project: {title, kicker, description, image, icon, href}}) {
     return (
         <ExternalLink href={href} className={cx(style.featured, lift)} style={{"--card-image": `url(${image})`}}>
-            {icon ? <img src={icon} alt="" className={style.appIcon}/> : null}
+            {icon ? <img src={icon} alt="" className={style.appIcon} loading="lazy" decoding="async"/> : null}
             <span className={cx(type.kickerSmall, type.accent)}>{kicker}</span>
             <span className={style.featuredTitle}>{title}</span>
             <span className={style.featuredDescription}>{description}</span>
