@@ -103,9 +103,9 @@
     border-radius: 999px;
     background: transparent;
     color: var(--text-subtle);
-    font-family: var(--font-mono), monospace;
-    font-size: 12px;
-    letter-spacing: var(--mono-tracking);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
     transition: background 150ms, color 150ms;
 }

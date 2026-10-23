@@ -1,0 +1,149 @@
+/* Insight Extractor's summary charts. Colours come from the --positive / --negative / --neutral-fill variables set
+   on the extractor. */
+
+.chart {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--card-border);
+    background: #141418;
+}
+
+.caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px 12px;
+}
+
+.positive { background: var(--positive); }
+.negative { background: var(--negative); }
+.neutral { background: var(--neutral-fill); }
+.mixed { background: repeating-linear-gradient(135deg, var(--positive) 0 4px, var(--negative) 4px 8px); }
+
+.legend {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-subtle);
+}
+
+.legendItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex: none;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Label | bar | value, with the label column sized to the chart. */
+.row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(70px, 38%) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 5px 6px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: none;
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+}
+
+.row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.row:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.rowActive, .rowActive:hover {
+    border-color: rgba(212, 175, 55, 0.45);
+    color: var(--text-primary);
+}
+
+.rowLabel {
+    line-height: 1.3;
+}
+
+.sentimentWord {
+    color: var(--text-subtle);
+}
+
+.track {
+    display: flex;
+}
+
+/* Segments split the bar with 2px surface gaps; only the bar's outer end is rounded (it grows from the left). */
+.bar {
+    display: flex;
+    gap: 2px;
+    min-width: 4px;
+    height: 10px;
+}
+
+.segment {
+    flex-basis: 0;
+    min-width: 3px;
+}
+
+.segment:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.value {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 2;
+    right: 6px;
+    bottom: calc(100% - 2px);
+    padding: 5px 9px;
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    background: #1c1c21;
+    color: var(--text-primary);
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms;
+}
+
+.row:hover .tooltip, .row:focus-visible .tooltip {
+    opacity: 1;
+}

@@ -1,9 +1,11 @@
 /* Insight Extractor */
 
+/* Positive blue and negative red: a pair checked to stay distinct for colour-blind readers on this dark surface. */
 .extractor {
-    --positive: #7FBF8E;
-    --negative: #E58A8A;
+    --positive: #4F8FD6;
+    --negative: #E0684F;
     --neutral: var(--text-subtle);
+    --neutral-fill: #4A4A52;
     --mixed: var(--accent);
     display: flex;
     flex-direction: column;
@@ -19,6 +21,12 @@
     font-weight: 400;
     letter-spacing: var(--mono-tracking);
     color: var(--text-muted);
+}
+
+.modes {
+    display: flex;
+    justify-content: center;
+    padding-top: 12px; /* The kit toggle tucks up under a status line; there isn't one here. */
 }
 
 /* Input */
@@ -119,12 +127,12 @@
 }
 
 .mark.positive {
-    background: rgba(127, 191, 142, 0.14);
+    background: rgba(79, 143, 214, 0.16);
     box-shadow: inset 0 -2px 0 var(--positive);
 }
 
 .mark.negative {
-    background: rgba(229, 138, 138, 0.14);
+    background: rgba(224, 104, 79, 0.16);
     box-shadow: inset 0 -2px 0 var(--negative);
 }
 

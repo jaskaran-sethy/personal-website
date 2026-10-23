@@ -1,11 +1,15 @@
 import {useDeferredValue, useMemo, useState} from "react";
 import cx from "../../lib/cx";
 import {analyze} from "../../lib/insights";
+import {Toggle} from "./kit";
+import {Highlighted, OverallCard, SentimentChip} from "./insightParts";
+import ProductInsights from "./productInsights";
 import ie from "./insightExtractor.module.css";
 
 // Insight Extractor: type or paste customer feedback and it pulls out the insightful phrases, labels what each is
 // about, scores its sentiment, then gives the whole message a sentiment and sums up each label. A small, in-browser
 // take on Sprinklr's Product Insights (see lib/insights.js for how it works). It updates as you type.
+// "Product reviews" does the same across an Amazon or Flipkart product's reviews (see productInsights.jsx).
 
 const EXAMPLES = [
     {name: "Phone review", text: "The camera is absolutely stunning and the screen is so bright, but the battery drains fast and it overheats while gaming. Customer service was not helpful at all."},
@@ -14,30 +18,9 @@ const EXAMPLES = [
     {name: "Online order", text: "Delivery was late by three days and the box was damaged. The headphones sound great though, and noise cancelling is impressive for the price."},
 ];
 
-const SENTIMENT_LABELS = {positive: "Positive", negative: "Negative", neutral: "Neutral", mixed: "Mixed"};
+const MODES = [{value: "message", label: "Message"}, {value: "product", label: "Product reviews"}];
 
-function SentimentChip({sentiment}) {
-    return <span className={cx(ie.chip, ie[sentiment])}>{SENTIMENT_LABELS[sentiment]}</span>;
-}
-
-// The message with each insight's phrase highlighted in its sentiment colour. Insights share a phrase when one
-// clause covers two labels, so phrases are de-duplicated by position.
-function Highlighted({text, insights}) {
-    const spans = [...new Map(insights.map((i) => [i.start, i])).values()].sort((a, b) => a.start - b.start);
-    const parts = [];
-    let at = 0;
-    for (const span of spans) {
-        if (span.start > at) parts.push(text.slice(at, span.start));
-        parts.push(
-            <mark key={span.start} className={cx(ie.mark, ie[span.sentiment])}>{text.slice(span.start, span.end)}</mark>,
-        );
-        at = span.end;
-    }
-    parts.push(text.slice(at));
-    return <p className={ie.highlighted}>{parts}</p>;
-}
-
-// A bar centred on zero: right and green for positive, left and red for negative. Scores run about -2 … +2.
+// A bar centred on zero: right for positive, left for negative. Scores run about -2 … +2.
 function ScoreBar({score}) {
     const amount = Math.min(1, Math.abs(score) / 2) * 50;
     return (
@@ -48,7 +31,7 @@ function ScoreBar({score}) {
     );
 }
 
-export default function InsightExtractor() {
+function MessageInsights() {
     const [text, setText] = useState(EXAMPLES[0].text);
     // Analysis is cheap, but deferring keeps typing smooth on long pastes.
     const deferred = useDeferredValue(text);
@@ -57,7 +40,7 @@ export default function InsightExtractor() {
     for (const span of new Map(insights.map((i) => [i.start, i])).values()) counts[span.sentiment]++;
 
     return (
-        <div className={ie.extractor}>
+        <>
             <div className={ie.input}>
                 <label htmlFor="insight-input" className={ie.kicker}>CUSTOMER FEEDBACK</label>
                 <textarea id="insight-input" className={ie.textarea} rows={4} value={text}
@@ -96,17 +79,8 @@ export default function InsightExtractor() {
                 </div>
 
                 <aside className={ie.side}>
-                    <div className={ie.overall}>
-                        <span className={ie.kicker}>OVERALL</span>
-                        <span className={cx(ie.overallWord, ie[overall.sentiment])}>
-                            {insights.length ? SENTIMENT_LABELS[overall.sentiment] : "—"}
-                        </span>
-                        {insights.length ? (
-                            <span className={ie.counts}>
-                                {counts.positive} positive · {counts.negative} negative{counts.neutral ? ` · ${counts.neutral} neutral` : ""}
-                            </span>
-                        ) : null}
-                    </div>
+                    <OverallCard sentiment={overall.sentiment} empty={!insights.length}
+                                 detail={`${counts.positive} positive · ${counts.negative} negative${counts.neutral ? ` · ${counts.neutral} neutral` : ""}`}/>
                     <div className={ie.summary}>
                         <span className={ie.kicker}>BY LABEL</span>
                         {summary.length ? (
@@ -123,7 +97,18 @@ export default function InsightExtractor() {
                     </div>
                 </aside>
             </div>
+        </>
+    );
+}
 
+export default function InsightExtractor() {
+    const [mode, setMode] = useState("message");
+    return (
+        <div className={ie.extractor}>
+            <div className={ie.modes}>
+                <Toggle label="What to analyse" options={MODES} value={mode} onChange={setMode}/>
+            </div>
+            {mode === "message" ? <MessageInsights/> : <ProductInsights/>}
             <p className={ie.note}>
                 Runs entirely in your browser with a hand-built lexicon: a small take on Product Insights at Sprinklr,
                 where I worked on the NLP models (fine-tuned transformers) that do this at scale.
