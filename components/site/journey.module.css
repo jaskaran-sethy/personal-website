@@ -179,6 +179,16 @@
     color: var(--text-subtle);
 }
 
+/* The place's own proudest moment: a quiet serif line under its name, apart from my points below. */
+.milestone {
+    margin: -2px 0 4px;
+    font-family: var(--font-display), serif;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--text-subtle);
+}
+
 .points {
     display: flex;
     flex-direction: column;
