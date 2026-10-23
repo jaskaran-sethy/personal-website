@@ -9,7 +9,7 @@ export default function Subscribe({className}) {
     return (
         <p className={cx(style.subscribe, className)}>
             New essays by email:
-            <TextLink href={`${SUBSTACK_URL}/subscribe`} external>Subscribe on Substack</TextLink>
+            <TextLink href={`${SUBSTACK_URL}/subscribe`} external icon="substack">Subscribe on Substack</TextLink>
             <span className={style.or}>or follow the</span>
             <a href="/rss.xml" className={style.rss}><Icon name="rss" size={14} tone="accent"/>RSS feed</a>
         </p>
