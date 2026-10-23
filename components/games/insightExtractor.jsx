@@ -1,4 +1,4 @@
-import {useDeferredValue, useMemo, useState} from "react";
+import {useDeferredValue, useEffect, useMemo, useState} from "react";
 import cx from "../../lib/cx";
 import {analyze} from "../../lib/insights";
 import {Toggle} from "./kit";
@@ -103,6 +103,10 @@ function MessageInsights() {
 
 export default function InsightExtractor() {
     const [mode, setMode] = useState("message");
+    // ?mode=product opens the product view (the helper extension's toolbar button links there).
+    useEffect(() => {
+        if (new URLSearchParams(location.search).get("mode") === "product") setMode("product");
+    }, []);
     return (
         <div className={ie.extractor}>
             <div className={ie.modes}>

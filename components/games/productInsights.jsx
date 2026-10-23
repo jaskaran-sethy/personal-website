@@ -16,6 +16,9 @@ const EXAMPLES = [
     {name: "iPhone 15 on Flipkart", url: "https://www.flipkart.com/apple-iphone-15-blue-128-gb/p/itm387c20f1f5347?pid=MOBHQV9YZGYG64U7"},
 ];
 const SHOP_NAMES = {amazon: "Amazon", flipkart: "Flipkart"};
+// The helper extension lives in its own public repo; its releases carry the built zip.
+const EXTENSION_REPO = "https://github.com/jaskaran-sethy/insight-extractor-extension";
+const EXTENSION_ZIP = `${EXTENSION_REPO}/releases/latest/download/insight-extractor-extension.zip`;
 const CHART_ROWS = 8;
 
 const stars = (rating) => (Number.isFinite(rating) ? "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating)) : "");
@@ -29,14 +32,14 @@ function InstallGuide() {
                 from <em>your</em> browser. Nothing goes through my server.
             </p>
             <ol className={pi.steps}>
-                <li><a href="/insight-extractor-extension.zip" download>Download the extension</a> and unzip it.</li>
+                <li><a href={EXTENSION_ZIP}>Download the extension</a> and unzip it.</li>
                 <li>Open <code>chrome://extensions</code> (or <code>edge://extensions</code>) and turn on <strong>Developer mode</strong>.</li>
                 <li>Click <strong>Load unpacked</strong> and pick the unzipped folder.</li>
                 <li>Reload this page.</li>
             </ol>
             <p className={pi.fine}>
                 Desktop Chrome, Edge or Brave. It can only read amazon.in, amazon.com and flipkart.com, and only when you
-                press Analyse here.
+                press Analyse here. <a href={EXTENSION_REPO}>Source on GitHub</a>.
             </p>
         </div>
     );
