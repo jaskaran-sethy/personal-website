@@ -18,6 +18,8 @@ const SERIES = [
     {key: "invested", name: "Invested", color: "#d95926"},
     {key: "real", name: "Today's money", color: "#199e70", dashed: true},
 ];
+// Tagged so Armor's analytics can tell visits from this calculator apart.
+const ARMOR_URL = "https://yourarmor.ai/?utm_source=jaskaransethy.com&utm_medium=referral&utm_campaign=portfolio-calculator";
 const CURRENCIES = [{value: "INR", label: "₹ Rupees"}, {value: "USD", label: "$ Dollars"}];
 
 const DEFAULTS = {
@@ -255,7 +257,7 @@ export default function PortfolioCalculator() {
 
             <Rebalance rows={rebalance(holdings, targets)} targets={targets} onTargets={(next) => set({targets: next})} currency={currency}/>
 
-            <a href="https://yourarmor.ai" target="_blank" rel="noopener" className={pc.armor}>
+            <a href={ARMOR_URL} target="_blank" rel="noopener" className={pc.armor}>
                 <img src="/logos/armor.svg" alt="" className={pc.armorLogo}/>
                 <span className={pc.armorText}>
                     <span className={pc.armorTitle}>Want a calculator backed by years of financial advisory?</span>
