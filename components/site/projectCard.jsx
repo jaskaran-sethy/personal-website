@@ -1,3 +1,4 @@
+import Link from "next/link";
 import cx from "../../lib/cx";
 import CroppedImage from "./croppedImage";
 import ExternalLink from "./externalLink";
@@ -20,19 +21,22 @@ export function FeaturedProjectCard({project: {title, kicker, description, image
     );
 }
 
-// A compact card: cropped screenshot on the left, text on the right (stacked on narrow screens).
+// A compact card: cropped screenshot on the left, text on the right (stacked on narrow screens). Projects on this
+// site (an href starting with "/") open in place with a plain arrow; the rest open in a new tab with ↗.
 export default function ProjectCard({project: {title, kicker, description, image, crop, href}}) {
+    const internal = href.startsWith("/");
+    const Anchor = internal ? Link : ExternalLink;
     return (
-        <ExternalLink href={href} className={cx(style.card, lift)}>
+        <Anchor href={href} className={cx(style.card, lift)}>
             <CroppedImage src={image} crop={crop} className={style.shot}/>
             <span className={style.text}>
                 <span className={style.top}>
                     <span className={type.kickerSmall}>{kicker}</span>
-                    <Icon name="arrow-up-right" size={18} className={style.arrow}/>
+                    <Icon name={internal ? "arrow-right" : "arrow-up-right"} size={18} className={style.arrow}/>
                 </span>
                 <span className={style.title}>{title}</span>
                 <span className={style.description}>{description}</span>
             </span>
-        </ExternalLink>
+        </Anchor>
     );
 }
