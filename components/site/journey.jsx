@@ -27,7 +27,7 @@ const STOPS = [
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
         site: "https://www.iitr.ac.in",
-        milestone: "The oldest IIT, engineering India since 1847",
+        milestone: "The oldest IIT, home to India's only earthquake engineering department",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
