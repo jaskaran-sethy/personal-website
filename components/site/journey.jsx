@@ -11,10 +11,11 @@ import style from "./journey.module.css";
 // to start with, so the panel always shows something and the page never jumps. On touch screens a tap pins.
 // `inset` is how much room each mark gets inside its medallion, tuned by eye: the round IIT seal can nearly
 // fill it, the crest and splash need a little air, and Armor's outlined shield (the mark from its own site
-// header, made for dark backgrounds) needs the most.
+// header, made for dark backgrounds) needs the most. Each card's name links to the place's website.
 const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
+        site: "https://www.stcolumbas.edu.in",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
@@ -23,6 +24,7 @@ const STOPS = [
     },
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
+        site: "https://www.iitr.ac.in",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
@@ -32,6 +34,7 @@ const STOPS = [
     },
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
+        site: "https://www.sprinklr.com",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         market: "B2B",
         points: [
@@ -43,6 +46,7 @@ const STOPS = [
     },
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
+        site: "https://yourarmor.ai",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
         market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
@@ -83,7 +87,7 @@ export default function Journey() {
             <p className={cx(type.kickerSmall, style.label)}>ALONG THE WAY</p>
             <ol className={style.row} aria-label="School, university and work, in order"
                 onPointerLeave={() => setPreviewing(null)}>
-                {STOPS.map(({id, inset, when, points, clients, market, ...mark}) => (
+                {STOPS.map(({id, inset, when, points, clients, market, site, ...mark}) => (
                     <li key={id}>
                         <button type="button" aria-pressed={pinned === id} aria-controls="journey-detail"
                                 className={cx(style.medallion, style[`inset-${inset}`], pinned === id && style.pinned,
@@ -103,7 +107,11 @@ export default function Journey() {
                          aria-hidden={stop.id !== shown.id}>
                         <p className={cx(type.kickerSmall, style.when)}>{stop.when}</p>
                         <p className={style.name}>
-                            {stop.name}
+                            {/* Hidden cards keep their links out of the tab order. */}
+                            <a href={stop.site} target="_blank" rel="noopener" className={style.site}
+                               tabIndex={stop.id === shown.id ? undefined : -1}>
+                                {stop.name}<span className={style.siteArrow} aria-hidden="true">↗</span>
+                            </a>
                             {/* Who the company sells to: businesses (B2B) or consumers (B2C). */}
                             {stop.market ? <span className={cx(type.kickerSmall, style.market)}>{stop.market}</span> : null}
                         </p>
