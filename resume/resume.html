@@ -1,0 +1,116 @@
+<!doctype html>
+<!--
+    Jaskaran Sethy's resume. Source for public/resume.pdf (US Letter, one page), which the site's Resume buttons
+    link to. To rebuild after editing, print it to PDF with headless Edge (or Chrome):
+        msedge --headless --no-pdf-header-footer --print-to-pdf=public/resume.pdf resume/resume.html
+    The public copy carries no contact details beyond the website and LinkedIn.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jaskaran Sethy, Resume</title>
+<style>
+    @page { size: letter; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body {
+        width: 8.5in;
+        min-height: 11in;
+        padding: 0.42in 0.55in 0.4in;
+        font-family: Garamond, "EB Garamond", "Times New Roman", serif;
+        font-size: 11.4pt;
+        line-height: 1.17;
+        color: #000;
+    }
+    a { color: #1155cc; }
+    h1 { font-size: 24pt; font-weight: bold; line-height: 1; margin-bottom: 4pt; }
+    .contact { font-size: 14pt; padding-bottom: 5pt; border-bottom: 1.4pt solid #000; }
+    h2 {
+        margin: 18pt 0 4pt;
+        padding-bottom: 1.5pt;
+        border-bottom: 0.9pt solid #000;
+        font-size: 11.6pt;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .entry { margin-top: 3pt; }
+    .entry + .entry { margin-top: 11pt; }
+    .row { display: flex; justify-content: space-between; align-items: baseline; }
+    .org, .when { font-weight: bold; }
+    .role, .where { font-style: italic; }
+    ul { margin: 1pt 0 0 18pt; list-style: disc; }
+    li { padding-left: 4pt; text-align: justify; }
+    li::marker { font-size: 9pt; }
+    b { font-weight: bold; }
+</style>
+</head>
+<body>
+    <h1>Jaskaran Sethy</h1>
+    <p class="contact"><a href="https://jaskaransethy.com">jaskaransethy.com</a> | <a href="https://www.linkedin.com/in/jaskaran-sethy/">LinkedIn</a></p>
+
+    <h2>Education</h2>
+    <div class="entry">
+        <div class="row"><span class="org">IIT Roorkee</span><span class="when">May 2022</span></div>
+        <div class="row"><span class="role">Bachelor of Technology, Biotechnology</span></div>
+        <ul>
+            <li><b>CGPA: 9.123,</b> Departmental Gold Medalist</li>
+            <li><b>Thesis Project</b>: Predicting the function of hypothetical proteins using Machine Learning</li>
+            <li><b>Relevant Courses:</b> Data Structures, Computer Programming, Bioinformatics</li>
+        </ul>
+    </div>
+    <div class="entry">
+        <div class="row"><span class="org">St. Columba’s School</span><span class="when">Mar 2018</span></div>
+        <div class="row"><span class="role">Intermediate (Class XII)</span><span class="where">New Delhi</span></div>
+        <ul>
+            <li><b>Grade: 96%</b></li>
+        </ul>
+    </div>
+
+    <h2>Work Experience</h2>
+    <div class="entry">
+        <div class="row"><span class="org">Armor</span><span class="when">Sep 2026 – Present</span></div>
+        <div class="row"><span class="role">Data Science &amp; Software</span></div>
+        <ul>
+            <li><b>Armor Overview:</b> a SEBI-registered investment adviser backed by South Park Commons, Google for
+                Startups and NVIDIA Inception, trusted by 1,000+ Indians to plan and grow their wealth.</li>
+            <li>Building the data pipelines behind Armor’s wealth analytics, bringing users’ holdings, market feeds and
+                corporate actions into one continuously updated picture of their finances.</li>
+            <li>Developing the analytics that turn that data into each user’s Armor Score and portfolio insights.</li>
+        </ul>
+    </div>
+    <div class="entry">
+        <div class="row"><span class="org">Sprinklr</span><span class="when">Jul 2022 – Dec 2023</span></div>
+        <div class="row"><span class="role">Data Scientist</span><span class="where">Hybrid</span></div>
+        <ul>
+            <li><b>Sprinklr Overview:</b> a $1.86B market cap, AI-powered Customer Experience Management (CXM) platform
+                with $796M in revenue, serving 1,700 clients across marketing, social media, and customer service to
+                deliver human experiences at scale.</li>
+            <li>Boosted Product Insights ARR from $1M to $3M+ by enabling enterprise clients (e.g., Samsung, Amazon,
+                Wells Fargo) to extract actionable insights from customer feedback; increasing NLP model accuracy (F1
+                from 60% to 80%+) across tasks like NER and sentiment analysis by finetuning and quantizing
+                transformers (BERT, XLMR)</li>
+            <li>Built an in-house LLM (fine-tuned LLaMA2 with vllm inference) to create an automated cataloging system,
+                eliminating 200+ hours of manual tagging and streamlining product data organization.</li>
+            <li>Built a self-service AutoML platform on Streamlit enabling product teams to train, test and deploy
+                models independently, saving 60+ developer hours per month.</li>
+            <li>Reduced Docker build times by 50% through image thinning and hardening; enhanced monitoring by
+                integrating health probes into Grafana success-rate dashboards.</li>
+            <li>Optimized Kafka-based integration of Product Insight services and improved HTTP-based response times,
+                achieving 100ms P95 latency across 100M+ daily messages and reducing server costs by $2K/month.</li>
+            <li>Handled on-call rotations for all ML services, resolving critical incidents and deployment issues to
+                maintain 99.999% availability and ensure uninterrupted customer experience for Fortune 500 clients.</li>
+            <li>Mentored two junior engineers on NLP pipeline design, containerization and documentation best practices.</li>
+        </ul>
+    </div>
+
+    <h2>Certifications, Skills &amp; Interests</h2>
+    <ul>
+        <li><b>Certifications:</b> Deep Learning Specialization (Coursera), Kubernetes Hands-on (KodeKloud)</li>
+        <li><b>Modelling:</b> HuggingFace, Transformers, LLMs, Model Quantization (ONNX), XGBoost</li>
+        <li><b>MLOps:</b> Docker, Kubernetes, Helm Charts, Gitlab CI/CD, Grafana, AWS (S3, EC2), GCP, JIRA</li>
+        <li><b>Strengths:</b> Model Building and Deployment, Cost and Latency Optimization, ML Research and
+            Implementation</li>
+        <li><b>Interests:</b> Weightlifting; Gaming; Trekking; Travelling; Economics</li>
+    </ul>
+</body>
+</html>
