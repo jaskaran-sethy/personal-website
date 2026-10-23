@@ -17,7 +17,7 @@ const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
         site: "https://www.stcolumbas.edu.in",
-        milestone: "Delhi's top-ranked boys' school, #5 in India (EducationWorld 2025–26)",
+        milestone: "Founded in 1941; ranked #5 in India by EducationWorld (2025–26)",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
