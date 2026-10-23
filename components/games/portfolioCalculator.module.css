@@ -96,6 +96,17 @@
     border-color: var(--accent);
 }
 
+/* No native up/down spinners: they're bright on the dark field and crowd the number. Arrow keys still step it. */
+.input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button, .input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
 .select {
     appearance: none;
     padding-right: 24px;
