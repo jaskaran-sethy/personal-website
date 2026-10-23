@@ -4,6 +4,7 @@ import Eyebrow from "../../components/site/eyebrow";
 import {liftSmall} from "../../components/site/lift";
 import PostCard from "../../components/site/postCard";
 import SiteShell from "../../components/site/siteShell";
+import Subscribe from "../../components/site/subscribe";
 import {TagFilter} from "../../components/site/tagPills";
 import TextLink from "../../components/site/textLink";
 import cx from "../../lib/cx";
@@ -40,6 +41,7 @@ export default function BlogPage({posts, tags}) {
                     <p className={cx(style.intro, liftSmall)}>
                         Essays, book reviews and whatever I've become obsessed with this month.
                     </p>
+                    <Subscribe/>
                 </header>
                 <TagFilter tags={tags} activeTag={activeTag} onSelect={selectTag}/>
                 <PostList posts={visiblePosts}/>

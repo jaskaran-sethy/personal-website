@@ -5,6 +5,7 @@ import Prose from "../../components/site/prose";
 import renderProse from "../../components/site/renderProse";
 import SectionHeader from "../../components/site/sectionHeader";
 import SiteShell from "../../components/site/siteShell";
+import Subscribe from "../../components/site/subscribe";
 import {TagList} from "../../components/site/tagPills";
 import TextLink from "../../components/site/textLink";
 import type from "../../components/site/type.module.css";
@@ -52,6 +53,7 @@ export default function BlogPost({post, morePosts}) {
                 <div className={style.body}>
                     <Prose html={post.html}/>
                     <TagList tags={post.tags}/>
+                    <Subscribe className={style.subscribe}/>
                 </div>
             </article>
             {morePosts.length ? (

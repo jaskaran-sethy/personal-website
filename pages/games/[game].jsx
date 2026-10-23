@@ -27,7 +27,8 @@ export default function GamePage({id}) {
     const [slot, setSlot] = useState(null);
     return (
         <SiteShell>
-            <Metadata title={`${game.name} · Games · Jaskaran Sethy`} description={game.blurb} url={gamePath(game.id)}/>
+            <Metadata title={`${game.name} · Games · Jaskaran Sethy`} description={game.blurb} url={gamePath(game.id)}
+                      image={`/og/${game.id}.png`}/>
             <main className={cx(style.games, style.playing)}>
                 <header className={style.gameBar}>
                     <Link href={sectionPath(game.section ?? "normal")} className={style.navButton} aria-label="All games">

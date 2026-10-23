@@ -75,7 +75,7 @@ export async function getStaticProps() {
 export default function HomePage({posts}) {
     return (
         <SiteShell>
-            <Metadata title="Jaskaran Sethy" type="website"/>
+            <Metadata title="Jaskaran Sethy" type="website" url="/"/>
             <Hero latestPost={posts[0]}/>
             <section className={style.journey} aria-label="Along the way">
                 <JourneyTimeline/>

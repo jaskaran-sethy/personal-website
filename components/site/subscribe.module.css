@@ -1,0 +1,23 @@
+.subscribe {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 10px;
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+.or {
+    color: var(--text-subtle);
+}
+
+.rss {
+    color: var(--text-secondary) !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border);
+}
+
+.rss:hover {
+    color: var(--text-primary) !important;
+}

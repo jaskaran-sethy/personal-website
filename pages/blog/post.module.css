@@ -56,6 +56,12 @@
     gap: 56px;
 }
 
+/* "New essays by email", set apart from the tags above it. */
+.subscribe {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
 .more {
     display: flex;
     flex-direction: column;
