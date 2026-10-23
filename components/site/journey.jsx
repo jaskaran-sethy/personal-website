@@ -12,12 +12,12 @@ import style from "./journey.module.css";
 // `inset` is how much room each mark gets inside its medallion, tuned by eye: the round IIT seal can nearly
 // fill it, the crest and splash need a little air, and Armor's outlined shield (the mark from its own site
 // header, made for dark backgrounds) needs the most. Each card's name links to the place's website, and
-// `milestone` is the place's own proudest moment, shown under its name.
+// `milestone` is one line on what the place itself is proudest of, shown under its name.
 const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
         site: "https://www.stcolumbas.edu.in",
-        milestone: "Alumni include Shah Rukh Khan, Param Vir Chakra recipient Arun Khetarpal and Pulitzer winner Siddhartha Mukherjee",
+        milestone: "Delhi's top-ranked boys' school, #5 in India (EducationWorld 2025–26)",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
@@ -27,7 +27,7 @@ const STOPS = [
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
         site: "https://www.iitr.ac.in",
-        milestone: "Alumni include Amit Singhal, head of Google Search for 15 years, and data-mining pioneer Rakesh Agrawal",
+        milestone: "Shaped India's earthquake-resistant building code",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
@@ -38,7 +38,7 @@ const STOPS = [
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         site: "https://www.sprinklr.com",
-        milestone: "Listed on the New York Stock Exchange in 2021, valued at about $4 billion",
+        milestone: "Went public on the NYSE in 2021, valued at about $4 billion",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         market: "B2B",
         points: [
@@ -51,7 +51,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         site: "https://yourarmor.ai",
-        milestone: "Backed by South Park Commons, Google for Startups and NVIDIA Inception; trusted by 1,000+ Indians",
+        milestone: "Backed by South Park Commons, Armor is a trusted investment adviser right in your phone",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
         market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
