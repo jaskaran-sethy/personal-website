@@ -2,7 +2,8 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
 import cx from "../../lib/cx";
 import {analyze} from "../../lib/insights";
 import {Toggle} from "./kit";
-import {highlightParts, OverallCard, SentimentChip} from "./insightParts";
+import {highlightParts, InsightSidePanel, OverallCard, SentimentChip} from "./insightParts";
+import {useDocked} from "./sidePanel";
 import ProductInsights from "./productInsights";
 import ie from "./insightExtractor.module.css";
 
@@ -60,6 +61,7 @@ function MessageInsights() {
     const [text, setText] = useState(EXAMPLES[0].text);
     // Analysed on every keystroke (it's quick), so the highlights always match what's in the box.
     const {insights, summary, overall} = useMemo(() => analyze(text), [text]);
+    const docked = useDocked();
     const counts = {positive: 0, negative: 0, neutral: 0};
     for (const span of new Map(insights.map((i) => [i.start, i])).values()) counts[span.sentiment]++;
 
@@ -78,7 +80,7 @@ function MessageInsights() {
                 </div>
             </div>
 
-            <div className={ie.results}>
+            <div className={cx(ie.results, docked && ie.resultsDocked)}>
                 <div className={ie.main}>
                     <h3 className={ie.kicker}>INSIGHTS</h3>
                     {insights.length ? (
@@ -100,7 +102,7 @@ function MessageInsights() {
                     )}
                 </div>
 
-                <aside className={ie.side}>
+                <InsightSidePanel>
                     <OverallCard sentiment={overall.sentiment} empty={!insights.length}
                                  detail={`${counts.positive} positive · ${counts.negative} negative${counts.neutral ? ` · ${counts.neutral} neutral` : ""}`}/>
                     <div className={ie.summary}>
@@ -117,7 +119,7 @@ function MessageInsights() {
                             </ul>
                         ) : <p className={ie.empty}>Labels appear here.</p>}
                     </div>
-                </aside>
+                </InsightSidePanel>
             </div>
         </>
     );

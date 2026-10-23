@@ -196,10 +196,28 @@
     gap: 20px;
 }
 
+/* Beside the game on wide screens it stays in view as the page scrolls, scrolling on its own if it's taller than
+   the window. */
 .side {
+    position: sticky;
+    top: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Where a tool docks its summary (components/games/sidePanel.jsx). Takes no room when empty. */
+.sideSlot {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sideSlot:empty {
+    display: none;
 }
 
 .gameBlurb {
@@ -215,6 +233,12 @@
     .playArea {
         grid-template-columns: minmax(0, 1fr);
         gap: 16px;
+    }
+
+    .side {
+        position: static;
+        max-height: none;
+        overflow: visible;
     }
 
     .gameBlurb {

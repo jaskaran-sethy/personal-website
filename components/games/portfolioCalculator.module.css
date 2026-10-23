@@ -70,6 +70,19 @@
     align-items: start;
 }
 
+/* With allocation docked in the page's side column, holdings take the full width. */
+.pairDocked {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+/* The docked summary in the page's side column. */
+.dock {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-variant-numeric: tabular-nums;
+}
+
 @container (max-width: 700px) {
     .pair {
         grid-template-columns: minmax(0, 1fr);

@@ -1,4 +1,5 @@
 import cx from "../../lib/cx";
+import {SidePanel} from "./sidePanel";
 import ie from "./insightExtractor.module.css";
 
 // Pieces Insight Extractor's message and product views share.
@@ -27,6 +28,16 @@ export function highlightParts(text, insights) {
 // Text with each insight's phrase highlighted in its sentiment colour.
 export function Highlighted({text, insights, className}) {
     return <p className={cx(ie.highlighted, className)}>{highlightParts(text, insights)}</p>;
+}
+
+// The summary beside the results: docked in the page's side column on wide screens, inline otherwise. It carries
+// its own palette so the sentiment colours work in either place.
+export function InsightSidePanel({children}) {
+    return (
+        <SidePanel>
+            <aside className={cx(ie.side, ie.palette)}>{children}</aside>
+        </SidePanel>
+    );
 }
 
 // The big overall sentiment word, with a line of detail under it. Shows a dash when there's nothing to judge.

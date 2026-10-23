@@ -1,8 +1,10 @@
 import {useState} from "react";
 import {fetchThroughExtension, useExtension} from "../../lib/extensionBridge";
 import {MAX_PAGES, fetchProductReviews, parseProductUrl, summarizeReviews} from "../../lib/productReviews";
+import cx from "../../lib/cx";
 import {GameButton} from "./kit";
-import {Highlighted, OverallCard, SentimentChip} from "./insightParts";
+import {Highlighted, InsightSidePanel, OverallCard, SentimentChip} from "./insightParts";
+import {useDocked} from "./sidePanel";
 import {LabelBreakdown, SentimentBreakdown, TopCombos} from "./insightCharts";
 import ie from "./insightExtractor.module.css";
 import pi from "./productInsights.module.css";
@@ -49,6 +51,7 @@ function Results({result, selected, onSelect}) {
     const {product, details, stopped, summary} = result;
     const {reviews, mix, labels, combos, overall, averageRating} = summary;
     const label = labels.find((row) => row.label === selected);
+    const docked = useDocked();
     const opinionated = reviews.length - mix.neutral;
 
     return (
@@ -70,7 +73,7 @@ function Results({result, selected, onSelect}) {
                 ) : null}
             </div>
 
-            <div className={ie.results}>
+            <div className={cx(ie.results, docked && ie.resultsDocked)}>
                 <div className={ie.main}>
                     {labels.length ? (
                         <>
@@ -108,7 +111,7 @@ function Results({result, selected, onSelect}) {
                     </details>
                 </div>
 
-                <aside className={ie.side}>
+                <InsightSidePanel>
                     <OverallCard sentiment={overall.sentiment} empty={!opinionated}
                                  detail={`Across ${opinionated} review${opinionated === 1 ? "" : "s"} with an opinion`}/>
                     <SentimentBreakdown mix={mix}/>
@@ -117,7 +120,7 @@ function Results({result, selected, onSelect}) {
                         <span className={pi.big}>{reviews.length}</span>
                         {averageRating ? <span className={ie.counts}>averaging {averageRating.toFixed(1)} ★</span> : null}
                     </div>
-                </aside>
+                </InsightSidePanel>
             </div>
         </>
     );

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import {useState} from "react";
 import HighScoreBar, {hasHighScore} from "../../components/games/highScoreBar";
 import {findGame, GAMES, gamePath, nextGame, sectionPath} from "../../components/games/registry";
+import {SideSlot} from "../../components/games/sidePanel";
 import Metadata from "../../components/metadata";
 import Icon from "../../components/site/icon";
 import SiteShell from "../../components/site/siteShell";
@@ -17,10 +19,12 @@ export function getStaticProps({params}) {
 
 // One game at /games/<id>. The game comes first: a slim bar (back, title, next) above it, and the blurb and
 // high scores beside it on wide screens (below it on narrow ones), so the board is on screen without scrolling.
+// Tools can dock a summary into that column through SideSlot (see components/games/sidePanel.jsx).
 export default function GamePage({id}) {
     const game = findGame(id);
     const {Game} = game;
     const next = nextGame(game);
+    const [slot, setSlot] = useState(null);
     return (
         <SiteShell>
             <Metadata title={`${game.name} · Games · Jaskaran Sethy`} description={game.blurb} url={gamePath(game.id)}/>
@@ -39,10 +43,13 @@ export default function GamePage({id}) {
                 </header>
                 <div className={style.playArea}>
                     <section className={style.stage} aria-label={game.name}>
-                        <Game key={game.id}/>
+                        <SideSlot.Provider value={slot}>
+                            <Game key={game.id}/>
+                        </SideSlot.Provider>
                     </section>
                     <aside className={style.side}>
                         <p className={style.gameBlurb}>{game.blurb}</p>
+                        <div ref={setSlot} className={style.sideSlot}/>
                         {hasHighScore(game.id) ? <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/> : null}
                     </aside>
                 </div>

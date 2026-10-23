@@ -1,12 +1,16 @@
 /* Insight Extractor */
 
-/* Positive blue and negative red: a pair checked to stay distinct for colour-blind readers on this dark surface. */
-.extractor {
+/* Positive blue and negative red: a pair checked to stay distinct for colour-blind readers on this dark surface.
+   Set on the extractor and again on its summary panel, which is moved into the page's side column on wide screens. */
+.extractor, .palette {
     --positive: #4F8FD6;
     --negative: #E0684F;
     --neutral: var(--text-subtle);
     --neutral-fill: #4A4A52;
     --mixed: var(--accent);
+}
+
+.extractor {
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -123,6 +127,11 @@
     grid-template-columns: minmax(0, 1fr) 260px;
     gap: 24px;
     align-items: start;
+}
+
+/* With the summary docked in the page's side column, the results take the full width. */
+.resultsDocked {
+    grid-template-columns: minmax(0, 1fr);
 }
 
 @container (max-width: 600px) {

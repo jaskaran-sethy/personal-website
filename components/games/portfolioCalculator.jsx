@@ -4,6 +4,7 @@ import {ASSET_CLASSES, allocation, blendedReturn, formatMoney, project, rebalanc
 import {readJSON, writeJSON} from "../../lib/storage";
 import {GameButton, Toggle} from "./kit";
 import GrowthChart from "./growthChart";
+import {SidePanel, useDocked} from "./sidePanel";
 import pc from "./portfolioCalculator.module.css";
 
 // Portfolio Calculator: list what you hold, see how it's split across asset classes and its blended expected return,
@@ -139,6 +140,18 @@ function Allocation({classes, total, blended, currency}) {
     );
 }
 
+// Where the projection ends up: value, what went in, the growth, and the value in today's money.
+function Outcome({end, money}) {
+    return (
+        <ul className={pc.stats}>
+            <li><span className={pc.big}>{money(end.value, true)}</span><span className={pc.caption}>Projected value</span></li>
+            <li><span className={pc.big}>{money(end.invested, true)}</span><span className={pc.caption}>Invested</span></li>
+            <li><span className={pc.big}>{money(end.value - end.invested, true)}</span><span className={pc.caption}>Growth</span></li>
+            <li><span className={pc.big}>{money(end.real, true)}</span><span className={pc.caption}>In today&rsquo;s money</span></li>
+        </ul>
+    );
+}
+
 function Rebalance({rows, targets, onTargets, currency}) {
     const targetTotal = sumOf(Object.values(targets));
     return (
@@ -208,6 +221,8 @@ export default function PortfolioCalculator() {
     }, [holdings, classes, returns, targets, monthly, stepUp, years, inflation]);
     const end = points.at(-1);
     const money = (value, compact) => formatMoney(value, currency, compact);
+    // On wide screens the allocation and outcome move to the page's side column, pinned while you scroll.
+    const docked = useDocked();
 
     return (
         <div className={pc.calculator}>
@@ -216,9 +231,9 @@ export default function PortfolioCalculator() {
                 <button type="button" className={pc.reset} onClick={() => setState(DEFAULTS)}>Reset to example</button>
             </div>
 
-            <div className={pc.pair}>
+            <div className={cx(pc.pair, docked && pc.pairDocked)}>
                 <Holdings holdings={holdings} currency={currency} onChange={(next) => set({holdings: next})}/>
-                <Allocation classes={classes} total={total} blended={blended} currency={currency}/>
+                {docked ? null : <Allocation classes={classes} total={total} blended={blended} currency={currency}/>}
             </div>
 
             <section className={pc.card}>
@@ -229,12 +244,7 @@ export default function PortfolioCalculator() {
                     <NumberField label="Years" suffix="yrs" value={years} min={1} max={50} onChange={(v) => set({years: Math.min(50, Math.round(v) || 1)})}/>
                     <NumberField label="Inflation" suffix="%" value={inflation} max={20} step={0.5} onChange={(v) => set({inflation: v})}/>
                 </div>
-                <ul className={pc.stats}>
-                    <li><span className={pc.big}>{money(end.value, true)}</span><span className={pc.caption}>Projected value</span></li>
-                    <li><span className={pc.big}>{money(end.invested, true)}</span><span className={pc.caption}>Invested</span></li>
-                    <li><span className={pc.big}>{money(end.value - end.invested, true)}</span><span className={pc.caption}>Growth</span></li>
-                    <li><span className={pc.big}>{money(end.real, true)}</span><span className={pc.caption}>In today&rsquo;s money</span></li>
-                </ul>
+                {docked ? null : <Outcome end={end} money={money}/>}
                 <div className={pc.chartLegend}>
                     {SERIES.map((s) => (
                         <span key={s.key} className={pc.legendItem}>
@@ -265,6 +275,18 @@ export default function PortfolioCalculator() {
                 </span>
                 <span className={pc.armorGlyph} aria-hidden="true">→</span>
             </a>
+
+            {docked ? (
+                <SidePanel>
+                    <div className={pc.dock}>
+                        <Allocation classes={classes} total={total} blended={blended} currency={currency}/>
+                        <section className={pc.card}>
+                            <h3 className={pc.heading}>In {years} year{years === 1 ? "" : "s"}</h3>
+                            <Outcome end={end} money={money}/>
+                        </section>
+                    </div>
+                </SidePanel>
+            ) : null}
 
             <p className={pc.disclaimer}>
                 A calculator, not advice. Projections assume each class returns its assumed rate every year; real markets
