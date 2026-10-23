@@ -36,19 +36,56 @@
     gap: 10px;
 }
 
-.textarea {
+/* The feedback box: a textarea over a backdrop that draws the same text with the insights highlighted. Both share
+   every text metric (font, size, line height, padding, border, wrapping) so the highlights sit exactly under the
+   words. The textarea grows to fit (set in script), so neither layer ever scrolls. */
+.editor {
+    position: relative;
+    background: #111114;
+}
+
+.backdrop, .textarea {
     width: 100%;
-    min-height: 104px;
+    margin: 0;
     padding: 14px 16px;
     box-sizing: border-box;
-    border: 1px solid var(--card-border);
-    border-radius: 0;
-    background: #111114;
-    color: var(--text-primary);
+    border: 1px solid transparent;
     font: inherit;
     font-size: 15px;
     line-height: 1.55;
-    resize: vertical;
+    letter-spacing: normal;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.backdrop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    color: transparent;
+    pointer-events: none;
+}
+
+/* Inside the box, highlights are tint and underline only: no padding (it would shift the words) and no text colour
+   (the textarea draws the text). */
+.backdrop .mark {
+    padding: 0;
+    border-radius: 2px;
+    color: transparent;
+}
+
+.textarea {
+    position: relative;
+    display: block;
+    min-height: 104px;
+    overflow: hidden;
+    border-color: var(--card-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-primary);
+    caret-color: var(--text-primary);
+    resize: none;
 }
 
 .textarea:focus {

@@ -1,8 +1,8 @@
-import {useDeferredValue, useEffect, useMemo, useState} from "react";
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
 import cx from "../../lib/cx";
 import {analyze} from "../../lib/insights";
 import {Toggle} from "./kit";
-import {Highlighted, OverallCard, SentimentChip} from "./insightParts";
+import {highlightParts, OverallCard, SentimentChip} from "./insightParts";
 import ProductInsights from "./productInsights";
 import ie from "./insightExtractor.module.css";
 
@@ -31,11 +31,35 @@ function ScoreBar({score}) {
     );
 }
 
+// Measures before paint in the browser; falls back quietly when server rendering.
+const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+// The feedback box, with each insight highlighted right in it: a backdrop behind the (transparent) textarea draws
+// the same text, in the same font and wrapping, with the highlights. The box grows to fit its text, so it never
+// scrolls and the two layers stay lined up.
+function HighlightedInput({text, insights, onChange}) {
+    const field = useRef(null);
+    useBrowserLayoutEffect(() => {
+        field.current.style.height = "auto";
+        field.current.style.height = `${field.current.scrollHeight}px`;
+    }, [text]);
+    return (
+        <div className={ie.editor}>
+            <div className={ie.backdrop} aria-hidden="true">
+                {highlightParts(text, insights)}
+                {/* A trailing newline needs something after it to take up a line, as it does in the textarea. */}
+                {"​"}
+            </div>
+            <textarea id="insight-input" ref={field} className={ie.textarea} rows={4} value={text} spellCheck={false}
+                      placeholder="Paste a review, a support message or a tweet…" onChange={(e) => onChange(e.target.value)}/>
+        </div>
+    );
+}
+
 function MessageInsights() {
     const [text, setText] = useState(EXAMPLES[0].text);
-    // Analysis is cheap, but deferring keeps typing smooth on long pastes.
-    const deferred = useDeferredValue(text);
-    const {insights, summary, overall} = useMemo(() => analyze(deferred), [deferred]);
+    // Analysed on every keystroke (it's quick), so the highlights always match what's in the box.
+    const {insights, summary, overall} = useMemo(() => analyze(text), [text]);
     const counts = {positive: 0, negative: 0, neutral: 0};
     for (const span of new Map(insights.map((i) => [i.start, i])).values()) counts[span.sentiment]++;
 
@@ -43,8 +67,7 @@ function MessageInsights() {
         <>
             <div className={ie.input}>
                 <label htmlFor="insight-input" className={ie.kicker}>CUSTOMER FEEDBACK</label>
-                <textarea id="insight-input" className={ie.textarea} rows={4} value={text}
-                          placeholder="Paste a review, a support message or a tweet…" onChange={(e) => setText(e.target.value)}/>
+                <HighlightedInput text={text} insights={insights} onChange={setText}/>
                 <div className={ie.examples}>
                     <span className={ie.kicker}>TRY</span>
                     {EXAMPLES.map((example) => (
@@ -60,7 +83,6 @@ function MessageInsights() {
                     <h3 className={ie.kicker}>INSIGHTS</h3>
                     {insights.length ? (
                         <>
-                            <Highlighted text={deferred} insights={insights}/>
                             <ul className={ie.insights}>
                                 {insights.map((insight, i) => (
                                     <li key={i} className={ie.insight}>
