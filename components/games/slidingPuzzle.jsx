@@ -9,7 +9,9 @@ import own from "./slidingPuzzle.module.css";
 
 const SIZE = 4;
 const SOLVED = [...Array.from({length: SIZE * SIZE - 1}, (_, i) => i + 1), 0];
-const BEST_KEY = "games.sliding.best";
+// The fastest solve, in seconds. Bests used to be move counts under "games.sliding.best"; a new key keeps those
+// from being read as times.
+const BEST_KEY = "games.sliding.time";
 // Which square's tile moves into the gap for each direction, as an offset from the gap.
 const OFFSETS = {up: SIZE, down: -SIZE, left: 1, right: -1};
 
@@ -65,8 +67,9 @@ export default function SlidingPuzzle() {
 
     useEffect(() => {
         if (!solved) return;
-        setElapsed(Math.floor((Date.now() - startedAt.current) / 1000));
-        recordBest(moves);
+        const seconds = Math.floor((Date.now() - startedAt.current) / 1000);
+        setElapsed(seconds);
+        recordBest(seconds);
     }, [solved]);
 
     useGameKeys((key, e) => {
@@ -95,7 +98,7 @@ export default function SlidingPuzzle() {
 
     let status;
     if (!dealt) status = "Shuffling…";
-    else if (solved) status = <>Solved in <em>{moves}</em> moves!</>;
+    else if (solved) status = <>Solved in <em>{clock(elapsed)}</em>, {moves} moves!</>;
     else if (moves === 0) status = "Put the tiles back in order";
     else status = `${tiles.filter((t, i) => t && t === SOLVED[i]).length} of 15 in place`;
 
@@ -121,7 +124,7 @@ export default function SlidingPuzzle() {
             <Stats>
                 <Stat value={moves} label="MOVES"/>
                 <Stat value={clock(elapsed)} label="TIME"/>
-                <Stat value={best ?? "–"} label="BEST"/>
+                <Stat value={best === null ? "–" : clock(best)} label="BEST"/>
             </Stats>
             <GameButton onClick={newGame}>
                 {solved ? "Play again" : "Shuffle"}

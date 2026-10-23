@@ -5,7 +5,8 @@ import {gamePath} from "./registry";
 import Icon from "../site/icon";
 import style from "./highScoreBar.module.css";
 
-// How each game's high score is stored and read out. `lower` marks games where a smaller number wins.
+// How each game's high score is stored and read out. `lower` marks games where a smaller number wins; a `unit` of
+// "clock" shows seconds as m:ss.
 // Games you could push forever just by grinding (Tic Tac Toe, Connect Four, Word Guess, Lights Out) have none.
 const SCORES = {
     "memory": {key: "games.memory.best", unit: ["move", "moves"], lower: true},
@@ -13,7 +14,7 @@ const SCORES = {
     "snake": {key: "games.snake.best", unit: ["point", "points"]},
     "2048": {key: "games.2048.best", unit: ["point", "points"]},
     "minesweeper": {key: "games.minesweeper.best", unit: ["second", "seconds"], lower: true},
-    "sliding-puzzle": {key: "games.sliding.best", unit: ["move", "moves"], lower: true},
+    "sliding-puzzle": {key: "games.sliding.time", unit: "clock", lower: true},
     "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
     "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
     "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
@@ -23,11 +24,11 @@ const SCORES = {
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
 const JASKARAN_SCORES = {
     "memory": 13,
-    "reaction": 242,
+    "reaction": 190,
     "snake": 56,
     "2048": 47932,
     "minesweeper": 14,
-    "sliding-puzzle": null,
+    "sliding-puzzle": 55,
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
@@ -39,6 +40,7 @@ export function hasHighScore(gameId) {
 }
 
 function format(value, unit) {
+    if (unit === "clock") return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
     return `${value.toLocaleString()} ${value === 1 ? unit[0] : unit[1]}`;
 }
 
