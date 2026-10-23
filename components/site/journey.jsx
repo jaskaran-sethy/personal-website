@@ -17,7 +17,7 @@ const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
         site: "https://www.stcolumbas.edu.in",
-        milestone: "Founded in 1941; ranked #5 in India by EducationWorld (2025–26)",
+        milestone: "Founded in 1941; #5 in India among day schools",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
@@ -27,7 +27,7 @@ const STOPS = [
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
         site: "https://www.iitr.ac.in",
-        milestone: "Shaped India's earthquake-resistant building code",
+        milestone: "The oldest IIT, engineering India since 1847",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
@@ -38,7 +38,7 @@ const STOPS = [
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         site: "https://www.sprinklr.com",
-        milestone: "Went public on the NYSE in 2021, valued at about $4 billion",
+        milestone: "A Customer Experience Management (CXM) platform, on the NYSE since 2021",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         market: "B2B",
         points: [
@@ -51,7 +51,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         site: "https://yourarmor.ai",
-        milestone: "Backed by South Park Commons, Armor is a trusted investment adviser right in your phone",
+        milestone: "Backed by South Park Commons, a trusted investment adviser in your phone",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
         market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
