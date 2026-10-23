@@ -2,6 +2,7 @@
 title: "The Modern Over-willingness of Man to Forgive Himself"
 date: "2026-10-20"
 image: "/blog/forgiveness/cover.png"
+thumbnailLight: "/blog/forgiveness/cover-light.png"
 tags: ["essay", "accountability", "self-improvement"]
 excerpt: "Self-forgiveness is good advice for the people who need it. Most of us are using it as a licence to skip the reflection."
 ---

@@ -47,7 +47,15 @@ export default function BlogPost({post, morePosts}) {
                 </header>
                 {post.image ? (
                     <div className={style.cover}>
-                        <img src={post.image} alt=""/>
+                        {/* With no separate thumbnail, the cover is the thumbnail, so it takes the light version too. */}
+                        {!post.thumbnail && post.thumbnailLight ? (
+                            <>
+                                <img className={style.darkOnly} src={post.image} alt=""/>
+                                <img className={style.lightOnly} src={post.thumbnailLight} alt=""/>
+                            </>
+                        ) : (
+                            <img src={post.image} alt=""/>
+                        )}
                     </div>
                 ) : null}
                 <div className={style.body}>

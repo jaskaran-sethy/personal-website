@@ -2,6 +2,7 @@
 title: "Pendulum Swings and Society"
 date: "2026-10-23"
 image: "/blog/pendulum/cover.png"
+thumbnailLight: "/blog/pendulum/cover-light.png"
 tags: ["essay", "society", "physics"]
 excerpt: "Physics and Phronesis"
 ---

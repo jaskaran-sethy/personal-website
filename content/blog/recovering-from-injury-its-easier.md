@@ -2,6 +2,7 @@
 title: "Recovering from Injury - It's easier than you think"
 date: "2026-10-22"
 image: "/blog/injury/cover.png"
+thumbnailLight: "/blog/injury/cover-light.png"
 tags: ["fitness", "injury-recovery", "training"]
 excerpt: "Tendonitis, sprains and a herniated disc, with a full recovery from every one. What actually got me back, and stronger."
 ---

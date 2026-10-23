@@ -2,6 +2,7 @@
 title: "My Thoughts on Obsidian, 1 Week In"
 date: "2026-10-21"
 image: "/blog/obsidian/cover.png"
+thumbnailLight: "/blog/obsidian/cover-light.png"
 tags: ["obsidian", "tools", "note-taking"]
 excerpt: "A decade of forcing note-taking apps to work, and then a week with one that just does."
 ---
