@@ -6,14 +6,16 @@ import type from "./type.module.css";
 import style from "./postCard.module.css";
 
 // A blog post teaser: cover, meta line, title and excerpt. Posts without a cover get their title set as one.
+// A post's `thumbnail` stands in for its cover here when it has one.
 // `featured` lays it out wide, cover beside the text, for the top of the blog index.
 export default function PostCard({post, featured}) {
     const title = shortTitle(post);
+    const cover = post.thumbnail || post.image;
     return (
         <Link href={`/blog/${post.slug}`} className={cx(style.postCard, featured && style.featured, lift)}>
             <span className={style.cover}>
-                {post.image ? (
-                    <img src={post.image} alt="" loading="lazy" decoding="async"/>
+                {cover ? (
+                    <img src={cover} alt="" loading="lazy" decoding="async"/>
                 ) : (
                     <span className={style.coverFallback} aria-hidden="true">{title}</span>
                 )}

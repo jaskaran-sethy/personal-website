@@ -37,7 +37,7 @@ export async function getStaticProps({params}) {
 export default function BlogPost({post, morePosts}) {
     return (
         <SiteShell>
-            <Metadata title={post.title} description={post.excerpt} image={post.image} url={`/blog/${post.slug}`}/>
+            <Metadata title={post.title} description={post.excerpt} image={post.thumbnail || post.image} url={`/blog/${post.slug}`}/>
             <article className={style.article}>
                 <TextLink href="/blog" back>All posts</TextLink>
                 <header className={style.header}>
