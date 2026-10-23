@@ -17,7 +17,7 @@ const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
         site: "https://www.stcolumbas.edu.in",
-        milestone: "Founded in 1941; #5 in India among day schools",
+        milestone: "Founded in 1941; among India's top-ranked schools",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
@@ -38,7 +38,7 @@ const STOPS = [
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         site: "https://www.sprinklr.com",
-        milestone: "A Customer Experience Management (CXM) platform, on the NYSE since 2021",
+        milestone: "The $1.5 billion CXM platform used by 60% of the Fortune 100",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         market: "B2B",
         points: [
@@ -51,7 +51,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         site: "https://yourarmor.ai",
-        milestone: "Backed by South Park Commons, a trusted investment adviser in your phone",
+        milestone: "A SEBI-registered adviser in your pocket, backed by South Park Commons",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
         market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
