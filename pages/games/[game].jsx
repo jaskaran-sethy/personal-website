@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HighScoreBar, {hasHighScore} from "../../components/games/highScoreBar";
-import {findGame, GAMES, gamePath, nextGame} from "../../components/games/registry";
+import {findGame, GAMES, gamePath, nextGame, sectionPath} from "../../components/games/registry";
 import Metadata from "../../components/metadata";
 import Icon from "../../components/site/icon";
 import SiteShell from "../../components/site/siteShell";
@@ -26,14 +26,16 @@ export default function GamePage({id}) {
             <Metadata title={`${game.name} · Games · Jaskaran Sethy`} description={game.blurb} url={gamePath(game.id)}/>
             <main className={cx(style.games, style.playing)}>
                 <header className={style.gameBar}>
-                    <Link href="/games" className={style.navButton} aria-label="All games">
+                    <Link href={sectionPath(game.section ?? "normal")} className={style.navButton} aria-label="All games">
                         <Icon name="arrow-left" size={16}/> <span className={style.navWide}>All games</span><span className={style.navNarrow}>Games</span>
                     </Link>
                     <h1 className={style.gameTitle}>{game.name}</h1>
-                    <Link href={gamePath(next.id)} className={cx(style.navButton, style.navNext)} aria-label={`Next game: ${next.name}`}>
-                        <span className={style.navNextLabel}>Next<span className={style.navWide}>: <span className={style.navNextName}>{next.name}</span></span></span>
-                        <Icon name="arrow-right" size={16}/>
-                    </Link>
+                    {next ? (
+                        <Link href={gamePath(next.id)} className={cx(style.navButton, style.navNext)} aria-label={`Next: ${next.name}`}>
+                            <span className={style.navNextLabel}>Next<span className={style.navWide}>: <span className={style.navNextName}>{next.name}</span></span></span>
+                            <Icon name="arrow-right" size={16}/>
+                        </Link>
+                    ) : null}
                 </header>
                 <div className={style.playArea}>
                     <section className={style.stage} aria-label={game.name}>

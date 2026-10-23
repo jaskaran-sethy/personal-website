@@ -34,15 +34,26 @@ export const GAMES = [
     {id: "aura-farm-idle", name: "Aura Farm Idle", glyph: "✧", section: "esoteric",
         blurb: "Farm aura even while you're away. Build habits, buy upgrades, touch grass.",
         Game: dynamic(() => import("./auraIdle"))},
-    {id: "insight-extractor", name: "Insight Extractor", glyph: "❝", section: "esoteric",
+    {id: "insight-extractor", name: "Insight Extractor", glyph: "❝", section: "tools",
         blurb: "Paste feedback; get insights by topic and sentiment, like Sprinklr's Product Insights.",
         Game: dynamic(() => import("./insightExtractor"))},
 ];
 
 export const SECTIONS = [
-    {id: "normal", title: "Normal games", blurb: "The classics. Rules you already know."},
-    {id: "esoteric", title: "Esoteric games", blurb: "Stranger ones, with rules you'll have to work out."},
+    {id: "normal", title: "Normal games", short: "Normal", blurb: "The classics. Rules you already know."},
+    {id: "esoteric", title: "Esoteric games", short: "Esoteric", blurb: "Stranger ones, with rules you'll have to work out."},
+    // Not games: `tools` keeps them out of the games' Next chain (see nextGame).
+    {id: "tools", title: "Useful tools", short: "Tools", blurb: "Not games at all. Small things that do a real job.", tools: true},
 ];
+
+const sectionOf = (game) => SECTIONS.find((section) => section.id === (game.section ?? "normal"));
+
+export const isTool = (game) => Boolean(sectionOf(game).tools);
+
+// The games list, opened on a section (the first section is the default, so it needs no query).
+export function sectionPath(sectionId) {
+    return sectionId === SECTIONS[0].id ? "/games" : `/games?section=${sectionId}`;
+}
 
 // The games in one section, in grid order. Games without a `section` are normal.
 export function gamesIn(sectionId) {
@@ -58,7 +69,9 @@ export function findGame(id) {
     return GAMES.find((game) => game.id === id);
 }
 
-// The game after this one, wrapping from the last back to the first.
+// The one after this, wrapping from the last back to the first: games lead on to games (across sections), tools to
+// tools. Null when there's nothing else to go to.
 export function nextGame(game) {
-    return GAMES[(GAMES.indexOf(game) + 1) % GAMES.length];
+    const pool = GAMES.filter((other) => isTool(other) === isTool(game));
+    return pool.length > 1 ? pool[(pool.indexOf(game) + 1) % pool.length] : null;
 }

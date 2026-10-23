@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
-import {findGame, GAMES, gamePath, gamesIn, SECTIONS} from "../../components/games/registry";
+import {findGame, GAMES, gamePath, gamesIn, isTool, SECTIONS} from "../../components/games/registry";
 import Metadata from "../../components/metadata";
 import Eyebrow from "../../components/site/eyebrow";
 import SectionTabs from "../../components/site/sectionTabs";
@@ -11,8 +11,11 @@ import TextLink from "../../components/site/textLink";
 import cx from "../../lib/cx";
 import style from "./index.module.css";
 
-// The tile select. Serif tabs at the top pick the section (normal or esoteric games); the choice lives in
+// The tile select. Serif tabs at the top pick the section (normal games, esoteric games, tools); the choice lives in
 // the URL (?section=esoteric), so it survives back/forward and can be linked. Each tile opens /games/<id>.
+const TOOL_COUNT = GAMES.filter(isTool).length;
+const GAME_COUNT = GAMES.length - TOOL_COUNT;
+
 export default function GamesPage() {
     const router = useRouter();
     const section = SECTIONS.find((s) => s.id === router.query.section) ?? SECTIONS[0];
@@ -34,7 +37,7 @@ export default function GamesPage() {
             <Metadata title="Games · Jaskaran Sethy" url="/games"/>
             <main className={style.games}>
                 <header className={style.header}>
-                    <Eyebrow>FUN · {GAMES.length} GAMES</Eyebrow>
+                    <Eyebrow>FUN · {GAME_COUNT} GAMES · {TOOL_COUNT} TOOL{TOOL_COUNT === 1 ? "" : "S"}</Eyebrow>
                     <h1 className={cx(style.title, liftSmall)}>Take a break</h1>
                     <p className={cx(style.intro, liftSmall)}>
                         A few small games I built for fun. Pick one and play right here.
@@ -42,7 +45,7 @@ export default function GamesPage() {
                 </header>
                 <div className={style.sectionPicker}>
                     <SectionTabs label="Game type" value={section.id} onChange={selectSection}
-                                 options={SECTIONS.map((s) => ({value: s.id, label: s.title, count: gamesIn(s.id).length}))}/>
+                                 options={SECTIONS.map((s) => ({value: s.id, label: s.title, shortLabel: s.short, count: gamesIn(s.id).length}))}/>
                     <p className={style.sectionBlurb}>{section.blurb}</p>
                 </div>
                 <ul className={style.grid} aria-label={section.title}>
@@ -51,7 +54,7 @@ export default function GamesPage() {
                             <Link href={gamePath(game.id)} className={cx(style.tile, lift)}>
                                 <span className={style.tileGlyph} aria-hidden="true">{game.glyph}</span>
                                 <span className={style.tileText}>
-                                    <span className={style.tileNumber}>{String(GAMES.indexOf(game) + 1).padStart(2, "0")}</span>
+                                    <span className={style.tileNumber}>{String(GAMES.filter((other) => isTool(other) === isTool(game)).indexOf(game) + 1).padStart(2, "0")}</span>
                                     <span className={style.tileName}>{game.name}</span>
                                     <span className={style.tileBlurb}>{game.blurb}</span>
                                 </span>

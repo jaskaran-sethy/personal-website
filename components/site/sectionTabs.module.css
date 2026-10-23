@@ -59,19 +59,33 @@
     color: var(--accent);
 }
 
-/* Phones: a touch smaller so two section names still sit side by side. */
+.short {
+    display: none;
+}
+
+/* Phones: a touch smaller, and short names where given, so the section names still sit side by side. */
 @media (max-width: 760px) {
+    .long {
+        display: none;
+    }
+
+    .short {
+        display: inline;
+    }
+
     .tabs {
-        gap: 8px 22px;
+        gap: 8px 16px;
     }
 
     .tab {
-        gap: 8px;
+        gap: 6px;
         padding-bottom: 10px;
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .count {
+        min-width: 20px;
+        padding: 1px 6px;
         font-size: 10px;
     }
 }
