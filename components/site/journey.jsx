@@ -17,7 +17,7 @@ const STOPS = [
     {
         id: "school", name: "St Columba's School", src: "/logos/st-columbas.webp", inset: "small",
         site: "https://www.stcolumbas.edu.in",
-        milestone: "Founded in 1941; alumni include three Rhodes Scholars and a Pulitzer Prize winner",
+        milestone: "Alumni include Shah Rukh Khan, Param Vir Chakra recipient Arun Khetarpal and Pulitzer winner Siddhartha Mukherjee",
         when: "CLASS OF '18 · NEW DELHI",
         points: [
             "96% in Class XII (PCM, English, Engineering Drawing)",
@@ -27,7 +27,7 @@ const STOPS = [
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
         site: "https://www.iitr.ac.in",
-        milestone: "Founded in 1847 to train engineers for the Ganges Canal; one of Asia's oldest engineering colleges",
+        milestone: "Independent India's first engineering university; its people designed the Bhakra Dam and India's earthquake-resistant design code",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
@@ -51,7 +51,7 @@ const STOPS = [
     {
         id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
         site: "https://yourarmor.ai",
-        milestone: "A SEBI-registered investment adviser, trusted by 1,000+ Indians",
+        milestone: "Backed by South Park Commons, Google for Startups and NVIDIA Inception; trusted by 1,000+ Indians",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",
         market: "B2C",
         points: ["Building data pipelines and wealth analytics"],
