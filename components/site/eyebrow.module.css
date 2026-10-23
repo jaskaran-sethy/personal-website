@@ -1,16 +1,20 @@
 .eyebrow {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     font-family: var(--font-mono), monospace;
     font-size: 12px;
     letter-spacing: var(--mono-tracking);
     color: var(--text-secondary);
 }
 
-.dash {
+/* Sized in em so it scales with the eyebrow (the hero's grows past 1440px), in the nav mark's 12:28 proportion.
+   Pinned to the first line, so an eyebrow that wraps on a phone keeps the mark beside its start. */
+.mark {
     flex: none;
-    width: 20px;
-    height: 2px;
-    background: var(--accent-gradient);
+    align-self: flex-start;
+    width: 0.6em;
+    height: 1.4em;
+    margin-top: 0.05em;
+    fill: var(--accent);
 }
