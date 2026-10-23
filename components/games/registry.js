@@ -34,6 +34,9 @@ export const GAMES = [
     {id: "aura-farm-idle", name: "Aura Farm Idle", glyph: "✧", section: "esoteric",
         blurb: "Farm aura even while you're away. Build habits, buy upgrades, touch grass.",
         Game: dynamic(() => import("./auraIdle"))},
+    {id: "insight-extractor", name: "Insight Extractor", glyph: "❝", section: "esoteric",
+        blurb: "Paste feedback; get insights by topic and sentiment, like Sprinklr's Product Insights.",
+        Game: dynamic(() => import("./insightExtractor"))},
 ];
 
 export const SECTIONS = [
