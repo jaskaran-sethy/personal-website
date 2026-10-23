@@ -449,6 +449,75 @@
     }
 }
 
+/* A link out to Armor, in the style of the home page's blog card: dark card, serif line, gold arrow. */
+.armor {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: linear-gradient(150deg, #1A1918, #111111);
+    color: inherit;
+    text-decoration: none;
+}
+
+.armorLogo {
+    flex: none;
+    width: 34px;
+    height: 34px;
+}
+
+.armorText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.armorTitle {
+    font-family: var(--font-display), serif;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--text-primary);
+}
+
+.armorSub {
+    font-size: 13px;
+    color: var(--text-subtle);
+}
+
+.armorGlyph {
+    flex: none;
+    font-family: var(--font-display), serif;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    transition: transform 150ms;
+}
+
+.armor:hover .armorGlyph {
+    transform: translateX(4px);
+}
+
+.armor:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+@container (max-width: 480px) {
+    .armor {
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .armorTitle {
+        font-size: 17px;
+    }
+}
+
 .disclaimer {
     padding-top: 14px;
     border-top: 1px solid var(--border);

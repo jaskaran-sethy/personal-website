@@ -255,6 +255,15 @@ export default function PortfolioCalculator() {
 
             <Rebalance rows={rebalance(holdings, targets)} targets={targets} onTargets={(next) => set({targets: next})} currency={currency}/>
 
+            <a href="https://yourarmor.ai" target="_blank" rel="noopener" className={pc.armor}>
+                <img src="/logos/armor.svg" alt="" className={pc.armorLogo}/>
+                <span className={pc.armorText}>
+                    <span className={pc.armorTitle}>Want a calculator backed by years of financial advisory?</span>
+                    <span className={pc.armorSub}>Try Armor at yourarmor.ai</span>
+                </span>
+                <span className={pc.armorGlyph} aria-hidden="true">→</span>
+            </a>
+
             <p className={pc.disclaimer}>
                 A calculator, not advice. Projections assume each class returns its assumed rate every year; real markets
                 don&rsquo;t move in straight lines. Everything stays in your browser.
