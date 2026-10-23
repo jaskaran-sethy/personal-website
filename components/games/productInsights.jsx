@@ -2,6 +2,7 @@ import {useState} from "react";
 import {fetchThroughExtension, useExtension} from "../../lib/extensionBridge";
 import {MAX_PAGES, fetchProductReviews, parseProductUrl, summarizeReviews} from "../../lib/productReviews";
 import cx from "../../lib/cx";
+import Pill from "../site/pill";
 import {GameButton} from "./kit";
 import {Highlighted, InsightSidePanel, OverallCard, SentimentChip} from "./insightParts";
 import {useDocked} from "./sidePanel";
@@ -21,6 +22,7 @@ const SHOP_NAMES = {amazon: "Amazon", flipkart: "Flipkart"};
 // The helper extension lives in its own public repo; its releases carry the built zip.
 const EXTENSION_REPO = "https://github.com/jaskaran-sethy/insight-extractor-extension";
 const EXTENSION_ZIP = `${EXTENSION_REPO}/releases/latest/download/insight-extractor-extension.zip`;
+const EXTENSION_STORE = "https://chromewebstore.google.com/detail/insight-extractor-helper/gajopiokmadhdhkhkmjchdbjokjhicdg";
 const CHART_ROWS = 8;
 
 const stars = (rating) => (Number.isFinite(rating) ? "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating)) : "");
@@ -33,15 +35,14 @@ function InstallGuide() {
                 Shops don&rsquo;t let other websites read their pages, so a tiny browser extension fetches the reviews
                 from <em>your</em> browser. Nothing goes through my server.
             </p>
-            <ol className={pi.steps}>
-                <li><a href={EXTENSION_ZIP}>Download the extension</a> and unzip it.</li>
-                <li>Open <code>chrome://extensions</code> (or <code>edge://extensions</code>) and turn on <strong>Developer mode</strong>.</li>
-                <li>Click <strong>Load unpacked</strong> and pick the unzipped folder.</li>
-                <li>Reload this page.</li>
-            </ol>
+            <div className={pi.installAction}>
+                <Pill href={EXTENSION_STORE} variant="gold" external>Add to Chrome</Pill>
+                <span>then reload this page.</span>
+            </div>
             <p className={pi.fine}>
                 Desktop Chrome, Edge or Brave. It can only read amazon.in, amazon.com and flipkart.com, and only when you
-                press Analyse here. <a href={EXTENSION_REPO}>Source on GitHub</a>.
+                press Analyse here. <a href={EXTENSION_REPO}>Source on GitHub</a>, or{" "}
+                <a href={EXTENSION_ZIP}>install it by hand</a> (unzip, then Load unpacked in <code>chrome://extensions</code>).
             </p>
         </div>
     );

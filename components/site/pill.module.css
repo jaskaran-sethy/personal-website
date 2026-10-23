@@ -28,6 +28,14 @@
     font-weight: 600;
 }
 
+/* Brushed gold for a page's main action, as on the active toggles. */
+.gold {
+    padding: 12px 22px;
+    background: var(--accent-gradient);
+    color: var(--accent-ink) !important;
+    font-weight: 600;
+}
+
 .small {
     padding: 8px 16px;
     font-size: 14px;

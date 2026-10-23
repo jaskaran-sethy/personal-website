@@ -32,12 +32,13 @@
     color: var(--text-primary);
 }
 
-.steps {
+/* The store button, with what to do after it. */
+.installAction {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin: 0;
-    padding-left: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    color: var(--text-secondary);
 }
 
 .fine {
