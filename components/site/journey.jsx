@@ -27,7 +27,7 @@ const STOPS = [
     {
         id: "iitr", name: "IIT Roorkee", src: "/logos/iit-roorkee.webp", inset: "none",
         site: "https://www.iitr.ac.in",
-        milestone: "Independent India's first engineering university; its people designed the Bhakra Dam and India's earthquake-resistant design code",
+        milestone: "Alumni include Amit Singhal, head of Google Search for 15 years, and data-mining pioneer Rakesh Agrawal",
         when: "B.TECH, BIOTECHNOLOGY · CLASS OF '22",
         points: [
             "Department Gold Medal",
