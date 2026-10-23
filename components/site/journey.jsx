@@ -38,7 +38,7 @@ const STOPS = [
     {
         id: "sprinklr", name: "Sprinklr", src: "/logos/sprinklr.webp", inset: "small",
         site: "https://www.sprinklr.com",
-        milestone: "The $1.5 billion CXM platform used by 60% of the Fortune 100",
+        milestone: "The former unicorn CXM platform used by 60% of the Fortune 100",
         when: "DATA SCIENTIST · JUL 2022 – DEC 2023",
         market: "B2B",
         points: [
