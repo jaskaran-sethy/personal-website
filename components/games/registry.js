@@ -37,6 +37,9 @@ export const GAMES = [
     {id: "insight-extractor", name: "Insight Extractor", glyph: "❝", section: "tools",
         blurb: "Paste feedback; get insights by topic and sentiment, like Sprinklr's Product Insights.",
         Game: dynamic(() => import("./insightExtractor"))},
+    {id: "portfolio-calculator", name: "Portfolio Calculator", glyph: "₹", section: "tools",
+        blurb: "Your holdings by asset class, a projection with a monthly SIP, and what to buy or sell to rebalance.",
+        Game: dynamic(() => import("./portfolioCalculator"))},
 ];
 
 export const SECTIONS = [

@@ -1,4 +1,4 @@
-import {GAMES} from "../components/games/registry";
+import {GAMES, isTool} from "../components/games/registry";
 import Metadata from "../components/metadata";
 import Eyebrow from "../components/site/eyebrow";
 import {liftSmall} from "../components/site/lift";
@@ -10,7 +10,7 @@ import style from "./404.module.css";
 const PLACES = [
     {href: "/", label: "Home", note: "Who I am and what I'm building"},
     {href: "/blog", label: "The blog", note: "Notes on books, habits & ideas"},
-    {href: "/games", label: "Games", note: `${GAMES.length} small games to play in the browser`},
+    {href: "/games", label: "Games", note: `${GAMES.filter((game) => !isTool(game)).length} small games to play in the browser`},
 ];
 
 // Shown for any URL that doesn't exist, in the same Editorial Dark frame as the rest of the site.
