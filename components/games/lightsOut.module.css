@@ -11,7 +11,7 @@
     aspect-ratio: 1;
     padding: 0;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;

@@ -49,7 +49,7 @@ const STOPS = [
         clients: true,
     },
     {
-        id: "armor", name: "Armor", src: "/logos/armor.svg", inset: "large",
+        id: "armor", name: "Armor", src: "/logos/armor.svg", tint: true, inset: "large",
         site: "https://yourarmor.ai",
         milestone: "A SEBI-registered adviser in your pocket, backed by South Park Commons",
         when: "DATA SCIENCE & SOFTWARE · BENGALURU · NOW",

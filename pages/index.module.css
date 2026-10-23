@@ -49,8 +49,8 @@
     max-width: calc(523 * var(--u));
     margin-top: calc(8 * var(--u));
     padding: calc(30 * var(--u)) calc(32 * var(--u));
-    background: linear-gradient(150deg, #1A1918, #111111);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--cta-gradient);
+    border: 1px solid var(--hairline);
 }
 
 .blogCtaText {

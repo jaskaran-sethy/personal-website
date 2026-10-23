@@ -7,7 +7,7 @@
     aspect-ratio: 1;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     container-type: inline-size;
     user-select: none;
 }
@@ -36,7 +36,7 @@
     height: 100%;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background: #1B1B20;
+    background: var(--raised);
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 9cqi;
@@ -55,7 +55,7 @@
 
 /* A tile on its own square gets a hint of gold. */
 .home .face {
-    border-color: rgba(212, 175, 55, 0.45);
+    border-color: var(--gold-line);
     color: var(--accent);
 }
 

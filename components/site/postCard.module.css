@@ -14,7 +14,7 @@
     display: block;
     height: 200px;
     border: 1px solid var(--card-border);
-    background: #18181C;
+    background: var(--well);
     overflow: hidden;
 }
 

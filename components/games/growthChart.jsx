@@ -4,6 +4,7 @@ import pc from "./portfolioCalculator.module.css";
 // A line chart of a projection over years: one line per series, a recessive grid, labels at the line ends, and a
 // crosshair with a tooltip on hover (or touch). Drawn at the container's real width so text stays crisp.
 // `points` is [{year, …values}]; `series` is [{key, name, color, dashed?, area?}]; `format(value, compact)` formats money.
+// Colours are applied as styles, not SVG attributes, so they can be CSS variables that follow the theme.
 
 const PAD = {top: 12, right: 84, bottom: 26, left: 58};
 const NARROW = 440; // Below this width the end labels go (the legend names the lines) so the plot keeps its room.
@@ -80,11 +81,11 @@ export default function GrowthChart({points, series, format}) {
                         </text>
                     ))}
                     {series.filter((s) => s.area).map((s) => (
-                        <path key={`${s.key}-area`} fill={s.color} opacity="0.1"
+                        <path key={`${s.key}-area`} style={{fill: s.color}} opacity="0.1"
                               d={`${line(s.key)}L${x(years)},${y(0)}L${x(0)},${y(0)}Z`}/>
                     ))}
                     {series.map((s) => (
-                        <path key={s.key} d={line(s.key)} fill="none" stroke={s.color} strokeWidth="2"
+                        <path key={s.key} d={line(s.key)} fill="none" style={{stroke: s.color}} strokeWidth="2"
                               strokeDasharray={s.dashed ? "5 4" : undefined} strokeLinejoin="round" strokeLinecap="round"/>
                     ))}
                     {narrow ? null : endLabels.map((s) => (
@@ -96,7 +97,7 @@ export default function GrowthChart({points, series, format}) {
                         <g>
                             <line x1={x(point.year)} x2={x(point.year)} y1={pad.top} y2={pad.top + plotHeight} className={pc.crosshair}/>
                             {series.map((s) => (
-                                <circle key={s.key} cx={x(point.year)} cy={y(point[s.key])} r="4.5" fill={s.color} className={pc.marker}/>
+                                <circle key={s.key} cx={x(point.year)} cy={y(point[s.key])} r="4.5" style={{fill: s.color}} className={pc.marker}/>
                             ))}
                         </g>
                     ) : null}

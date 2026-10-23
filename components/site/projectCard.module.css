@@ -14,7 +14,11 @@
     overflow: hidden;
     padding: 36px;
     border-radius: 6px;
-    background: #16161A;
+    background: var(--card);
+    /* The text sits on the photo's dark fade in both themes, so it keeps the dark theme's light text and gold. */
+    --text-primary: #F4F4F5;
+    --accent: #D4AF37;
+    color: var(--text-primary);
 }
 
 /* The screenshot fills the card behind the text, with a gradient so the text over its lower edge stays legible. */
@@ -47,6 +51,7 @@
     font-size: 36px;
     letter-spacing: -1.2px;
     line-height: 1.35;
+    color: var(--text-primary); /* Set here: the shell's `a { color: inherit }` outranks the card's own colour. */
     transition: color 150ms;
 }
 

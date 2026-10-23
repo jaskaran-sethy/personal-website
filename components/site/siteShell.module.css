@@ -15,6 +15,30 @@
     /* Letter-spacing for every JetBrains Mono label (eyebrows, kickers, stat labels, pills). */
     --mono-tracking: 0.05em;
     --gutter: 64px;
+    /* Roles beyond the basic surfaces, so components never hard-code a colour that only suits one theme. */
+    --well: #111114; /* Recessed: inputs, game boards, empty cells. */
+    --raised: #1C1C21; /* Above a card: tooltips, popovers, game pieces on a board. */
+    --hover: rgba(255, 255, 255, 0.03);
+    --hairline: rgba(255, 255, 255, 0.07);
+    --nav-bg: rgba(14, 14, 16, 0.94);
+    --shadow: rgba(0, 0, 0, 0.45);
+    --prose: #D4D4D8; /* Long-form reading text, a step brighter than --text-secondary. */
+    --cta-gradient: linear-gradient(150deg, #1A1918, #111111);
+    --medallion: radial-gradient(circle at 32% 24%, #2A2A31, #17171B 62%, #121215);
+    --gold-wash: rgba(212, 175, 55, 0.12);
+    --gold-line: rgba(212, 175, 55, 0.5);
+    --danger: #E5484D;
+    /* Charts: sentiment and the six asset classes, checked for colour-blind separation on this surface. */
+    --positive: #4F8FD6;
+    --negative: #E0684F;
+    --neutral-fill: #4A4A52;
+    --class-1: #3987E5;
+    --class-2: #D95926;
+    --class-3: #199E70;
+    --class-4: #C98500;
+    --class-5: #D55181;
+    --class-6: #008300;
+    color-scheme: dark;
 
     min-height: 100vh;
     background: var(--bg);
@@ -33,6 +57,43 @@
 :where(.page) :where(p, h1, h2, h3, blockquote, dl, dd, figure) {
     margin: 0;
     padding: 0;
+}
+
+/* Light: warm paper, white cards, a deeper gold for text and lines (the brushed gold surfaces stay as they are).
+   Set by the data-theme attribute on <html> (see pages/_document.jsx and components/site/themeToggle.jsx). */
+:global(html[data-theme="light"]) .page {
+    --bg: #F6F3EC;
+    --surface: #FBF9F4;
+    --card: #FFFFFF;
+    --card-border: #E7E2D7;
+    --border: #DCD6C8;
+    --text-primary: #18171C;
+    --text-secondary: #4B4A52;
+    --text-subtle: #5F5E66;
+    --text-muted: #6E6D75;
+    --accent: #8C6A12;
+    --well: #F1EDE5;
+    --raised: #FFFFFF;
+    --hover: rgba(24, 23, 28, 0.04);
+    --hairline: rgba(24, 23, 28, 0.08);
+    --nav-bg: rgba(246, 243, 236, 0.94);
+    --shadow: rgba(60, 48, 20, 0.14);
+    --prose: #2B2A30;
+    --cta-gradient: linear-gradient(150deg, #FFFFFF, #F3EFE6);
+    --medallion: radial-gradient(circle at 32% 24%, #FFFFFF, #F4F0E8 62%, #E9E4D9);
+    --gold-wash: rgba(212, 175, 55, 0.16);
+    --gold-line: rgba(140, 106, 18, 0.45);
+    --danger: #C9302C;
+    --positive: #2A78D6;
+    --negative: #D23F3E;
+    --neutral-fill: #B9B4AA;
+    --class-1: #2A78D6;
+    --class-2: #EB6834;
+    --class-3: #1BAF7A;
+    --class-4: #EDA100;
+    --class-5: #E87BA4;
+    --class-6: #008300;
+    color-scheme: light;
 }
 
 @media (max-width: 1100px) {

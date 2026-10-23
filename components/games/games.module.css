@@ -134,7 +134,7 @@
     justify-content: center;
     align-items: center;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 48px;
@@ -158,7 +158,7 @@
 
 .tttWin {
     border-color: var(--accent);
-    background: rgba(212, 175, 55, 0.12);
+    background: var(--gold-wash);
 }
 
 /* Memory Match */
@@ -207,7 +207,7 @@
 }
 
 .memoryBack {
-    background: repeating-linear-gradient(135deg, #16161A 0 6px, #1B1B20 6px 12px);
+    background: repeating-linear-gradient(135deg, var(--surface) 0 6px, var(--well) 6px 12px);
 }
 
 .memoryCard:hover:not(:disabled) .memoryBack {
@@ -216,7 +216,7 @@
 
 .memoryFace {
     transform: rotateY(180deg);
-    background: #111114;
+    background: var(--well);
     font-family: var(--font-display), serif;
     font-size: 32px;
     color: var(--text-primary);
@@ -224,7 +224,7 @@
 
 .memoryMatched .memoryFace {
     border-color: var(--accent);
-    background: rgba(212, 175, 55, 0.12);
+    background: var(--gold-wash);
     color: var(--accent);
 }
 
@@ -241,7 +241,7 @@
     padding: 24px;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     color: var(--text-primary);
     font: inherit;
     text-align: center;
@@ -265,7 +265,7 @@
 
 .reactionWaiting {
     border-color: var(--border);
-    background: #18181C;
+    background: var(--surface);
 }
 
 .reactionGo {
@@ -279,6 +279,6 @@
 }
 
 .reactionEarly {
-    border-color: #7F1D1D;
-    background: rgba(127, 29, 29, 0.25);
+    border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+    background: color-mix(in srgb, var(--danger) 14%, transparent);
 }

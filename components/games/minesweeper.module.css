@@ -1,6 +1,11 @@
 /* Minesweeper */
 
 .board {
+    --n1: #8FB3E0;
+    --n2: #8CC79A;
+    --n3: #E39A84;
+    --n4: #B59BE0;
+    --n6: #7FCFCF;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     gap: 3px;
@@ -8,6 +13,15 @@
     container-type: inline-size;
     user-select: none;
     -webkit-touch-callout: none;
+}
+
+/* The pastel numbers wash out on a light board; deeper shades of the same hues. */
+:global(html[data-theme="light"]) .board {
+    --n1: #2F5E9E;
+    --n2: #2E7D46;
+    --n3: #B5482F;
+    --n4: #6B4FB0;
+    --n6: #1F7A7A;
 }
 
 .cell {
@@ -18,7 +32,7 @@
     min-width: 0;
     padding: 0;
     border: 1px solid var(--card-border);
-    background: #1B1B20;
+    background: var(--raised);
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 6cqi;
@@ -38,7 +52,7 @@
 }
 
 .open {
-    background: #111114;
+    background: var(--well);
     cursor: default;
 }
 
@@ -47,20 +61,20 @@
 }
 
 .open.flagged {
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: var(--gold-line);
 }
 
 .exploded {
-    border-color: #B91C1C;
-    background: rgba(185, 28, 28, 0.35);
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 35%, transparent);
 }
 
-.n1 { color: #8FB3E0; }
-.n2 { color: #8CC79A; }
-.n3 { color: #E39A84; }
-.n4 { color: #B59BE0; }
+.n1 { color: var(--n1); }
+.n2 { color: var(--n2); }
+.n3 { color: var(--n3); }
+.n4 { color: var(--n4); }
 .n5 { color: var(--accent); }
-.n6 { color: #7FCFCF; }
+.n6 { color: var(--n6); }
 .n7 { color: var(--text-primary); }
 .n8 { color: var(--text-muted); }
 

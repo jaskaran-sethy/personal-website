@@ -36,7 +36,7 @@ const PROJECTS = [
         kicker: "NLP · WEB TOOL",
         description: "Product Insights in the browser: paste feedback or a product link, get every opinion by topic and sentiment.",
         image: "/projects/insight-dark.jpg",
-        crop: {w: 1.7, h: 1.7, x: -0.04, y: -0.07},
+        crop: {w: 1, h: 1, x: 0, y: 0}, // Made for the card, so shown whole.
         href: "/games/insight-extractor",
     },
     {

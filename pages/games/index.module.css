@@ -61,7 +61,7 @@
 
 .tile:hover {
     border-color: var(--accent);
-    background: linear-gradient(150deg, #1A1918, #111111);
+    background: var(--cta-gradient);
 }
 
 .tileGlyph {
@@ -70,7 +70,7 @@
     align-items: center;
     aspect-ratio: 16 / 9;
     border-bottom: 1px solid var(--card-border);
-    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.08), transparent 65%), #111114;
+    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.08), transparent 65%), var(--well);
     font-family: var(--font-display), serif;
     font-size: 44px;
     letter-spacing: 0.04em;
@@ -80,7 +80,7 @@
 }
 
 .tile:hover .tileGlyph {
-    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.16), transparent 65%), #111114;
+    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.16), transparent 65%), var(--well);
 }
 
 .tileText {

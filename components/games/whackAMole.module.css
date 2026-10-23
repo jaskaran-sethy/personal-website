@@ -1,10 +1,15 @@
 /* Whack-a-Mole: a 3 x 3 grid of holes; a gold mole rises out of one at a time. */
 
 .board {
+    --pit: #050506;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: min(100%, 312px, var(--board-max));
+}
+
+:global(html[data-theme="light"]) .board {
+    --pit: #D6CFBF;
 }
 
 .hole {
@@ -13,7 +18,7 @@
     padding: 0;
     overflow: hidden;
     border: 1px solid var(--card-border);
-    background: radial-gradient(ellipse 60% 22% at 50% 78%, #050506 0 90%, transparent 100%), #111114;
+    background: radial-gradient(ellipse 60% 22% at 50% 78%, var(--pit) 0 90%, transparent 100%), var(--well);
     cursor: default;
     touch-action: manipulation;
     user-select: none;
@@ -63,5 +68,5 @@
 
 .whacked {
     border-color: var(--accent);
-    background: radial-gradient(ellipse 60% 22% at 50% 78%, #050506 0 90%, transparent 100%), rgba(212, 175, 55, 0.14);
+    background: radial-gradient(ellipse 60% 22% at 50% 78%, var(--pit) 0 90%, transparent 100%), rgba(212, 175, 55, 0.14);
 }

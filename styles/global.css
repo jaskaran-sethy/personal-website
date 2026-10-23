@@ -3,6 +3,22 @@
     --background-color: #111111;
 }
 
+/* Behind the page (overscroll, before paint): match the theme's page colour. */
+html {
+    background: #0E0E10;
+    color-scheme: dark;
+}
+
+html[data-theme="light"] {
+    background: #F6F3EC;
+    color-scheme: light;
+}
+
+/* For the frame a theme changes in, so everything switches at once (see components/site/themeToggle.jsx). */
+html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after {
+    transition: none !important;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }

@@ -32,6 +32,17 @@
     object-fit: contain;
 }
 
+/* A one-colour mark painted in the text colour through its image as a mask. */
+.tint {
+    background: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
 /* Stand-in for an organisation without a mark yet. */
 .text {
     font-family: var(--font-body), sans-serif;

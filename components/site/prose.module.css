@@ -1,7 +1,7 @@
 .prose {
     font-size: 18px;
     line-height: 1.75;
-    color: #D4D4D8;
+    color: var(--prose);
 }
 
 .prose > * + * {

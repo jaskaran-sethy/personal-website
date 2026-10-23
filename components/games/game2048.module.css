@@ -2,6 +2,12 @@
 
 .board {
     --gap: 8px;
+    --tile-base: #16161A;
+    --tile-2: #1B1B20;
+    --tile-4: #202026;
+    --tile-gold-text: #F1D98B;
+    --tile-128-text: #FBF1D0;
+    --tile-256-text: #FFF8E1;
     position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -12,11 +18,21 @@
     padding: var(--gap);
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     container-type: inline-size;
     touch-action: none;
     user-select: none;
     cursor: grab;
+}
+
+/* On white tiles the pale gold numerals would vanish, so they darken. */
+:global(html[data-theme="light"]) .board {
+    --tile-base: #FFFFFF;
+    --tile-2: #FFFFFF;
+    --tile-4: #F7F3EA;
+    --tile-gold-text: var(--accent);
+    --tile-128-text: var(--accent-ink);
+    --tile-256-text: var(--accent-ink);
 }
 
 .board:active {
@@ -24,8 +40,8 @@
 }
 
 .cell {
-    border: 1px solid #1C1C21;
-    background: #141418;
+    border: 1px solid var(--hairline);
+    background: var(--hover);
 }
 
 /* Tiles sit on their own layer over the empty cells and move by transform, so a slide is one smooth GPU tween. */
@@ -67,7 +83,7 @@
     height: 100%;
     box-sizing: border-box;
     border: 1px solid var(--card-border);
-    background-color: #16161A;
+    background-color: var(--tile-base);
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 11cqi;
@@ -82,47 +98,47 @@
 /* Values climb from plain card to full brushed gold. */
 
 .v2 {
-    background: #1B1B20;
+    background: var(--tile-2);
     color: var(--text-secondary);
 }
 
 .v4 {
-    background: #202026;
+    background: var(--tile-4);
     color: var(--text-primary);
 }
 
 .v8 {
     border-color: rgba(212, 175, 55, 0.25);
-    background: linear-gradient(rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.08)), #16161A;
+    background: linear-gradient(rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.08)), var(--tile-base);
 }
 
 .v16 {
     border-color: rgba(212, 175, 55, 0.35);
-    background: linear-gradient(rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.15)), #16161A;
+    background: linear-gradient(rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.15)), var(--tile-base);
 }
 
 .v32 {
     border-color: rgba(212, 175, 55, 0.45);
-    background: linear-gradient(rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.22)), #16161A;
-    color: #F1D98B;
+    background: linear-gradient(rgba(212, 175, 55, 0.22), rgba(212, 175, 55, 0.22)), var(--tile-base);
+    color: var(--tile-gold-text);
 }
 
 .v64 {
     border-color: rgba(212, 175, 55, 0.55);
-    background: linear-gradient(rgba(212, 175, 55, 0.32), rgba(212, 175, 55, 0.32)), #16161A;
-    color: #F1D98B;
+    background: linear-gradient(rgba(212, 175, 55, 0.32), rgba(212, 175, 55, 0.32)), var(--tile-base);
+    color: var(--tile-gold-text);
 }
 
 .v128 {
     border-color: rgba(212, 175, 55, 0.7);
-    background: linear-gradient(rgba(212, 175, 55, 0.45), rgba(212, 175, 55, 0.45)), #16161A;
-    color: #FBF1D0;
+    background: linear-gradient(rgba(212, 175, 55, 0.45), rgba(212, 175, 55, 0.45)), var(--tile-base);
+    color: var(--tile-128-text);
 }
 
 .v256 {
     border-color: var(--accent);
-    background: linear-gradient(rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.6)), #16161A;
-    color: #FFF8E1;
+    background: linear-gradient(rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.6)), var(--tile-base);
+    color: var(--tile-256-text);
 }
 
 .v512 {
@@ -133,7 +149,7 @@
 
 .v1024 {
     border-color: #F1D98B;
-    background: var(--accent);
+    background: #D4AF37;
     color: var(--accent-ink);
 }
 
@@ -207,7 +223,7 @@
     align-items: center;
     gap: 16px;
     padding: 16px;
-    background: rgba(14, 14, 16, 0.78);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
     backdrop-filter: blur(2px);
     animation: appear 200ms ease-out;
 }

@@ -6,6 +6,7 @@ import {RESUME_URL} from "../../lib/site";
 import Icon from "./icon";
 import {lift} from "./lift";
 import Pill from "./pill";
+import ThemeToggle from "./themeToggle";
 import style from "./siteNav.module.css";
 
 // Section links point at the home page so they work from any page; Writing goes to the blog itself.
@@ -49,6 +50,7 @@ export default function SiteNav() {
                         </Link>
                     );
                 })}
+                <ThemeToggle/>
                 <Pill href={RESUME_URL} size="small" external>
                     Resume <Icon name="download" size={14} tone="muted"/>
                 </Pill>

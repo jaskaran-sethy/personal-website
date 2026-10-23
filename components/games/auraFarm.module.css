@@ -1,6 +1,8 @@
 /* Aura Farm */
 
 .arena {
+    --glow-rgb: 241, 217, 139;
+    --pocket-ink: #F1D98B;
     position: relative;
     display: grid;
     grid-template-columns: min(400px, var(--board-max), calc(100% - 84px)) 72px;
@@ -9,13 +11,19 @@
     width: 100%;
 }
 
+/* Pale gold barely shows on a light field, so the aura and pocket go a shade deeper. */
+:global(html[data-theme="light"]) .arena {
+    --glow-rgb: 212, 175, 55;
+    --pocket-ink: var(--accent);
+}
+
 .field {
     position: relative;
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
     border: 1px solid var(--card-border);
-    background: radial-gradient(circle at 50% 50%, #17161A, #0F0F12 70%);
+    background: radial-gradient(circle at 50% 50%, var(--surface), var(--well) 70%);
     container-type: inline-size;
     touch-action: none;
     user-select: none;
@@ -30,7 +38,7 @@
     aspect-ratio: 1;
     border-radius: 50%;
     background: radial-gradient(circle closest-side,
-        rgba(241, 217, 139, calc(0.15 + 0.6 * var(--glow))),
+        rgba(var(--glow-rgb), calc(0.15 + 0.6 * var(--glow))),
         rgba(212, 175, 55, calc(0.08 + 0.3 * var(--glow))) 45%,
         transparent);
     opacity: 0;
@@ -50,9 +58,9 @@
     justify-content: center;
     align-items: center;
     aspect-ratio: 1;
-    border: 1.5px dashed rgba(241, 217, 139, 0.55);
+    border: 1.5px dashed rgba(var(--glow-rgb), 0.55);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(241, 217, 139, 0.28), rgba(212, 175, 55, 0.08) 60%, transparent 72%);
+    background: radial-gradient(circle, rgba(var(--glow-rgb), 0.28), rgba(212, 175, 55, 0.08) 60%, transparent 72%);
     transform: translate(-50%, -50%);
     pointer-events: none;
     animation: pocketIn 400ms ease-out, breathe 1400ms ease-in-out 400ms infinite alternate;
@@ -60,14 +68,14 @@
 
 .pocketActive {
     border-style: solid;
-    border-color: #F1D98B;
-    box-shadow: 0 0 24px rgba(241, 217, 139, 0.45);
+    border-color: rgb(var(--glow-rgb));
+    box-shadow: 0 0 24px rgba(var(--glow-rgb), 0.45);
 }
 
 .pocketLabel {
     font-family: var(--font-display), serif;
     font-size: 16px;
-    color: #F1D98B;
+    color: var(--pocket-ink);
 }
 
 @keyframes pocketIn {
@@ -97,14 +105,14 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    background: rgba(10, 10, 12, 0.55);
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
     backdrop-filter: grayscale(0.8);
     animation: freezeIn 160ms ease-out;
 }
 
 @keyframes freezeIn {
     from {
-        background: rgba(10, 10, 12, 0);
+        background: transparent;
     }
 }
 
@@ -116,10 +124,10 @@
     width: min(100%, 280px);
     padding: 14px 16px 16px;
     box-sizing: border-box;
-    border: 1px solid #2C2C34;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: #1B1B21;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    background: var(--raised);
+    box-shadow: 0 12px 32px var(--shadow);
     animation: cardIn 220ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
 }
 
@@ -144,7 +152,7 @@
 .countdown {
     height: 3px;
     border-radius: 999px;
-    background: linear-gradient(90deg, #E5484D, #D4AF37 30%, #F1D98B);
+    background: linear-gradient(90deg, var(--danger), #D4AF37 30%, #F1D98B);
     transform-origin: left;
     animation: drain var(--limit) linear forwards;
 }
@@ -160,8 +168,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #E5484D;
-    box-shadow: 0 0 0 3px rgba(229, 72, 77, 0.18);
+    background: var(--danger);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 18%, transparent);
 }
 
 .baitText {
@@ -172,7 +180,7 @@
 
 /* A spell-check squiggle under the mistake. */
 .typo {
-    text-decoration: underline wavy #E5484D;
+    text-decoration: underline wavy var(--danger);
     text-decoration-thickness: 1.5px;
     text-underline-offset: 3px;
 }
@@ -188,7 +196,7 @@
 .choice {
     min-height: 40px;
     padding: 8px 10px;
-    border: 1px solid rgba(212, 175, 55, 0.5);
+    border: 1px solid var(--gold-line);
     border-radius: 10px;
     background: rgba(212, 175, 55, 0.08);
     color: var(--text-primary);
@@ -278,7 +286,7 @@
 }
 
 .bad {
-    color: #E58A8A;
+    color: var(--danger);
 }
 
 @keyframes rise {
@@ -302,7 +310,7 @@
     align-items: center;
     gap: clamp(10px, 5cqi, 20px);
     padding: clamp(12px, 6cqi, 24px);
-    background: rgba(14, 14, 16, 0.72);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
     text-align: center;
 }
 
@@ -390,13 +398,13 @@
     min-height: 80px;
     border: 1px solid var(--border);
     border-radius: 999px;
-    background: #111114;
+    background: var(--well);
     overflow: hidden;
 }
 
 .meterNegative {
-    border-color: #7F1D1D;
-    background: rgba(127, 29, 29, 0.2);
+    border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
 }
 
 .meterFill {

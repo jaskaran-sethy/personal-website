@@ -74,7 +74,7 @@
 }
 
 .row:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--hover);
 }
 
 .row:focus-visible {
@@ -87,7 +87,7 @@
 }
 
 .rowActive, .rowActive:hover {
-    border-color: rgba(212, 175, 55, 0.45);
+    border-color: var(--gold-line);
     color: var(--text-primary);
 }
 

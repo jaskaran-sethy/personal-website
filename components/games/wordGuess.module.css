@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--well);
     color: var(--text-primary);
     font-family: var(--font-display), serif;
     font-size: 28px;
@@ -53,7 +53,7 @@
     padding: 0;
     border: 1px solid var(--card-border);
     border-radius: 4px;
-    background: #1B1B20;
+    background: var(--raised);
     color: var(--text-primary);
     font-family: var(--font-mono), monospace;
     font-size: 14px;
@@ -90,7 +90,7 @@
 }
 
 .absent, .absent:hover {
-    border-color: #26262B;
-    background: #26262B;
+    border-color: var(--border);
+    background: var(--border);
     color: var(--text-muted);
 }

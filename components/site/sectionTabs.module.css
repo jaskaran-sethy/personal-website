@@ -55,7 +55,7 @@
 }
 
 .active .count {
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: var(--gold-line);
     color: var(--accent);
 }
 

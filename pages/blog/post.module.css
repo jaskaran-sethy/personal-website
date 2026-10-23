@@ -40,7 +40,7 @@
     max-width: 1040px;
     aspect-ratio: 1200 / 630;
     border: 1px solid var(--card-border);
-    background: #18181C;
+    background: var(--well);
     overflow: hidden;
 }
 

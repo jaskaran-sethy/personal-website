@@ -162,7 +162,7 @@
 
 .upgrade, .habit {
     border: 1px solid var(--card-border);
-    background: #141418;
+    background: var(--well);
     color: var(--text-primary);
     font: inherit;
     text-align: left;
@@ -172,7 +172,7 @@
 
 .upgrade:hover:not(:disabled), .habit:hover:not(:disabled) {
     border-color: var(--accent);
-    background: #19181A;
+    background: var(--surface);
 }
 
 .upgrade:disabled, .habit:disabled {

@@ -1,12 +1,9 @@
 /* Insight Extractor */
 
-/* Positive blue and negative red: a pair checked to stay distinct for colour-blind readers on this dark surface.
+/* Positive blue and negative red come from the site tokens (a pair checked for colour-blind readers in each theme).
    Set on the extractor and again on its summary panel, which is moved into the page's side column on wide screens. */
 .extractor, .palette {
-    --positive: #4F8FD6;
-    --negative: #E0684F;
     --neutral: var(--text-subtle);
-    --neutral-fill: #4A4A52;
     /* Mixed is both at once: the two sentiment colours striped, as in the charts. Gold stays for "selected". */
     --mixed: repeating-linear-gradient(135deg, var(--positive) 0 4px, var(--negative) 4px 8px);
 }
@@ -180,17 +177,17 @@
 }
 
 .mark.positive {
-    background: rgba(79, 143, 214, 0.16);
+    background: color-mix(in srgb, var(--positive) 16%, transparent);
     box-shadow: inset 0 -2px 0 var(--positive);
 }
 
 .mark.negative {
-    background: rgba(224, 104, 79, 0.16);
+    background: color-mix(in srgb, var(--negative) 16%, transparent);
     box-shadow: inset 0 -2px 0 var(--negative);
 }
 
 .mark.neutral {
-    background: rgba(161, 161, 170, 0.12);
+    background: color-mix(in srgb, var(--neutral) 14%, transparent);
     box-shadow: inset 0 -2px 0 var(--neutral);
 }
 

@@ -2,6 +2,7 @@ import {useEffect, useMemo, useState} from "react";
 import cx from "../../lib/cx";
 import {ASSET_CLASSES, allocation, blendedReturn, formatMoney, project, rebalance} from "../../lib/portfolio";
 import {readJSON, writeJSON} from "../../lib/storage";
+import LogoMark from "../site/logoMark";
 import {GameButton, Toggle} from "./kit";
 import GrowthChart from "./growthChart";
 import {SidePanel, useDocked} from "./sidePanel";
@@ -12,12 +13,13 @@ import pc from "./portfolioCalculator.module.css";
 // lib/portfolio.js; inputs are kept in this browser so they're there next time.
 
 const STORAGE_KEY = "tools.portfolio.v1";
-// The reference chart palette's first six slots, in order, checked for colour-blind separation on this surface.
-const CLASS_COLORS = {equity: "#3987e5", debt: "#d95926", realEstate: "#199e70", gold: "#c98500", cash: "#d55181", other: "#008300"};
+// The reference chart palette's first six slots, in order: the --class-N tokens, stepped for each theme and checked
+// for colour-blind separation on its surface.
+const CLASS_COLORS = {equity: "var(--class-1)", debt: "var(--class-2)", realEstate: "var(--class-3)", gold: "var(--class-4)", cash: "var(--class-5)", other: "var(--class-6)"};
 const SERIES = [
-    {key: "value", name: "Value", color: "#3987e5", area: true},
-    {key: "invested", name: "Invested", color: "#d95926"},
-    {key: "real", name: "Today's money", color: "#199e70", dashed: true},
+    {key: "value", name: "Value", color: "var(--class-1)", area: true},
+    {key: "invested", name: "Invested", color: "var(--class-2)"},
+    {key: "real", name: "Today's money", color: "var(--class-3)", dashed: true},
 ];
 // Tagged so Armor's analytics can tell visits from this calculator apart.
 const ARMOR_URL = "https://yourarmor.ai/?utm_source=jaskaransethy.com&utm_medium=referral&utm_campaign=portfolio-calculator";
@@ -268,7 +270,7 @@ export default function PortfolioCalculator() {
             <Rebalance rows={rebalance(holdings, targets)} targets={targets} onTargets={(next) => set({targets: next})} currency={currency}/>
 
             <a href={ARMOR_URL} target="_blank" rel="noopener" className={pc.armor}>
-                <img src="/logos/armor.svg" alt="" className={pc.armorLogo}/>
+                <LogoMark src="/logos/armor.svg" tint shape="fill" className={pc.armorLogo}/>
                 <span className={pc.armorText}>
                     <span className={pc.armorTitle}>Want a calculator backed by years of financial advisory?</span>
                     <span className={pc.armorSub}>Try Armor at yourarmor.ai</span>
