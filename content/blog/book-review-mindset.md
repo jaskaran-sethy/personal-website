@@ -3,6 +3,7 @@ title: "Mindset - Book Review"
 date: "2023-11-25"
 image: "/blog/mindset/book.webp"
 thumbnail: "/blog/mindset/cover.png"
+thumbnailLight: "/blog/mindset/cover-light.png"
 tags: ["book-review", "growth-mindset", "self-improvement"]
 excerpt: "The book that changed how I think about talent, effort and challenges."
 ---

@@ -28,6 +28,14 @@
     object-fit: contain;
 }
 
+.lightOnly, :global(html[data-theme="light"]) .darkOnly {
+    display: none;
+}
+
+:global(html[data-theme="light"]) .lightOnly {
+    display: block;
+}
+
 .coverFallback {
     display: flex;
     align-items: flex-end;

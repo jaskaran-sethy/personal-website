@@ -3,6 +3,7 @@ title: "Ikigai - Book Review"
 date: "2023-11-27"
 image: "/blog/ikigai/book.jpg"
 thumbnail: "/blog/ikigai/cover.png"
+thumbnailLight: "/blog/ikigai/cover-light.png"
 tags: ["book-review", "self-improvement", "wellness"]
 excerpt: "A popular take on purpose and long life that didn't quite win me over."
 ---

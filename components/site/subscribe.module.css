@@ -12,6 +12,9 @@
 }
 
 .rss {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--text-secondary) !important;
     text-decoration: underline;
     text-underline-offset: 3px;
