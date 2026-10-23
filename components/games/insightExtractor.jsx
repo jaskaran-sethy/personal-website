@@ -68,10 +68,10 @@ function MessageInsights() {
     return (
         <>
             <div className={ie.input}>
-                <label htmlFor="insight-input" className={ie.kicker}>CUSTOMER FEEDBACK</label>
+                <label htmlFor="insight-input" className={ie.fieldLabel}>Customer feedback</label>
                 <HighlightedInput text={text} insights={insights} onChange={setText}/>
                 <div className={ie.examples}>
-                    <span className={ie.kicker}>TRY</span>
+                    <span className={ie.fieldLabel}>Try</span>
                     {EXAMPLES.map((example) => (
                         <button key={example.name} type="button" className={ie.example} onClick={() => setText(example.text)}>
                             {example.name}
@@ -82,7 +82,7 @@ function MessageInsights() {
 
             <div className={cx(ie.results, docked && ie.resultsDocked)}>
                 <div className={ie.main}>
-                    <h3 className={ie.kicker}>INSIGHTS</h3>
+                    <h3 className={ie.heading}>Insights</h3>
                     {insights.length ? (
                         <>
                             <ul className={ie.insights}>
@@ -106,7 +106,7 @@ function MessageInsights() {
                     <OverallCard sentiment={overall.sentiment} empty={!insights.length}
                                  detail={`${counts.positive} positive · ${counts.negative} negative${counts.neutral ? ` · ${counts.neutral} neutral` : ""}`}/>
                     <div className={ie.summary}>
-                        <span className={ie.kicker}>BY LABEL</span>
+                        <h3 className={ie.heading}>By label</h3>
                         {summary.length ? (
                             <ul className={ie.summaryList}>
                                 {summary.map((row) => (

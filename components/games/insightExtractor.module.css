@@ -7,7 +7,8 @@
     --negative: #E0684F;
     --neutral: var(--text-subtle);
     --neutral-fill: #4A4A52;
-    --mixed: var(--accent);
+    /* Mixed is both at once: the two sentiment colours striped, as in the charts. Gold stays for "selected". */
+    --mixed: repeating-linear-gradient(135deg, var(--positive) 0 4px, var(--negative) 4px 8px);
 }
 
 .extractor {
@@ -19,12 +20,18 @@
     container-type: inline-size;
 }
 
-.kicker {
-    font-family: var(--font-mono), monospace;
-    font-size: 11px;
+/* Labels match the Portfolio Calculator's: plain body text for fields, the serif for card titles. */
+.fieldLabel {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.heading {
+    font-family: var(--font-display), serif;
+    font-size: 17px;
     font-weight: 400;
-    letter-spacing: var(--mono-tracking);
-    color: var(--text-muted);
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
 }
 
 .modes {
@@ -45,7 +52,7 @@
    words. The textarea grows to fit (set in script), so neither layer ever scrolls. */
 .editor {
     position: relative;
-    background: #111114;
+    background: var(--bg);
 }
 
 .backdrop, .textarea {
@@ -157,7 +164,7 @@
 .highlighted {
     padding: 14px 16px;
     border: 1px solid var(--card-border);
-    background: #111114;
+    background: var(--bg);
     font-size: 15px;
     line-height: 1.75;
     color: var(--text-secondary);
@@ -204,7 +211,7 @@
     gap: 6px 12px;
     padding: 10px 12px;
     border: 1px solid var(--card-border);
-    background: #141418;
+    background: var(--surface);
 }
 
 .phrase {
@@ -219,11 +226,9 @@
     gap: 8px;
 }
 
+/* The topic an insight is about, beside its sentiment chip. */
 .label {
-    font-family: var(--font-mono), monospace;
-    font-size: 11px;
-    letter-spacing: var(--mono-tracking);
-    text-transform: uppercase;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
@@ -239,12 +244,26 @@
 .chip.positive { color: var(--positive); }
 .chip.negative { color: var(--negative); }
 .chip.neutral { color: var(--neutral); }
-.chip.mixed { color: var(--mixed); }
+.chip.mixed {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+
+.chip.mixed::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--mixed);
+}
 
 .overall, .summary {
     padding: 14px 16px;
     border: 1px solid var(--card-border);
-    background: #141418;
+    background: var(--surface);
 }
 
 .overallWord {
@@ -257,7 +276,17 @@
 .overallWord.positive { color: var(--positive); }
 .overallWord.negative { color: var(--negative); }
 .overallWord.neutral { color: var(--neutral); }
-.overallWord.mixed { color: var(--mixed); }
+.overallWord.mixed { color: var(--text-primary); }
+
+.overallWord.mixed::after {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 4px;
+    margin-top: 8px;
+    border-radius: 2px;
+    background: var(--mixed);
+}
 
 .counts {
     font-size: 13px;

@@ -8,7 +8,7 @@
     margin: 0;
     padding: 14px 16px;
     border: 1px solid var(--card-border);
-    background: #141418;
+    background: var(--surface);
 }
 
 .caption {
@@ -22,7 +22,7 @@
 .positive { background: var(--positive); }
 .negative { background: var(--negative); }
 .neutral { background: var(--neutral-fill); }
-.mixed { background: repeating-linear-gradient(135deg, var(--positive) 0 4px, var(--negative) 4px 8px); }
+.mixed { background: var(--mixed); }
 
 .legend {
     display: inline-flex;
@@ -135,7 +135,7 @@
     padding: 5px 9px;
     border: 1px solid var(--card-border);
     border-radius: 4px;
-    background: #1c1c21;
+    background: var(--bg);
     color: var(--text-primary);
     font-size: 12px;
     white-space: nowrap;

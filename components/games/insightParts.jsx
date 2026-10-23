@@ -44,7 +44,7 @@ export function InsightSidePanel({children}) {
 export function OverallCard({sentiment, detail, empty}) {
     return (
         <div className={ie.overall}>
-            <span className={ie.kicker}>OVERALL</span>
+            <h3 className={ie.heading}>Overall</h3>
             <span className={cx(ie.overallWord, !empty && ie[sentiment])}>{empty ? "—" : SENTIMENT_LABELS[sentiment]}</span>
             {!empty && detail ? <span className={ie.counts}>{detail}</span> : null}
         </div>

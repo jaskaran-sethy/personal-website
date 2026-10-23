@@ -32,7 +32,7 @@ function BarChart({title, legend, rows, selected, onSelect}) {
     return (
         <figure className={ch.chart}>
             <figcaption className={ch.caption}>
-                <span className={ie.kicker}>{title}</span>
+                <h3 className={ie.heading}>{title}</h3>
                 {legend ? <Legend sentiments={legend}/> : null}
             </figcaption>
             <ul className={ch.rows}>
@@ -66,7 +66,7 @@ function BarChart({title, legend, rows, selected, onSelect}) {
 export function SentimentBreakdown({mix}) {
     const total = MIX_ORDER.reduce((sum, key) => sum + mix[key], 0);
     return (
-        <BarChart title="SENTIMENT BREAKDOWN" rows={MIX_ORDER.map((sentiment) => ({
+        <BarChart title="Sentiment breakdown" rows={MIX_ORDER.map((sentiment) => ({
             key: sentiment,
             label: SENTIMENT_LABELS[sentiment],
             segments: [{sentiment, value: mix[sentiment]}],
@@ -79,7 +79,7 @@ export function SentimentBreakdown({mix}) {
 // How many reviews talk about each label, split by how they feel about it.
 export function LabelBreakdown({labels, selected, onSelect}) {
     return (
-        <BarChart title="LABEL BREAKDOWN" legend={SPLIT_ORDER} selected={selected} onSelect={onSelect}
+        <BarChart title="Label breakdown" legend={SPLIT_ORDER} selected={selected} onSelect={onSelect}
                   rows={labels.map((row) => ({
                       key: row.label,
                       label: row.label,
@@ -93,7 +93,7 @@ export function LabelBreakdown({labels, selected, onSelect}) {
 // The most common label : sentiment pairs. Picking one shows that label's quotes.
 export function TopCombos({combos, selected, onSelect}) {
     return (
-        <BarChart title="MOST COMMON LABEL : SENTIMENT" selected={selected} onSelect={(key) => onSelect(key.split("|")[0])}
+        <BarChart title="Most common label : sentiment" selected={selected} onSelect={(key) => onSelect(key.split("|")[0])}
                   rows={combos.map((combo) => ({
                       key: `${combo.label}|${combo.sentiment}`,
                       label: <>{combo.label} <span className={ch.sentimentWord}>· {SENTIMENT_LABELS[combo.sentiment]}</span></>,

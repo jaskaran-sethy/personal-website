@@ -28,7 +28,7 @@ const stars = (rating) => (Number.isFinite(rating) ? "★".repeat(Math.round(rat
 function InstallGuide() {
     return (
         <div className={pi.install}>
-            <span className={ie.kicker}>ONE-TIME SETUP</span>
+            <h3 className={ie.heading}>One-time setup</h3>
             <p>
                 Shops don&rsquo;t let other websites read their pages, so a tiny browser extension fetches the reviews
                 from <em>your</em> browser. Nothing goes through my server.
@@ -57,7 +57,7 @@ function Results({result, selected, onSelect}) {
     return (
         <>
             <div className={pi.product}>
-                <span className={ie.kicker}>{SHOP_NAMES[product.shop].toUpperCase()}</span>
+                <span className={ie.fieldLabel}>{SHOP_NAMES[product.shop]}</span>
                 <h3 className={pi.name}>{details.name ?? "This product"}</h3>
                 {details.rating ? (
                     <span className={pi.shopRating}>
@@ -81,7 +81,7 @@ function Results({result, selected, onSelect}) {
                             <TopCombos combos={combos.slice(0, CHART_ROWS)} onSelect={onSelect}/>
                             {label ? (
                                 <div className={ie.main}>
-                                    <h3 className={ie.kicker}>WHAT REVIEWS SAY ABOUT {label.label.toUpperCase()}</h3>
+                                    <h3 className={ie.heading}>What reviews say about {label.label.toLowerCase()}</h3>
                                     <ul className={ie.insights}>
                                         {label.quotes.map((quote) => (
                                             <li key={quote.phrase} className={ie.insight}>
@@ -116,7 +116,7 @@ function Results({result, selected, onSelect}) {
                                  detail={`Across ${opinionated} review${opinionated === 1 ? "" : "s"} with an opinion`}/>
                     <SentimentBreakdown mix={mix}/>
                     <div className={ie.summary}>
-                        <span className={ie.kicker}>REVIEWS READ</span>
+                        <h3 className={ie.heading}>Reviews read</h3>
                         <span className={pi.big}>{reviews.length}</span>
                         {averageRating ? <span className={ie.counts}>averaging {averageRating.toFixed(1)} ★</span> : null}
                     </div>
@@ -154,7 +154,7 @@ export default function ProductInsights() {
             {extension.status === "missing" ? <InstallGuide/> : null}
 
             <form className={ie.input} onSubmit={analyse}>
-                <label htmlFor="product-link" className={ie.kicker}>AMAZON OR FLIPKART PRODUCT LINK</label>
+                <label htmlFor="product-link" className={ie.fieldLabel}>Amazon or Flipkart product link</label>
                 <div className={pi.linkRow}>
                     <input id="product-link" className={pi.link} type="url" inputMode="url" value={link} spellCheck={false}
                            placeholder="https://www.amazon.in/dp/…" onChange={(e) => setLink(e.target.value)}/>
@@ -166,7 +166,7 @@ export default function ProductInsights() {
                     <p className={pi.hint}>That doesn&rsquo;t look like an amazon.in, amazon.com or flipkart.com product page link.</p>
                 ) : null}
                 <div className={ie.examples}>
-                    <span className={ie.kicker}>TRY</span>
+                    <span className={ie.fieldLabel}>Try</span>
                     {EXAMPLES.map((example) => (
                         <button key={example.name} type="button" className={ie.example} onClick={() => setLink(example.url)}>
                             {example.name}
