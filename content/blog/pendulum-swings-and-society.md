@@ -3,7 +3,7 @@ title: "Pendulum Swings and Society"
 date: "2026-10-23"
 image: "/blog/pendulum/cover.png"
 tags: ["essay", "society", "physics"]
-excerpt: "Society does swing like a pendulum, just not the tidy textbook kind: it's damped, driven, and sometimes chaotic."
+excerpt: "Physics and Phronesis"
 ---
 
 I often use pendulum swings as an analogy for human behavior: both at the individual level as well as the societal level. Those of you more familiar with high school physics might recognize the resistance-less pendulum as a simple harmonic oscillator.
