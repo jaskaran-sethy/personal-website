@@ -7,7 +7,7 @@
     align-items: center;
     gap: 18px;
     width: 100%;
-    max-width: 640px;
+    max-width: 820px;
 }
 
 .editor {
@@ -49,17 +49,16 @@
     flex: none;
 }
 
-/* Tall enough for a good stretch of code; the rest scrolls, following the cursor. */
+/* The whole snippet, always: long lines wrap rather than scroll. */
 .code {
     margin: 0;
     padding: 14px 16px 16px 0;
-    max-height: min(440px, 55svh);
-    overflow: auto;
     color: var(--text-muted);
     font-family: var(--font-mono), monospace;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.7;
-    white-space: pre;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
     /* Code should look like what you type: no <= turning into ≤. */
     font-variant-ligatures: none;
 }
@@ -68,21 +67,22 @@
     display: flex;
 }
 
-/* Line numbers stay put while long lines scroll sideways. */
+.line > span:last-child {
+    min-width: 0;
+}
+
 .lineNumber {
-    position: sticky;
-    left: 0;
     flex: none;
     width: 44px;
     padding-right: 14px;
     box-sizing: border-box;
     text-align: right;
-    background: var(--well);
     color: color-mix(in srgb, var(--text-muted) 50%, var(--well));
 }
 
 .hint {
     margin: -8px 0 0;
+    text-align: center;
     color: var(--text-muted);
     font-size: 13px;
 }

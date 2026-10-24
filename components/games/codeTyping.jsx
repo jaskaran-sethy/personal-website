@@ -136,22 +136,15 @@ export default function CodeTyping() {
         refocus.current = true;
     }
 
-    // Long snippets scroll inside their box: keep the cursor in view, a third of the way down and clear of the edges.
+    // Long snippets run past the screen: scroll the page to keep the cursor in view, about a third of the way down.
     useEffect(() => {
-        const box = codeBox.current;
-        const cursor = box?.querySelector(`.${ct.cursor}`);
+        const cursor = codeBox.current?.querySelector(`.${ct.cursor}`);
         if (!cursor) return;
-        const outer = box.getBoundingClientRect();
         const at = cursor.getBoundingClientRect();
-        const lineHeight = at.height;
-        if (at.top < outer.top + lineHeight || at.bottom > outer.bottom - 2 * lineHeight) {
-            box.scrollTop += at.top - outer.top - outer.height / 3;
+        if (at.top < 2 * at.height || at.bottom > window.innerHeight - 3 * at.height) {
+            window.scrollBy({top: at.top - window.innerHeight / 3});
         }
-        const gutter = box.querySelector(`.${ct.lineNumber}`).offsetWidth;
-        if (at.left < outer.left + gutter || at.right > outer.right - 3 * at.width) {
-            box.scrollLeft += at.left - outer.left - outer.width / 2;
-        }
-    }, [typed, focused, index]);
+    }, [typed, focused]);
 
     // The field is disabled when a run ends, so focus it once the restart has rendered.
     useEffect(() => {
@@ -181,6 +174,7 @@ export default function CodeTyping() {
     return (
         <div className={ct.game}>
             <Status>{status}</Status>
+            <p className={ct.hint}>Enter for new lines. Indentation is typed for you.</p>
             {/* Pressing on the code focuses the hidden field without blurring it first. */}
             <div className={cx(ct.editor, focused && phase !== "done" && ct.focused)}
                  onMouseDown={(e) => {
@@ -213,7 +207,6 @@ export default function CodeTyping() {
                           aria-label="Type the code here" autoCapitalize="off" autoCorrect="off"
                           autoComplete="off" spellCheck={false}/>
             </div>
-            <p className={ct.hint}>Enter for new lines. Indentation is typed for you.</p>
             <Stats>
                 <Stat value={(elapsed / 1000).toFixed(1)} label="SECONDS"/>
                 <Stat value={result ? result.wpm : "–"} label="WPM"/>
