@@ -144,3 +144,29 @@
         font-size: 13px;
     }
 }
+
+/* "Time's up", floating at the bottom of the screen for a few seconds when the clock runs out. */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    z-index: 50;
+    padding: 12px 22px;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: 0 12px 32px var(--shadow);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, 16px);
+    pointer-events: none;
+    transition: opacity 200ms, transform 200ms;
+}
+
+.toastShown {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}

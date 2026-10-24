@@ -53,6 +53,8 @@ export default function CodeTyping() {
     const [timeLeft, setTimeLeft] = useState(TEST_MS);
     const [result, setResult] = useState(null);
     const [focused, setFocused] = useState(false);
+    // Kept after it hides, so the text stays while it fades out.
+    const [toast, setToast] = useState({text: "", shown: false});
     const [best, recordBest] = useHighScore(BEST_KEY);
     const [keystrokes, setKeystrokes] = useState({total: 0, correct: 0});
     const startedAt = useRef(0);
@@ -92,6 +94,7 @@ export default function CodeTyping() {
         const wpm = Math.round(words / (TEST_MS / 60000));
         const accuracy = keystrokes.total ? Math.round(keystrokes.correct / keystrokes.total * 100) : 0;
         setResult({wpm, accuracy});
+        setToast({text: `Time's up! ${wpm} WPM`, shown: true});
         setTimeLeft(0);
         setPhase("done");
         recordBest(wpm);
@@ -163,6 +166,7 @@ export default function CodeTyping() {
         setPhase("ready");
         setTimeLeft(TEST_MS);
         banked.current = 0;
+        setToast((current) => ({...current, shown: false}));
         setResult(null);
         setKeystrokes({total: 0, correct: 0});
         refocus.current = true;
@@ -181,6 +185,12 @@ export default function CodeTyping() {
             window.scrollBy({top: at.top - window.innerHeight / 3});
         }
     }, [typed, focused]);
+
+    useEffect(() => {
+        if (!toast.shown) return;
+        const timer = setTimeout(() => setToast((current) => ({...current, shown: false})), 3500);
+        return () => clearTimeout(timer);
+    }, [toast.shown]);
 
     // The field is disabled when a run ends, so focus it once the restart has rendered.
     useEffect(() => {
@@ -248,6 +258,7 @@ export default function CodeTyping() {
                 <Stat value={result ? result.wpm : "–"} label="WPM"/>
                 <Stat value={best ?? "–"} label="BEST WPM"/>
             </Stats>
+            <div className={cx(ct.toast, toast.shown && ct.toastShown)} role="status">{toast.text}</div>
             <GameButton onClick={restart}>
                 {phase === "done" ? "Try again" : phase === "running" ? "Restart" : "New snippet"}
             </GameButton>
