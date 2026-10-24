@@ -1,7 +1,8 @@
 .subscribe {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    /* Centred, not baseline: the links lead with an icon, which would become their baseline and lift them. */
+    align-items: center;
     gap: 6px 10px;
     font-size: 15px;
     color: var(--text-secondary);
