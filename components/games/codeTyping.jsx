@@ -6,6 +6,7 @@ import {GameButton, Stat, Stats, Status} from "./kit";
 import {SNIPPETS} from "./codeSnippets";
 import ct from "./codeTyping.module.css";
 
+const TEST_MS = 120000;
 const BEST_KEY = "games.code.best";
 
 // Which characters are a line's leading indentation. Those are filled in for you, like an editor would.
@@ -25,13 +26,31 @@ function indentAt(code, at) {
     return code.slice(at).match(/^ */)[0];
 }
 
-// ready → running (the clock starts on the first keystroke) → done (the snippet is typed out).
+// What counts toward WPM: characters typed right, leaving out the indentation you were given.
+function correctChars(typed, code, auto) {
+    let count = 0;
+    for (let i = 0; i < typed.length; i++) if (!auto[i] && typed[i] === code[i]) count++;
+    return count;
+}
+
+// m:ss, counting down.
+function formatClock(ms) {
+    const seconds = Math.ceil(ms / 1000);
+    return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
+// A different snippet from the current one.
+function nextIndex(current) {
+    return (current + 1 + randomInt(SNIPPETS.length - 1)) % SNIPPETS.length;
+}
+
+// ready → running (two minutes, from the first keystroke; finish a snippet and the next follows) → done.
 export default function CodeTyping() {
     // Picked in an effect, so the server render and first client render agree.
     const [index, setIndex] = useState(null);
     const [typed, setTyped] = useState("");
     const [phase, setPhase] = useState("ready");
-    const [elapsed, setElapsed] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(TEST_MS);
     const [result, setResult] = useState(null);
     const [focused, setFocused] = useState(false);
     const [best, recordBest] = useHighScore(BEST_KEY);
@@ -41,6 +60,8 @@ export default function CodeTyping() {
     const input = useRef(null);
     const codeBox = useRef(null);
     const refocus = useRef(false);
+    // Correct characters from snippets already finished this run.
+    const banked = useRef(0);
 
     const snippet = index === null ? null : SNIPPETS[index];
     const code = snippet?.code ?? "";
@@ -54,23 +75,24 @@ export default function CodeTyping() {
             return line;
         });
     }, [code]);
+    // Read by the ticker, which outlives the render it was created in.
+    const latest = useRef(null);
+    latest.current = {typed, code, auto, keystrokes};
 
     useEffect(() => {
         setIndex(randomInt(SNIPPETS.length));
         return () => clearInterval(ticker.current);
     }, []);
 
-    function finish(finalTyped, finalKeystrokes) {
+    function finish() {
         clearInterval(ticker.current);
-        const time = performance.now() - startedAt.current;
-        // Only what you typed counts: the indentation you were given doesn't.
-        let correctChars = 0;
-        for (let i = 0; i < finalTyped.length; i++) if (!auto[i] && finalTyped[i] === code[i]) correctChars++;
-        // Standard WPM: five characters make a word.
-        const wpm = Math.round(correctChars / 5 / (Math.max(time, 1000) / 60000));
-        const accuracy = finalKeystrokes.total ? Math.round(finalKeystrokes.correct / finalKeystrokes.total * 100) : 0;
+        const {typed, code, auto, keystrokes} = latest.current;
+        // Standard words of five characters, over the full two minutes.
+        const words = (banked.current + correctChars(typed, code, auto)) / 5;
+        const wpm = Math.round(words / (TEST_MS / 60000));
+        const accuracy = keystrokes.total ? Math.round(keystrokes.correct / keystrokes.total * 100) : 0;
         setResult({wpm, accuracy});
-        setElapsed(time);
+        setTimeLeft(0);
         setPhase("done");
         recordBest(wpm);
     }
@@ -81,7 +103,11 @@ export default function CodeTyping() {
         if (phase === "ready" && value) {
             setPhase("running");
             startedAt.current = performance.now();
-            ticker.current = setInterval(() => setElapsed(performance.now() - startedAt.current), 100);
+            ticker.current = setInterval(() => {
+                const left = TEST_MS - (performance.now() - startedAt.current);
+                if (left <= 0) finish();
+                else setTimeLeft(left);
+            }, 100);
         }
         let {total, correct} = keystrokes;
         if (value.length > typed.length && value.startsWith(typed)) {
@@ -109,8 +135,14 @@ export default function CodeTyping() {
         value = value.slice(0, code.length);
         const nextKeystrokes = {total, correct};
         setKeystrokes(nextKeystrokes);
-        setTyped(value);
-        if (value.length === code.length) finish(value, nextKeystrokes);
+        if (value.length === code.length) {
+            // Snippet done with time to spare: bank it and carry on with the next.
+            banked.current += correctChars(value, code, auto);
+            setIndex(nextIndex);
+            setTyped("");
+        } else {
+            setTyped(value);
+        }
     }
 
     // Typing always happens at the end: clicking or arrowing into the middle would scramble the comparison.
@@ -126,11 +158,11 @@ export default function CodeTyping() {
 
     function restart() {
         clearInterval(ticker.current);
-        // A different snippet from the last one.
-        setIndex((current) => (current + 1 + randomInt(SNIPPETS.length - 1)) % SNIPPETS.length);
+        setIndex(nextIndex);
         setTyped("");
         setPhase("ready");
-        setElapsed(0);
+        setTimeLeft(TEST_MS);
+        banked.current = 0;
         setResult(null);
         setKeystrokes({total: 0, correct: 0});
         refocus.current = true;
@@ -141,6 +173,10 @@ export default function CodeTyping() {
         const cursor = codeBox.current?.querySelector(`.${ct.cursor}`);
         if (!cursor) return;
         const at = cursor.getBoundingClientRect();
+        // The hidden field goes where the cursor is: browsers scroll a field into view as you type in it, and left
+        // at the top of the box it would drag the page back up there.
+        const field = input.current;
+        field.style.top = `${at.top - field.offsetParent.getBoundingClientRect().top}px`;
         if (at.top < 2 * at.height || at.bottom > window.innerHeight - 3 * at.height) {
             window.scrollBy({top: at.top - window.innerHeight / 3});
         }
@@ -150,7 +186,7 @@ export default function CodeTyping() {
     useEffect(() => {
         if (!refocus.current) return;
         refocus.current = false;
-        input.current?.focus();
+        input.current?.focus({preventScroll: true});
     }, [index]);
 
     let status;
@@ -180,9 +216,9 @@ export default function CodeTyping() {
                  onMouseDown={(e) => {
                      if (e.target === input.current) return;
                      e.preventDefault();
-                     input.current?.focus();
+                     input.current?.focus({preventScroll: true});
                  }}
-                 onClick={() => input.current?.focus()}>
+                 onClick={() => input.current?.focus({preventScroll: true})}>
                 <div className={ct.header}>
                     <span className={ct.lang}>{snippet?.lang ?? ""}</span>
                     <span className={ct.source}>{snippet?.source ?? ""}</span>
@@ -208,12 +244,12 @@ export default function CodeTyping() {
                           autoComplete="off" spellCheck={false}/>
             </div>
             <Stats>
-                <Stat value={(elapsed / 1000).toFixed(1)} label="SECONDS"/>
+                <Stat value={formatClock(timeLeft)} label="TIME LEFT"/>
                 <Stat value={result ? result.wpm : "–"} label="WPM"/>
                 <Stat value={best ?? "–"} label="BEST WPM"/>
             </Stats>
             <GameButton onClick={restart}>
-                {phase === "done" ? "Next snippet" : "New snippet"}
+                {phase === "done" ? "Try again" : phase === "running" ? "Restart" : "New snippet"}
             </GameButton>
         </div>
     );

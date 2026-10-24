@@ -33,7 +33,7 @@ const JASKARAN_SCORES = {
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
-    "code-typing": null,
+    "code-typing": 77,
     "aura-farm": 86744,
 };
 
