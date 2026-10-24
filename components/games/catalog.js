@@ -14,7 +14,7 @@ export const CATALOG = [
     {id: "lights-out", name: "Lights Out", glyph: "☼", blurb: "Each tap flips a light and its neighbours. Turn them all off."},
     {id: "whack-a-mole", name: "Whack-a-Mole", glyph: "◉", blurb: "Thirty seconds. Hit every mole you can."},
     {id: "typing", name: "Typing Test", glyph: "wpm", blurb: "How many words a minute can you type?"},
-    {id: "code-typing", name: "Code Typing", glyph: "{ }", blurb: "The typing test, but for code. Brackets, semicolons and all."},
+    {id: "code-typing", name: "Code Typing", glyph: "{ }", blurb: "Type famous code from LLVM, Linux, Quake III and more. Brackets, semicolons and all."},
     {id: "aura-farm", name: "Aura Farm", glyph: "✦", section: "esoteric",
         blurb: "Stay still to farm aura. Good calls double your multiplier; bad ones reset it."},
     {id: "aura-farm-idle", name: "Aura Farm Idle", glyph: "✧", section: "esoteric",

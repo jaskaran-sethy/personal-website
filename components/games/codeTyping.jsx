@@ -3,103 +3,9 @@ import cx from "../../lib/cx";
 import {useHighScore} from "../../lib/highScores";
 import {randomInt} from "../../lib/random";
 import {GameButton, Stat, Stats, Status} from "./kit";
+import {SNIPPETS} from "./codeSnippets";
 import ct from "./codeTyping.module.css";
 
-// Short, real-looking snippets. Spaces only, no trailing whitespace, and narrow enough to fit a phone.
-const SNIPPETS = [
-    {lang: "JavaScript", code: `function debounce(fn, ms) {
-    let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), ms);
-    };
-}`},
-    {lang: "Python", code: `def fizzbuzz(n):
-    for i in range(1, n + 1):
-        if i % 15 == 0:
-            print("FizzBuzz")
-        elif i % 3 == 0:
-            print("Fizz")
-        else:
-            print(i)`},
-    {lang: "Go", code: `func reverse(s string) string {
-    runes := []rune(s)
-    for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
-        runes[i], runes[j] = runes[j], runes[i]
-    }
-    return string(runes)
-}`},
-    {lang: "Rust", code: `fn largest<T: PartialOrd>(list: &[T]) -> &T {
-    let mut largest = &list[0];
-    for item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-    largest
-}`},
-    {lang: "TypeScript", code: `type User = { id: number; name: string };
-
-async function getUser(id: number): Promise<User> {
-    const res = await fetch(\`/api/users/\${id}\`);
-    if (!res.ok) throw new Error(res.statusText);
-    return res.json();
-}`},
-    {lang: "Python", code: `class Stack:
-    def __init__(self):
-        self.items = []
-
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        return self.items.pop()`},
-    {lang: "SQL", code: `SELECT c.name, COUNT(o.id) AS orders
-FROM customers c
-LEFT JOIN orders o ON o.customer_id = c.id
-WHERE o.created_at >= '2026-01-01'
-GROUP BY c.name
-HAVING COUNT(o.id) > 3
-ORDER BY orders DESC;`},
-    {lang: "React", code: `export default function Counter() {
-    const [count, setCount] = useState(0);
-    return (
-        <button onClick={() => setCount(count + 1)}>
-            Clicked {count} times
-        </button>
-    );
-}`},
-    {lang: "C", code: `int binary_search(int *a, int n, int key) {
-    int lo = 0, hi = n - 1;
-    while (lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] == key) return mid;
-        if (a[mid] < key) lo = mid + 1;
-        else hi = mid - 1;
-    }
-    return -1;
-}`},
-    {lang: "Java", code: `public static int fib(int n) {
-    int[] memo = new int[n + 2];
-    memo[1] = 1;
-    for (int i = 2; i <= n; i++) {
-        memo[i] = memo[i - 1] + memo[i - 2];
-    }
-    return memo[n];
-}`},
-    {lang: "Bash", code: `for file in *.log; do
-    if [[ -s "$file" ]]; then
-        gzip -9 "$file"
-        echo "compressed $file"
-    fi
-done`},
-    {lang: "Python", code: `with open("data.csv") as f:
-    rows = [line.strip().split(",") for line in f]
-
-totals = {}
-for name, amount in rows[1:]:
-    totals[name] = totals.get(name, 0) + float(amount)`},
-];
 const BEST_KEY = "games.code.best";
 
 // Which characters are a line's leading indentation. Those are filled in for you, like an editor would.
@@ -133,6 +39,7 @@ export default function CodeTyping() {
     const startedAt = useRef(0);
     const ticker = useRef(null);
     const input = useRef(null);
+    const codeBox = useRef(null);
     const refocus = useRef(false);
 
     const snippet = index === null ? null : SNIPPETS[index];
@@ -170,7 +77,7 @@ export default function CodeTyping() {
 
     function onChange(e) {
         if (phase === "done" || !code) return;
-        let value = e.target.value.replace(/\t/g, "").slice(0, code.length);
+        let value = e.target.value.replace(/\t/g, "");
         if (phase === "ready" && value) {
             setPhase("running");
             startedAt.current = performance.now();
@@ -178,13 +85,18 @@ export default function CodeTyping() {
         }
         let {total, correct} = keystrokes;
         if (value.length > typed.length && value.startsWith(typed)) {
-            // Count each newly added character once, so fixed mistakes still cost accuracy.
-            for (let i = typed.length; i < value.length; i++) {
+            // Usually one character, but a phone keyboard can add several at once.
+            let grown = typed;
+            for (const char of value.slice(typed.length)) {
+                if (grown.length >= code.length) break;
+                // Count each newly added character once, so fixed mistakes still cost accuracy.
                 total++;
-                if (value[i] === code[i]) correct++;
+                if (char === code[grown.length]) correct++;
+                grown += char;
+                // A newline where one belongs brings the next line's indentation with it.
+                if (char === "\n" && code[grown.length - 1] === "\n") grown += indentAt(code, grown.length);
             }
-            // A newline where one belongs brings the next line's indentation with it.
-            if (value.endsWith("\n") && code[value.length - 1] === "\n") value += indentAt(code, value.length);
+            value = grown;
         } else if (value.length < typed.length) {
             // Backspacing into given indentation takes all of it, and the newline, back to the line above.
             const lineStart = value.lastIndexOf("\n") + 1;
@@ -194,6 +106,7 @@ export default function CodeTyping() {
                 value = value.slice(0, lineStart - 1);
             }
         }
+        value = value.slice(0, code.length);
         const nextKeystrokes = {total, correct};
         setKeystrokes(nextKeystrokes);
         setTyped(value);
@@ -223,6 +136,23 @@ export default function CodeTyping() {
         refocus.current = true;
     }
 
+    // Long snippets scroll inside their box: keep the cursor in view, a third of the way down and clear of the edges.
+    useEffect(() => {
+        const box = codeBox.current;
+        const cursor = box?.querySelector(`.${ct.cursor}`);
+        if (!cursor) return;
+        const outer = box.getBoundingClientRect();
+        const at = cursor.getBoundingClientRect();
+        const lineHeight = at.height;
+        if (at.top < outer.top + lineHeight || at.bottom > outer.bottom - 2 * lineHeight) {
+            box.scrollTop += at.top - outer.top - outer.height / 3;
+        }
+        const gutter = box.querySelector(`.${ct.lineNumber}`).offsetWidth;
+        if (at.left < outer.left + gutter || at.right > outer.right - 3 * at.width) {
+            box.scrollLeft += at.left - outer.left - outer.width / 2;
+        }
+    }, [typed, focused, index]);
+
     // The field is disabled when a run ends, so focus it once the restart has rendered.
     useEffect(() => {
         if (!refocus.current) return;
@@ -251,12 +181,20 @@ export default function CodeTyping() {
     return (
         <div className={ct.game}>
             <Status>{status}</Status>
-            <div className={cx(ct.editor, focused && phase !== "done" && ct.focused)}>
+            {/* Pressing on the code focuses the hidden field without blurring it first. */}
+            <div className={cx(ct.editor, focused && phase !== "done" && ct.focused)}
+                 onMouseDown={(e) => {
+                     if (e.target === input.current) return;
+                     e.preventDefault();
+                     input.current?.focus();
+                 }}
+                 onClick={() => input.current?.focus()}>
                 <div className={ct.header}>
-                    <span>{snippet?.lang ?? ""}</span>
-                    <span className={ct.hint}>Enter for new lines · indentation is typed for you</span>
+                    <span className={ct.lang}>{snippet?.lang ?? ""}</span>
+                    <span className={ct.source}>{snippet?.source ?? ""}</span>
+                    <span className={ct.license}>{snippet?.license ?? ""}</span>
                 </div>
-                <pre className={ct.code} aria-hidden="true">
+                <pre ref={codeBox} className={ct.code} aria-hidden="true">
                     {lines.map(({text, offset}, n) => (
                         <div key={n} className={ct.line}>
                             <span className={ct.lineNumber}>{n + 1}</span>
@@ -275,6 +213,7 @@ export default function CodeTyping() {
                           aria-label="Type the code here" autoCapitalize="off" autoCorrect="off"
                           autoComplete="off" spellCheck={false}/>
             </div>
+            <p className={ct.hint}>Enter for new lines. Indentation is typed for you.</p>
             <Stats>
                 <Stat value={(elapsed / 1000).toFixed(1)} label="SECONDS"/>
                 <Stat value={result ? result.wpm : "–"} label="WPM"/>
