@@ -18,6 +18,7 @@ const SCORES = {
     "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
     "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
     "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
+    "code-typing": {key: "games.code.best", unit: ["wpm", "wpm"]},
     "aura-farm": {key: "games.aura.best", unit: ["aura", "aura"]},
 };
 
@@ -32,6 +33,7 @@ const JASKARAN_SCORES = {
     "simon": 32,
     "whack-a-mole": 46,
     "typing": 141,
+    "code-typing": null,
     "aura-farm": 86744,
 };
 

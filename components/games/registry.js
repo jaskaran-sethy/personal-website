@@ -18,6 +18,7 @@ const COMPONENTS = {
     "lights-out": dynamic(() => import("./lightsOut")),
     "whack-a-mole": dynamic(() => import("./whackAMole")),
     "typing": dynamic(() => import("./typingTest")),
+    "code-typing": dynamic(() => import("./codeTyping")),
     "aura-farm": dynamic(() => import("./auraFarm")),
     "aura-farm-idle": dynamic(() => import("./auraIdle")),
     "insight-extractor": dynamic(() => import("./insightExtractor")),
