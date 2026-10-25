@@ -32,18 +32,25 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 - `npm run build` — build the app for production
 - `npm start` — run the production build
 
+`dev` and `build` first run `scripts/site-files.mjs`, which generates `public/rss.xml` and `public/sitemap.xml` from the blog posts and games catalog (the generated files are not committed).
+
 ## Project Structure
 
 ```
-components/   Shared React components (layout, navbar, footer, cards, etc.)
+components/   React components: site/ (shared UI) and games/ (the games section)
+content/      Blog posts as Markdown (content/blog)
+lib/          Helpers (posts, high scores, site data, etc.)
 pages/        Route pages (home, blog, games, API routes)
 public/       Static assets (images, icons, robots.txt)
+scripts/      Build-time scripts (RSS/sitemap, OG cards)
 styles/       Global and module CSS
+design/       Design source files (see design/README.md)
+archive/      Unused code and images from the 2023 version of the site
 ```
 
 ## CI
 
-Pushes and pull requests to `main` are built and tested via GitHub Actions ([.github/workflows/node.js.yml](.github/workflows/node.js.yml)).
+Pushes and pull requests to `main` are built via GitHub Actions ([.github/workflows/node.js.yml](.github/workflows/node.js.yml)).
 
 ## License
 
