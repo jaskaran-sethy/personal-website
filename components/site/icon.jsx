@@ -6,6 +6,7 @@ const ICONS = {
     "arrow-left": <><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></>,
     "arrow-right": <><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>,
     "arrow-up-right": <><path d="M7 7h10v10"/><path d="M7 17 17 7"/></>,
+    "coffee": <><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></>,
     "download": <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></>,
     "map-pin": <><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></>,
     "menu": <><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></>,
