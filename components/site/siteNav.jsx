@@ -9,9 +9,9 @@ import Pill from "./pill";
 import ThemeToggle from "./themeToggle";
 import style from "./siteNav.module.css";
 
-// Section links point at the home page so they work from any page; Writing goes to the blog itself.
+// Projects, Writing and Fun have pages of their own; About points at the home page section so it works from any page.
 const LINKS = [
-    {label: "Projects", href: "/#projects"},
+    {label: "Projects", href: "/projects"},
     {label: "Writing", href: "/blog"},
     {label: "About", href: "/#about"},
     {label: "Fun", href: "/games"},
@@ -21,7 +21,7 @@ export default function SiteNav() {
     const {pathname, events} = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // Close the phone menu on any navigation, including same-page hash links like /#projects.
+    // Close the phone menu on any navigation, including same-page hash links like /#about.
     useEffect(() => {
         const close = () => setMenuOpen(false);
         events.on("routeChangeStart", close);

@@ -2,14 +2,13 @@ import Link from "next/link";
 import Metadata from "../components/metadata";
 import CroppedImage from "../components/site/croppedImage";
 import Eyebrow from "../components/site/eyebrow";
-import ExternalLink from "../components/site/externalLink";
 import FactList from "../components/site/factList";
 import JourneyTimeline from "../components/site/journey";
 import Icon from "../components/site/icon";
 import {lift, liftSmall} from "../components/site/lift";
 import Pill from "../components/site/pill";
 import PostCard from "../components/site/postCard";
-import ProjectCard, {FeaturedProjectCard} from "../components/site/projectCard";
+import ProjectShowcase from "../components/site/projectShowcase";
 import SectionHeader from "../components/site/sectionHeader";
 import SiteShell from "../components/site/siteShell";
 import TextLink from "../components/site/textLink";
@@ -17,45 +16,8 @@ import type from "../components/site/type.module.css";
 import cx from "../lib/cx";
 import {shortTitle} from "../lib/postFormat";
 import {getAllPostsMeta} from "../lib/posts";
-import {EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL} from "../lib/site";
+import {EMAIL, GITHUB_URL, LINKEDIN_URL} from "../lib/site";
 import style from "./index.module.css";
-
-const FEATURED_PROJECT = {
-    title: "Breathe",
-    kicker: "ANDROID · KOTLIN · JETPACK COMPOSE",
-    description: "A calm, offline breathing app. Four rhythms, three visual guides — an orb, a tide, a trace of light — and badges you can never lose.",
-    image: "/projects/breathe-lake.webp",
-    icon: "/projects/breathe-icon.webp",
-    href: `${GITHUB_URL}/meditation-app`,
-};
-
-// `crop` mirrors the image fill transform in the design: size and offset as fractions of the frame.
-const PROJECTS = [
-    {
-        title: "Insight Extractor",
-        kicker: "NLP · WEB TOOL",
-        description: "Product Insights in the browser: paste feedback or a product link, get every opinion by topic and sentiment.",
-        image: "/projects/insight-dark.jpg",
-        crop: {w: 1, h: 1, x: 0, y: 0}, // Made for the card, so shown whole.
-        href: "/games/insight-extractor",
-    },
-    {
-        title: "Mermaid Nixie",
-        kicker: "OBSIDIAN PLUGIN",
-        description: "Vault-wide Mermaid layouts: the ELK engine, right-angle edges and spacing that actually applies.",
-        image: "/projects/mermaid-dark.jpg",
-        crop: {w: 1.724, h: 1.724, x: -0.345, y: -0.310},
-        href: `${GITHUB_URL}/obsidian-mermaid-nixie`,
-    },
-    {
-        title: "Nested List Numbers",
-        kicker: "OBSIDIAN PLUGIN",
-        description: "Numbered lists that know their parents, so item 1 under 2.2 reads as 2.2.1.",
-        image: "/projects/nested-dark.jpg",
-        crop: {w: 1.667, h: 1.667, x: -0.317, y: -0.167},
-        href: `${GITHUB_URL}/obsidian-nested-list-numbers`,
-    },
-];
 
 const FACTS = [
     {key: "STUDIED", value: "Biotechnology · IIT Roorkee, Gold Medal"},
@@ -129,18 +91,7 @@ function Projects() {
         <section id="projects" className={style.projects}>
             <SectionHeader title="Projects" linkLabel="View GitHub" href={GITHUB_URL} external
                            className={style.projectsHeader}/>
-            <div className={style.projectsGrid}>
-                <FeaturedProjectCard project={FEATURED_PROJECT}/>
-                <div className={style.projectColumn}>
-                    {PROJECTS.map((project) => <ProjectCard key={project.title} project={project}/>)}
-                </div>
-            </div>
-            <p className={style.resumeAside}>
-                And, well, for professional work —
-                <ExternalLink href={RESUME_URL} className={cx(style.resumeLink, lift)}>
-                    see my resume <Icon name="download" size={18}/>
-                </ExternalLink>
-            </p>
+            <ProjectShowcase/>
         </section>
     );
 }

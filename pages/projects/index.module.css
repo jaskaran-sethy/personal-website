@@ -1,0 +1,46 @@
+.projects {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    padding: 88px var(--gutter) 120px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 760px;
+}
+
+.title {
+    font-family: var(--font-display), serif;
+    font-size: clamp(44px, 6vw, 84px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+}
+
+.intro {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.aside {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 760px) {
+    .projects {
+        gap: 40px;
+        padding: 56px var(--gutter) 80px;
+    }
+}
