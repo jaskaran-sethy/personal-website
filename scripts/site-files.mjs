@@ -35,6 +35,7 @@ ${items.join("\n")}
 
 const pages = [
     {path: "/", lastmod: posts[0]?.date},
+    {path: "/projects"},
     {path: "/blog", lastmod: posts[0]?.date},
     ...posts.map((post) => ({path: `/blog/${post.slug}`, lastmod: post.date})),
     {path: "/games"},
