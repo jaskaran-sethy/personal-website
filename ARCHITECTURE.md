@@ -4,8 +4,8 @@ How the site is put together, and where to go to change things. The README cover
 
 ## The big picture
 
-The site is a Next.js 15 app using the Pages Router, deployed to Cloudflare Pages through `@cloudflare/next-on-pages`.
-Every page is rendered to static HTML at build time: posts with `getStaticProps`/`getStaticPaths`, the rest as plain
+The site is a Next.js 16 app using the Pages Router, exported to plain files in `out/` (`output: "export"`) and served
+by Cloudflare as Workers static assets (`wrangler.jsonc`). Every page is rendered to static HTML at build time: posts with `getStaticProps`/`getStaticPaths`, the rest as plain
 static pages. There is no server-side data. The interactive parts (theme toggle, blog tag filter, the games) run in
 the browser, and anything they remember goes in the visitor's `localStorage`.
 
@@ -17,8 +17,10 @@ Code runs at three different times:
 | Build | Pages render to static HTML; blog Markdown becomes HTML | Node (Next.js) |
 | In the browser | React hydrates; games, theme, filters | Visitor's browser |
 
-Nothing of ours runs per request. Keep it that way where possible: a Next.js `middleware.js` runs on every page
-request on Cloudflare, and the one added in #15 took the whole site down with 500s (reverted in #16).
+Nothing of ours runs per request, and with a static export nothing can: there is no Worker script, so middleware,
+API routes, `getServerSideProps` and `revalidate` won't build. That keeps hosting free, since requests to static
+assets are free and unlimited. New posts, projects and games go live when a push to `main` rebuilds and redeploys.
+Redirects for removed pages are in `public/_redirects`.
 
 Because the build scripts run in plain Node, they can't import JSX. Anything both a page and a script need (page
 text, projects, the games catalog, posts) lives in plain `.js` modules under `lib/` or `components/games/catalog.js`.
@@ -37,7 +39,7 @@ Those modules import each other with a `.js` ending so Node can load them.
 | 404 | `pages/404.jsx` | |
 
 `pages/_document.jsx` sets the light or dark theme before the page paints. `pages/_app.jsx` only adds the global
-reset. `pages/api/hello.js` is a leftover example route.
+reset.
 
 Every page wraps itself in `SiteShell` (fonts, theme tokens, nav, footer, cursor glow) and sets its `<head>` with
 `components/metadata.jsx` (title, description, Open Graph and Twitter tags, canonical URL, RSS and Markdown links).
@@ -95,7 +97,7 @@ to render its link-preview image into `public/og/`.
 - `public/rss.xml`: the blog feed, newest first.
 - `public/sitemap.xml`: every page.
 - `public/**/*.md`: a Markdown version of every page, at the page's path plus `.md`.
-- `public/_headers`: Cloudflare Pages headers for those Markdown files.
+- `public/_headers`: Cloudflare headers for those Markdown files.
 
 None of these are committed.
 

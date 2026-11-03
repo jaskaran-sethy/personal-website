@@ -1,0 +1,11 @@
+// A Worker with no script: Cloudflare serves the static export in out/ directly, and requests to static assets are
+// free and unlimited. public/_headers and public/_redirects are copied into out/ and apply here too.
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "personal-website",
+    "compatibility_date": "2026-11-01",
+    "assets": {
+        "directory": "./out",
+        "not_found_handling": "404-page"
+    }
+}

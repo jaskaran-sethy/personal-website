@@ -4,11 +4,9 @@ Personal website frontend — built with [Next.js](https://nextjs.org/), featuri
 
 ## Tech Stack
 
-- [Next.js](https://nextjs.org/) 15 (Pages Router)
-- [React](https://react.dev/) 18
-- [@react-spring/web](https://www.react-spring.dev/) for animations
-- [SWR](https://swr.vercel.app/) for data fetching
-- Deployed via [Cloudflare Pages](https://pages.cloudflare.com/) (`@cloudflare/next-on-pages`)
+- [Next.js](https://nextjs.org/) 16 (Pages Router), exported as a static site
+- [React](https://react.dev/) 19
+- Served by [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/) (`wrangler.jsonc`)
 
 ## Getting Started
 
@@ -29,8 +27,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 ## Available Scripts
 
 - `npm run dev` — start the development server
-- `npm run build` — build the app for production
-- `npm start` — run the production build
+- `npm run build` — build the static site into `out/`
+- `npm run preview` — build, then serve `out/` locally the way Cloudflare will (headers, redirects, 404 page)
+- `npm run deploy` — upload `out/` to Cloudflare (run `npm run build` first)
 
 `dev` and `build` first run `scripts/site-files.mjs`, which generates `public/rss.xml`, `public/sitemap.xml`, a Markdown version of every page (`public/**/*.md`) and `public/_headers` from the blog posts, projects and games catalog (the generated files are not committed).
 
@@ -40,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 components/   React components: site/ (shared UI) and games/ (the games section)
 content/      Blog posts as Markdown (content/blog)
 lib/          Data and helpers: page text (copy.js), contact links, projects, posts, game logic, storage
-pages/        Route pages (home, projects, blog, games, API routes)
+pages/        Route pages (home, projects, blog, games)
 public/       Static assets (images, icons, robots.txt, resume.pdf, link-preview images)
 scripts/      Build scripts (RSS, sitemap, Markdown pages) and the link-preview image renderer
 styles/       Global and shared CSS

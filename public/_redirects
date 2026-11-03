@@ -1,0 +1,26 @@
+# Games that were taken down. Their pages were indexed, so each one sends visitors (and search engines) on to
+# /games for good rather than to a 404.
+/games/tic-tac-toe /games 301
+/games/tic-tac-toe.md /games.md 301
+/games/memory /games 301
+/games/memory.md /games.md 301
+/games/snake /games 301
+/games/snake.md /games.md 301
+/games/2048 /games 301
+/games/2048.md /games.md 301
+/games/minesweeper /games 301
+/games/minesweeper.md /games.md 301
+/games/connect-four /games 301
+/games/connect-four.md /games.md 301
+/games/sliding-puzzle /games 301
+/games/sliding-puzzle.md /games.md 301
+/games/word-guess /games 301
+/games/word-guess.md /games.md 301
+/games/simon /games 301
+/games/simon.md /games.md 301
+/games/lights-out /games 301
+/games/lights-out.md /games.md 301
+/games/whack-a-mole /games 301
+/games/whack-a-mole.md /games.md 301
+/games/typing /games 301
+/games/typing.md /games.md 301

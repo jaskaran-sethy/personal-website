@@ -6,3 +6,5 @@ public/*.md
 public/blog/*.md
 public/games/*.md
 public/_headers
+out/
+.wrangler/
