@@ -1,6 +1,5 @@
 import Head from 'next/head';
-
-const DEFAULT_DESCRIPTION = "Jaskaran Sethy is an ML and full stack engineer at Armor in Bengaluru. IIT Roorkee class of 2022. Writing about AI, books, habits and whatever else is interesting this month.";
+import {DEFAULT_DESCRIPTION} from '../lib/copy';
 
 export default function Metadata({title, description, image, url, type}) {
     const metaDescription = description || DEFAULT_DESCRIPTION;
@@ -38,6 +37,8 @@ export default function Metadata({title, description, image, url, type}) {
             <meta name="twitter:creator" content="@JaskaranSethy"/>
             {/* Only pages that name their own URL claim it (the 404 page shouldn't point at the home page). */}
             {url ? <link rel="canonical" href={metaUrl}/> : null}
+            {/* The same page as Markdown, for agents (see middleware.js). */}
+            {url ? <link rel="alternate" type="text/markdown" href={`${metaUrl.replace(/\/$/, "/index")}.md`}/> : null}
             <link rel="alternate" type="application/rss+xml" title="Jaskaran Sethy's blog" href="https://jaskaransethy.com/rss.xml"/>
             <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>

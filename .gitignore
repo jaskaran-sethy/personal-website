@@ -2,3 +2,4 @@ node_modules/
 .next/
 public/rss.xml
 public/sitemap.xml
+lib/markdown.generated.js
