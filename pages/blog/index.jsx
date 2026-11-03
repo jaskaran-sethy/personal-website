@@ -7,7 +7,6 @@ import SiteShell from "../../components/site/siteShell";
 import Subscribe from "../../components/site/subscribe";
 import {TagFilter} from "../../components/site/tagPills";
 import TextLink from "../../components/site/textLink";
-import {BLOG_PAGE} from "../../lib/copy";
 import cx from "../../lib/cx";
 import {getAllPostsMeta, getAllTags} from "../../lib/posts";
 import style from "./index.module.css";
@@ -38,8 +37,10 @@ export default function BlogPage({posts, tags}) {
             <main className={style.blog}>
                 <header className={style.header}>
                     <Eyebrow>THE BLOG · {posts.length} POSTS</Eyebrow>
-                    <h1 className={cx(style.title, liftSmall)}>{BLOG_PAGE.title}</h1>
-                    <p className={cx(style.intro, liftSmall)}>{BLOG_PAGE.intro}</p>
+                    <h1 className={cx(style.title, liftSmall)}>Notes on books, habits &amp; ideas</h1>
+                    <p className={cx(style.intro, liftSmall)}>
+                        Essays, book reviews and whatever I've become obsessed with this month.
+                    </p>
                     <Subscribe/>
                 </header>
                 <TagFilter tags={tags} activeTag={activeTag} onSelect={selectTag}/>

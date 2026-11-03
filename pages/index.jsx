@@ -13,12 +13,18 @@ import SectionHeader from "../components/site/sectionHeader";
 import SiteShell from "../components/site/siteShell";
 import TextLink from "../components/site/textLink";
 import type from "../components/site/type.module.css";
-import {HOME} from "../lib/copy";
 import cx from "../lib/cx";
 import {shortTitle} from "../lib/postFormat";
 import {getAllPostsMeta} from "../lib/posts";
-import {EMAIL, FACTS, GITHUB_URL, LINKEDIN_URL} from "../lib/site";
+import {EMAIL, GITHUB_URL, LINKEDIN_URL} from "../lib/site";
 import style from "./index.module.css";
+
+const FACTS = [
+    {key: "STUDIED", value: "Biotechnology · IIT Roorkee, Gold Medal"},
+    {key: "PREVIOUSLY", value: "Data Scientist · Sprinklr"},
+    {key: "NOW", value: "Data Science & Software · Armor, Bengaluru"},
+    {key: "OFF HOURS", value: "Fitness, gaming, reading, music"},
+];
 
 export async function getStaticProps() {
     return {
@@ -48,9 +54,12 @@ function Hero({latestPost}) {
     return (
         <section className={style.hero}>
             <div className={style.heroText}>
-                <Eyebrow>{HOME.role}</Eyebrow>
+                <Eyebrow>ML &amp; FULL STACK ENGINEER · ARMOR · BENGALURU</Eyebrow>
                 <h1 className={cx(style.heroName, liftSmall)}>Jaskaran<br/>Sethy</h1>
-                <p className={cx(style.intro, liftSmall)}>{HOME.intro}</p>
+                <p className={cx(style.intro, liftSmall)}>
+                    I build ML systems and the software around them, and write about the books, habits and ideas I get
+                    obsessed with.
+                </p>
                 <Link href="/blog" className={cx(style.blogCta, lift)}>
                     <span className={style.blogCtaText}>
                         <span className={cx(type.kicker, type.accent)}>THE BLOG</span>
@@ -103,12 +112,20 @@ function About() {
         <section id="about" className={style.about}>
             <div className={style.quoteColumn}>
                 <blockquote className={cx(style.pullQuote, liftSmall)}>
-                    “{HOME.quote}”
+                    “I become deeply interested in almost everything under the sun.”
                 </blockquote>
                 <FactList facts={FACTS}/>
             </div>
             <div className={style.aboutCopy}>
-                {HOME.bio.map((paragraph) => <p key={paragraph} className={cx(style.bio, liftSmall)}>{paragraph}</p>)}
+                <p className={cx(style.bio, liftSmall)}>
+                    I studied Biotechnology at IIT Roorkee, graduated with the Department Gold Medal, and fell for
+                    software along the way. After a year and a half as a Data Scientist at Sprinklr, I now work across
+                    data science and software engineering at Armor in Bengaluru.
+                </p>
+                <p className={cx(style.bio, liftSmall)}>
+                    Outside work it's fitness, gaming, reading, music and content creation, whatever has my attention
+                    this month.
+                </p>
                 <TextLink href={LINKEDIN_URL} external>More about me</TextLink>
             </div>
         </section>
@@ -119,7 +136,7 @@ function Contact() {
     return (
         <section className={style.contact}>
             <div className={cx(style.contactPanel, lift)}>
-                <h2 className={style.contactHeadline}>{HOME.contact}</h2>
+                <h2 className={style.contactHeadline}>Want to talk ML, books, or a project? My inbox is open.</h2>
                 <Pill href={`mailto:${EMAIL}`} variant="ink">
                     Say hello <Icon name="mail" size={16} tone="accent"/>
                 </Pill>
