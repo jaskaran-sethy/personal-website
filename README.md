@@ -1,6 +1,6 @@
 # Personal Website
 
-Personal website frontend — built with [Next.js](https://nextjs.org/), featuring a home page, blog, and a games section.
+Personal website frontend — built with [Next.js](https://nextjs.org/), featuring a home page, projects, a blog, and a games section.
 
 ## Tech Stack
 
@@ -32,21 +32,24 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 - `npm run build` — build the app for production
 - `npm start` — run the production build
 
-`dev` and `build` first run `scripts/site-files.mjs`, which generates `public/rss.xml` and `public/sitemap.xml` from the blog posts and games catalog (the generated files are not committed).
+`dev` and `build` first run `scripts/site-files.mjs`, which generates `public/rss.xml`, `public/sitemap.xml`, a Markdown version of every page (`public/**/*.md`) and `public/_headers` from the blog posts, projects and games catalog (the generated files are not committed).
 
 ## Project Structure
 
 ```
 components/   React components: site/ (shared UI) and games/ (the games section)
 content/      Blog posts as Markdown (content/blog)
-lib/          Helpers (posts, high scores, site data, etc.)
-pages/        Route pages (home, blog, games, API routes)
-public/       Static assets (images, icons, robots.txt)
-scripts/      Build-time scripts (RSS/sitemap, OG cards)
-styles/       Global and module CSS
+lib/          Data and helpers: page text (copy.js), contact links, projects, posts, game logic, storage
+pages/        Route pages (home, projects, blog, games, API routes)
+public/       Static assets (images, icons, robots.txt, resume.pdf, link-preview images)
+scripts/      Build scripts (RSS, sitemap, Markdown pages) and the link-preview image renderer
+styles/       Global and shared CSS
+resume/       Source HTML for public/resume.pdf
 design/       Design source files (see design/README.md)
 archive/      Unused code and images from the 2023 version of the site
 ```
+
+[ARCHITECTURE.md](ARCHITECTURE.md) explains how the pieces fit together and where to make common changes.
 
 ## CI
 

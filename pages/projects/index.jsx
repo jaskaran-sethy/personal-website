@@ -4,6 +4,7 @@ import {liftSmall} from "../../components/site/lift";
 import ProjectShowcase from "../../components/site/projectShowcase";
 import SiteShell from "../../components/site/siteShell";
 import TextLink from "../../components/site/textLink";
+import {PROJECTS_PAGE} from "../../lib/copy";
 import cx from "../../lib/cx";
 import {PROJECTS} from "../../lib/projects";
 import {GITHUB_URL} from "../../lib/site";
@@ -18,10 +19,8 @@ export default function ProjectsPage() {
             <main className={style.projects}>
                 <header className={style.header}>
                     <Eyebrow>PROJECTS · {PROJECT_COUNT} BUILT</Eyebrow>
-                    <h1 className={cx(style.title, liftSmall)}>Things I've built</h1>
-                    <p className={cx(style.intro, liftSmall)}>
-                        Apps, plugins and tools I made on my own time, mostly because I wanted them to exist.
-                    </p>
+                    <h1 className={cx(style.title, liftSmall)}>{PROJECTS_PAGE.title}</h1>
+                    <p className={cx(style.intro, liftSmall)}>{PROJECTS_PAGE.intro}</p>
                 </header>
                 <ProjectShowcase/>
                 <p className={style.aside}>
