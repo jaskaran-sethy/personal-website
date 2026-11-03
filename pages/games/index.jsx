@@ -12,8 +12,8 @@ import {GAMES_PAGE} from "../../lib/copy";
 import cx from "../../lib/cx";
 import style from "./index.module.css";
 
-// The tile select. Serif tabs at the top pick the section (normal games, esoteric games, tools); the choice lives in
-// the URL (?section=esoteric), so it survives back/forward and can be linked. Each tile opens /games/<id>.
+// The tile select. Serif tabs at the top pick the section (games or tools); the choice lives in
+// the URL (?section=tools), so it survives back/forward and can be linked. Each tile opens /games/<id>.
 const TOOL_COUNT = GAMES.filter(isTool).length;
 const GAME_COUNT = GAMES.length - TOOL_COUNT;
 
@@ -63,6 +63,7 @@ export default function GamesPage() {
                 </ul>
                 <p className={style.aside}>
                     Had enough fun? <TextLink href="/blog">Read the blog</TextLink>
+                    <TextLink href="/projects">See what else I've built</TextLink>
                 </p>
             </main>
         </SiteShell>

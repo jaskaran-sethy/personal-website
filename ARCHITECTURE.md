@@ -74,10 +74,10 @@ Games and tools are listed in two files:
 - `components/games/registry.js`: adds each one's component, loaded only when its page opens, plus helpers
   (`gamePath`, `gamesIn`, `nextGame`, `isTool`).
 
-Sections are `normal`, `esoteric` and `tools`. Tools are listed apart and lead on only to other tools.
+Sections are `games` (the default) and `tools`. Tools are listed apart and lead on only to other tools.
 
 Each game is a component in `components/games/` with its own CSS module. Shared pieces are in `kit.jsx` (status
-line, stats, buttons, switches) and `hooks.js` (keyboard and swipe input). High scores go through
+line, stats, buttons, switches). High scores go through
 `highScoreBar.jsx` and `lib/highScores.js`, on top of `lib/storage.js`, which guards every `localStorage` call. A
 tool can show a summary in the page's side column with `sidePanel.jsx`.
 

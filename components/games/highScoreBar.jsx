@@ -5,34 +5,16 @@ import {gamePath} from "./registry";
 import Icon from "../site/icon";
 import style from "./highScoreBar.module.css";
 
-// How each game's high score is stored and read out. `lower` marks games where a smaller number wins; a `unit` of
-// "clock" shows seconds as m:ss.
-// Games you could push forever just by grinding (Tic Tac Toe, Connect Four, Word Guess, Lights Out) have none.
+// How each game's high score is stored and read out. `lower` marks games where a smaller number wins.
 const SCORES = {
-    "memory": {key: "games.memory.best", unit: ["move", "moves"], lower: true},
     "reaction": {key: "games.reaction.best", unit: ["ms average", "ms average"], lower: true},
-    "snake": {key: "games.snake.best", unit: ["point", "points"]},
-    "2048": {key: "games.2048.best", unit: ["point", "points"]},
-    "minesweeper": {key: "games.minesweeper.best", unit: ["second", "seconds"], lower: true},
-    "sliding-puzzle": {key: "games.sliding.time", unit: "clock", lower: true},
-    "simon": {key: "games.simon.best", unit: ["round", "rounds"]},
-    "whack-a-mole": {key: "games.moles.best", unit: ["mole", "moles"]},
-    "typing": {key: "games.typing.best", unit: ["wpm", "wpm"]},
     "code-typing": {key: "games.code.best", unit: ["wpm", "wpm"]},
     "aura-farm": {key: "games.aura.best", unit: ["aura", "aura"]},
 };
 
 // Jaskaran's own bests. null shows as "—" until a score is filled in.
 const JASKARAN_SCORES = {
-    "memory": 13,
     "reaction": 190,
-    "snake": 56,
-    "2048": 47932,
-    "minesweeper": 14,
-    "sliding-puzzle": 55,
-    "simon": 32,
-    "whack-a-mole": 46,
-    "typing": 141,
     "code-typing": 77,
     "aura-farm": 86744,
 };
@@ -42,7 +24,6 @@ export function hasHighScore(gameId) {
 }
 
 function format(value, unit) {
-    if (unit === "clock") return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
     return `${value.toLocaleString()} ${value === 1 ? unit[0] : unit[1]}`;
 }
 
@@ -70,7 +51,11 @@ export default function HighScoreBar({gameId, gameName}) {
 
     async function share() {
         const url = `${window.location.origin}${gamePath(gameId)}`;
-        const text = `My high score in ${gameName}: ${format(mine, config.unit)}. Can you beat it?`;
+        // Naming Jaskaran's score gives whoever gets the link a target, not just a number.
+        const target = jaskaran === null ? "" : beatJaskaran
+            ? ` That beats Jaskaran's ${format(jaskaran, config.unit)}.`
+            : ` Jaskaran's is ${format(jaskaran, config.unit)}.`;
+        const text = `My high score in ${gameName}: ${format(mine, config.unit)}.${target} Can you beat it?`;
         const data = {title: `${gameName} high score`, text, url};
         // Phones and tablets get the system share sheet; computers just copy, which is what people expect there.
         // share() must run straight from the tap (no await before it), or the browser refuses it.

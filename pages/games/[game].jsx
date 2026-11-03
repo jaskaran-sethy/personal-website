@@ -6,6 +6,7 @@ import {SideSlot} from "../../components/games/sidePanel";
 import Metadata from "../../components/metadata";
 import Icon from "../../components/site/icon";
 import SiteShell from "../../components/site/siteShell";
+import TextLink from "../../components/site/textLink";
 import cx from "../../lib/cx";
 import style from "./index.module.css";
 
@@ -31,7 +32,7 @@ export default function GamePage({id}) {
                       image={`/og/${game.id}.png`}/>
             <main className={cx(style.games, style.playing)}>
                 <header className={style.gameBar}>
-                    <Link href={sectionPath(game.section ?? "normal")} className={style.navButton} aria-label="All games">
+                    <Link href={sectionPath(game.section ?? "games")} className={style.navButton} aria-label="All games">
                         <Icon name="arrow-left" size={16}/> <span className={style.navWide}>All games</span><span className={style.navNarrow}>Games</span>
                     </Link>
                     <h1 className={style.gameTitle}>{game.name}</h1>
@@ -52,6 +53,10 @@ export default function GamePage({id}) {
                         <p className={style.gameBlurb}>{game.blurb}</p>
                         <div ref={setSlot} className={style.sideSlot}/>
                         {hasHighScore(game.id) ? <HighScoreBar key={game.id} gameId={game.id} gameName={game.name}/> : null}
+                        <p className={style.gameMore}>
+                            <TextLink href="/projects">More things I've built</TextLink>
+                            <TextLink href="/blog">Read the blog</TextLink>
+                        </p>
                     </aside>
                 </div>
             </main>

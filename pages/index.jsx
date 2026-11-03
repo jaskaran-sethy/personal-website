@@ -18,6 +18,7 @@ import cx from "../lib/cx";
 import {shortTitle} from "../lib/postFormat";
 import {getAllPostsMeta} from "../lib/posts";
 import {EMAIL, FACTS, GITHUB_URL, LINKEDIN_URL} from "../lib/site";
+import {personSchema} from "../lib/structuredData";
 import style from "./index.module.css";
 
 export async function getStaticProps() {
@@ -31,7 +32,7 @@ export async function getStaticProps() {
 export default function HomePage({posts}) {
     return (
         <SiteShell>
-            <Metadata title="Jaskaran Sethy" type="website" url="/"/>
+            <Metadata title="Jaskaran Sethy" type="website" url="/" jsonLd={personSchema()}/>
             <Hero latestPost={posts[0]}/>
             <section className={style.journey} aria-label="Along the way">
                 <JourneyTimeline/>
