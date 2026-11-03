@@ -45,9 +45,9 @@ export default function GamePage({id}) {
                 </header>
                 <div className={style.playArea}>
                     <section className={style.stage} aria-label={game.name}>
-                        <SideSlot.Provider value={slot}>
+                        <SideSlot value={slot}>
                             <Game key={game.id}/>
-                        </SideSlot.Provider>
+                        </SideSlot>
                     </section>
                     <aside className={style.side}>
                         <p className={style.gameBlurb}>{game.blurb}</p>
