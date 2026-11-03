@@ -8,6 +8,7 @@ import SectionTabs from "../../components/site/sectionTabs";
 import {lift, liftSmall} from "../../components/site/lift";
 import SiteShell from "../../components/site/siteShell";
 import TextLink from "../../components/site/textLink";
+import {GAMES_PAGE} from "../../lib/copy";
 import cx from "../../lib/cx";
 import style from "./index.module.css";
 
@@ -38,10 +39,8 @@ export default function GamesPage() {
             <main className={style.games}>
                 <header className={style.header}>
                     <Eyebrow>FUN · {GAME_COUNT} GAMES · {TOOL_COUNT} TOOL{TOOL_COUNT === 1 ? "" : "S"}</Eyebrow>
-                    <h1 className={cx(style.title, liftSmall)}>Take a break</h1>
-                    <p className={cx(style.intro, liftSmall)}>
-                        A few small games I built for fun. Pick one and play right here.
-                    </p>
+                    <h1 className={cx(style.title, liftSmall)}>{GAMES_PAGE.title}</h1>
+                    <p className={cx(style.intro, liftSmall)}>{GAMES_PAGE.intro}</p>
                 </header>
                 <div className={style.sectionPicker}>
                     <SectionTabs label="Game type" value={section.id} onChange={selectSection}
