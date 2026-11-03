@@ -1,11 +1,18 @@
-// Writes public/rss.xml (the blog, newest first) and public/sitemap.xml (every page) from the posts and the games
-// catalog. Runs before dev and build (see package.json); the files are generated, so they aren't committed.
+// Writes public/rss.xml (the blog, newest first), public/sitemap.xml (every page), a Markdown version of every page
+// for agents (public/**/*.md) and public/_headers from the posts, projects and games catalog.
+// Runs before dev and build (see package.json); the files are generated, so they aren't committed.
 
-import {writeFileSync} from "node:fs";
-import {CATALOG} from "../components/games/catalog.js";
-import {getAllPostsMeta} from "../lib/posts.js";
+import {mkdirSync, writeFileSync} from "node:fs";
+import {dirname} from "node:path";
+import {CATALOG, SECTIONS} from "../components/games/catalog.js";
+import {BLOG_PAGE, DEFAULT_DESCRIPTION, GAMES_PAGE, HOME, PROJECTS_PAGE} from "../lib/copy.js";
+import {getAllPostsMeta, getPostBySlug} from "../lib/posts.js";
+import {FEATURED_PROJECT, PROJECTS} from "../lib/projects.js";
+import {BUY_ME_A_COFFEE_URL, EMAIL, FACTS, GITHUB_URL, LINKEDIN_URL, SOCIALS, SUBSTACK_URL} from "../lib/site.js";
 
 const SITE = "https://jaskaransethy.com";
+// The same signals as public/robots.txt, sent with every Markdown page.
+const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=yes";
 const escape = (text = "") => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 // Posts carry dates as YYYY-MM-DD; RSS wants RFC 822, and noon UTC keeps the day the same in every time zone.
 const rfc822 = (date) => new Date(`${date}T12:00:00Z`).toUTCString();
@@ -48,4 +55,114 @@ ${pages.map(({path, lastmod}) => `  <url><loc>${SITE}${path}</loc>${lastmod ? `<
 </urlset>
 `);
 
-console.log(`Wrote public/rss.xml (${posts.length} posts) and public/sitemap.xml (${pages.length} pages)`);
+// Markdown for agents: what each page says, without the layout. The words come from the same modules the pages render;
+// only the link lines are Markdown's own. Site paths become absolute URLs, so the Markdown reads the same wherever it
+// ends up.
+const absolute = (href) => (href.startsWith("/") ? `${SITE}${href}` : href);
+const absoluteLinks = (markdown) => markdown.replace(/\]\(\//g, `](${SITE}/`);
+const page = (title, description, body) => `---
+title: ${JSON.stringify(title)}
+description: ${JSON.stringify(description)}
+---
+
+${body.trim()}
+`;
+
+const projectLines = [FEATURED_PROJECT, ...PROJECTS]
+    .map((project) => `- [${project.title}](${absolute(project.href)}) (${project.kicker.toLowerCase()}): ${project.description}`)
+    .join("\n");
+const postLine = (post) => `- [${post.title}](${SITE}/blog/${post.slug}) (${post.formattedDate}): ${post.excerpt}`;
+const footer = `Email ${EMAIL} · ${SOCIALS.map((social) => `[${social.label}](${social.href})`).join(" · ")} · [Buy me a coffee](${BUY_ME_A_COFFEE_URL})`;
+
+const markdown = {
+    "/": page("Jaskaran Sethy", DEFAULT_DESCRIPTION, `
+# Jaskaran Sethy
+
+${HOME.role}
+
+${HOME.intro}
+
+${FACTS.map((fact) => `- **${fact.key.toLowerCase()}:** ${fact.value}`).join("\n")}
+
+## Projects
+
+${projectLines}
+
+More on [GitHub](${GITHUB_URL}) and at [${SITE}/projects](${SITE}/projects).
+
+## From the blog
+
+${posts.slice(0, 3).map(postLine).join("\n")}
+
+All posts: [${SITE}/blog](${SITE}/blog)
+
+## About
+
+> ${HOME.quote}
+
+${HOME.bio.join("\n\n")}
+
+More on [LinkedIn](${LINKEDIN_URL}).
+
+${HOME.contact} ${footer}
+`),
+    "/projects": page("Projects · Jaskaran Sethy", PROJECTS_PAGE.intro, `
+# ${PROJECTS_PAGE.title}
+
+${PROJECTS_PAGE.intro}
+
+${projectLines}
+
+The rest of my code lives on [GitHub](${GITHUB_URL}).
+`),
+    "/blog": page("The Blog · Jaskaran Sethy", BLOG_PAGE.intro, `
+# ${BLOG_PAGE.title}
+
+${BLOG_PAGE.intro} Also on [Substack](${SUBSTACK_URL}), and as an [RSS feed](${SITE}/rss.xml).
+
+${posts.map(postLine).join("\n")}
+`),
+    ...Object.fromEntries(posts.map((post) => [`/blog/${post.slug}`, page(post.title, post.excerpt, `
+# ${post.title}
+
+${post.formattedDate} · ${post.readingMinutes} min read${post.tags.length ? ` · ${post.tags.join(", ")}` : ""}
+
+${absoluteLinks(getPostBySlug(post.slug).content.trim())}
+`)])),
+    "/games": page("Games · Jaskaran Sethy", GAMES_PAGE.intro, `
+# ${GAMES_PAGE.title}
+
+${GAMES_PAGE.intro}
+
+${SECTIONS.map((section) => `## ${section.title}
+
+${section.blurb}
+
+${CATALOG.filter((game) => (game.section ?? "normal") === section.id)
+        .map((game) => `- [${game.name}](${SITE}/games/${game.id}): ${game.blurb}`).join("\n")}`).join("\n\n")}
+`),
+    ...Object.fromEntries(CATALOG.map((game) => [`/games/${game.id}`, page(`${game.name} · Games · Jaskaran Sethy`, game.blurb, `
+# ${game.name}
+
+${game.blurb}
+
+It's interactive and runs in the browser: open [${SITE}/games/${game.id}](${SITE}/games/${game.id}) to play. More at [${SITE}/games](${SITE}/games).
+`)])),
+};
+
+// Each page's Markdown sits at its path plus .md ("/blog" → /blog.md, the home page → /index.md), served as a static
+// file. _headers gives those files their type and the Content-Signal header on Cloudflare Pages.
+const mdPath = (path) => `${path === "/" ? "/index" : path}.md`;
+for (const [path, text] of Object.entries(markdown)) {
+    const file = `public${mdPath(path)}`;
+    mkdirSync(dirname(file), {recursive: true});
+    writeFileSync(file, text);
+}
+
+writeFileSync("public/_headers", Object.keys(markdown).map((path) => `${mdPath(path)}
+  Content-Type: text/markdown; charset=utf-8
+  Content-Signal: ${CONTENT_SIGNAL}
+  Link: <${SITE}${path}>; rel="canonical"
+`).join("\n"));
+
+console.log(`Wrote public/rss.xml (${posts.length} posts), public/sitemap.xml (${pages.length} pages) and ${Object.keys(markdown).length} Markdown pages`);

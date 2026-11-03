@@ -2,3 +2,7 @@ node_modules/
 .next/
 public/rss.xml
 public/sitemap.xml
+public/*.md
+public/blog/*.md
+public/games/*.md
+public/_headers
