@@ -25,6 +25,8 @@ export default function ProjectsPage() {
                 <ProjectShowcase/>
                 <p className={style.aside}>
                     The rest of my code lives on GitHub. <TextLink href={GITHUB_URL} external>View GitHub</TextLink>
+                    <TextLink href="/games">Play the games</TextLink>
+                    <TextLink href="/blog">Read the blog</TextLink>
                 </p>
             </main>
         </SiteShell>

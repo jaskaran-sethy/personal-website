@@ -12,6 +12,8 @@ import type from "../../components/site/type.module.css";
 import cx from "../../lib/cx";
 import {formatPostMeta} from "../../lib/postFormat";
 import {getAllPostSlugs, getAllPostsMeta, getPostBySlug} from "../../lib/posts";
+import {PROJECTS} from "../../lib/projects";
+import {blogPostingSchema} from "../../lib/structuredData";
 import style from "./post.module.css";
 
 export async function getStaticPaths() {
@@ -35,9 +37,11 @@ export async function getStaticProps({params}) {
 }
 
 export default function BlogPost({post, morePosts}) {
+    const projects = PROJECTS.filter((project) => project.posts?.includes(post.slug));
     return (
         <SiteShell>
-            <Metadata title={post.title} description={post.excerpt} image={post.thumbnail || post.image} url={`/blog/${post.slug}`}/>
+            <Metadata title={post.title} description={post.excerpt} image={post.thumbnail || post.image} url={`/blog/${post.slug}`}
+                      jsonLd={blogPostingSchema(post)}/>
             <article className={style.article}>
                 <TextLink href="/blog" back>All posts</TextLink>
                 <header className={style.header}>
@@ -61,6 +65,15 @@ export default function BlogPost({post, morePosts}) {
                 <div className={style.body}>
                     <Prose html={post.html}/>
                     <TagList tags={post.tags}/>
+                    {projects.length ? (
+                        <p className={style.related}>
+                            <span>Related projects:</span>
+                            {projects.map((project) => (
+                                <TextLink key={project.title} href={project.href} external={project.href.startsWith("http")}>{project.title}</TextLink>
+                            ))}
+                            <TextLink href="/projects">All projects</TextLink>
+                        </p>
+                    ) : null}
                     <Subscribe className={style.subscribe}/>
                 </div>
             </article>

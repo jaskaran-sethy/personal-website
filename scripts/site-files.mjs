@@ -138,7 +138,7 @@ ${SECTIONS.map((section) => `## ${section.title}
 
 ${section.blurb}
 
-${CATALOG.filter((game) => (game.section ?? "normal") === section.id)
+${CATALOG.filter((game) => (game.section ?? "games") === section.id)
         .map((game) => `- [${game.name}](${SITE}/games/${game.id}): ${game.blurb}`).join("\n")}`).join("\n\n")}
 `),
     ...Object.fromEntries(CATALOG.map((game) => [`/games/${game.id}`, page(`${game.name} · Games · Jaskaran Sethy`, game.blurb, `

@@ -27,7 +27,7 @@
     color: var(--text-secondary);
 }
 
-/* Normal / esoteric tabs above the grid, with the chosen section's one-line description under the rule. */
+/* Games / tools tabs above the grid, with the chosen section's one-line description under the rule. */
 .sectionPicker {
     display: flex;
     flex-direction: column;
@@ -210,6 +210,14 @@
 }
 
 /* Where a tool docks its summary (components/games/sidePanel.jsx). Takes no room when empty. */
+/* Links on from a game to the rest of the site, under the blurb and high scores. */
+.gameMore {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: 14px;
+}
+
 .sideSlot {
     display: flex;
     flex-direction: column;
@@ -247,6 +255,10 @@
         background: none;
         text-align: center;
         color: var(--text-subtle);
+    }
+
+    .gameMore {
+        justify-content: center;
     }
 }
 

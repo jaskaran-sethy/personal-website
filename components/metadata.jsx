@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import {DEFAULT_DESCRIPTION} from '../lib/copy';
 
-export default function Metadata({title, description, image, url, type}) {
+// `jsonLd` is schema.org data for search engines (see lib/structuredData.js).
+export default function Metadata({title, description, image, url, type, jsonLd}) {
     const metaDescription = description || DEFAULT_DESCRIPTION;
     const metaImage = image ? `https://jaskaransethy.com${image}` : "https://jaskaransethy.com/suit_me.png";
     const metaUrl = url ? `https://jaskaransethy.com${url}` : "https://jaskaransethy.com";
@@ -43,5 +44,8 @@ export default function Metadata({title, description, image, url, type}) {
             <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"/>
             <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
             <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+            {/* "<" is escaped so no text in the data can close the script tag early. */}
+            {jsonLd ? <script type="application/ld+json"
+                              dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c")}}/> : null}
         </Head>)
 }

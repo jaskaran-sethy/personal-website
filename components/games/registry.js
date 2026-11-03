@@ -5,19 +5,7 @@ export {SECTIONS};
 
 // Each game's component, loaded only when it's opened, so the tile grid stays light.
 const COMPONENTS = {
-    "tic-tac-toe": dynamic(() => import("./ticTacToe")),
-    "memory": dynamic(() => import("./memoryMatch")),
     "reaction": dynamic(() => import("./reactionTime")),
-    "snake": dynamic(() => import("./snake")),
-    "2048": dynamic(() => import("./game2048")),
-    "minesweeper": dynamic(() => import("./minesweeper")),
-    "connect-four": dynamic(() => import("./connectFour")),
-    "sliding-puzzle": dynamic(() => import("./slidingPuzzle")),
-    "word-guess": dynamic(() => import("./wordGuess")),
-    "simon": dynamic(() => import("./simon")),
-    "lights-out": dynamic(() => import("./lightsOut")),
-    "whack-a-mole": dynamic(() => import("./whackAMole")),
-    "typing": dynamic(() => import("./typingTest")),
     "code-typing": dynamic(() => import("./codeTyping")),
     "aura-farm": dynamic(() => import("./auraFarm")),
     "aura-farm-idle": dynamic(() => import("./auraIdle")),
@@ -28,7 +16,7 @@ const COMPONENTS = {
 // Every game on /games, in grid order (see catalog.js), with its component.
 export const GAMES = CATALOG.map((game) => ({...game, Game: COMPONENTS[game.id]}));
 
-const sectionOf = (game) => SECTIONS.find((section) => section.id === (game.section ?? "normal"));
+const sectionOf = (game) => SECTIONS.find((section) => section.id === (game.section ?? "games"));
 
 export const isTool = (game) => Boolean(sectionOf(game).tools);
 
@@ -37,9 +25,9 @@ export function sectionPath(sectionId) {
     return sectionId === SECTIONS[0].id ? "/games" : `/games?section=${sectionId}`;
 }
 
-// The games in one section, in grid order. Games without a `section` are normal.
+// The games in one section, in grid order. Games without a `section` are in `games`.
 export function gamesIn(sectionId) {
-    return GAMES.filter((game) => (game.section ?? "normal") === sectionId);
+    return GAMES.filter((game) => (game.section ?? "games") === sectionId);
 }
 
 // Each game lives at its own URL, e.g. /games/aura-farm.

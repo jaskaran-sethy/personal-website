@@ -23,20 +23,6 @@ export function GameButton({active, className, ...props}) {
     return <button type="button" className={cx(style.button, active && style.buttonActive, className)} {...props}/>;
 }
 
-// A row of pill buttons where one is selected, e.g. "vs Computer" / "2 Players".
-export function ButtonGroup({options, value, onChange}) {
-    return (
-        <div className={style.controls}>
-            {options.map((option) => (
-                <GameButton key={String(option.value)} active={option.value === value} aria-pressed={option.value === value}
-                            onClick={() => onChange(option.value)}>
-                    {option.label}
-                </GameButton>
-            ))}
-        </div>
-    );
-}
-
 // A compact two-or-more-way switch, e.g. Easy / Hard or Dig / Flag. `label` names the group for screen readers.
 export function Toggle({label, options, value, onChange}) {
     return (
