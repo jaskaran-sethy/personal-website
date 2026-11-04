@@ -151,7 +151,7 @@ It's interactive and runs in the browser: open [${SITE}/games/${game.id}](${SITE
 };
 
 // Each page's Markdown sits at its path plus .md ("/blog" → /blog.md, the home page → /index.md), served as a static
-// file. _headers gives those files their type and the Content-Signal header on Cloudflare Pages.
+// file. _headers gives those files their type and the Content-Signal header on Cloudflare.
 const mdPath = (path) => `${path === "/" ? "/index" : path}.md`;
 for (const [path, text] of Object.entries(markdown)) {
     const file = `public${mdPath(path)}`;
@@ -159,10 +159,19 @@ for (const [path, text] of Object.entries(markdown)) {
     writeFileSync(file, text);
 }
 
-writeFileSync("public/_headers", Object.keys(markdown).map((path) => `${mdPath(path)}
+// Every response also gets the standard security headers: HTTPS only, no MIME sniffing, no framing by other sites,
+// and only the origin sent as the referrer to other sites.
+const SECURITY_HEADERS = `/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+`;
+
+writeFileSync("public/_headers", [SECURITY_HEADERS, ...Object.keys(markdown).map((path) => `${mdPath(path)}
   Content-Type: text/markdown; charset=utf-8
   Content-Signal: ${CONTENT_SIGNAL}
   Link: <${SITE}${path}>; rel="canonical"
-`).join("\n"));
+`)].join("\n"));
 
 console.log(`Wrote public/rss.xml (${posts.length} posts), public/sitemap.xml (${pages.length} pages) and ${Object.keys(markdown).length} Markdown pages`);
